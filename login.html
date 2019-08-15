@@ -1,15 +1,22 @@
+<?php
+
+session_start();
+
+if (isset($_SESSION['id'])) header("location: index.html");
+
+?>
 <!doctype html>
 <html class="no-js" lang="">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Login Register | Notika - Notika Admin Template</title>
+    <title>Elyunite Feedback System | Login</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- favicon
 		============================================ -->
-    <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="img/logo/elyunitelogo.png">
     <!-- Google Fonts
 		============================================ -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
@@ -53,7 +60,7 @@
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
-<body>
+<body ng-app="login" ng-controller="loginCtrl">
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -61,25 +68,44 @@
     <div class="login-content">
         <!-- Login -->
         <div class="nk-block toggled" id="l-login">
-            <div class="nk-form">
-                <div class="input-group">
-                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-support"></i></span>
-                    <div class="nk-int-st">
-                        <input type="text" class="form-control" placeholder="Username">
-                    </div>
-                </div>
-                <div class="input-group mg-t-15">
-                    <span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-edit"></i></span>
-                    <div class="nk-int-st">
-                        <input type="password" class="form-control" placeholder="Password">
-                    </div>
-                </div>
-                <div class="fm-checkbox">
-                    <label><input type="checkbox" class="i-checks"> <i></i> Keep me signed in</label>
-                </div>
-                <a href="#l-register" data-ma-action="nk-login-switch" data-ma-block="#l-register" class="btn btn-login btn-success btn-float"><i class="notika-icon notika-right-arrow right-arrow-ant"></i></a>
-            </div>
-
+			<div class="col-lg-12">
+				<a href="login.html" class="pull-center"><img src="img/logo/lu_seal.png" style="width: 15%;" alt="" /></a>
+				<a href="login.html" class="pull-center"><img src="img/logo/elyunitelogo.png" style="width: 25%;" alt="" /></a>
+				<a href="login.html" class="pull-center"><img src="img/logo/ilovelaunion.png" style="width: 18%;" alt="" /></a>
+			</div>
+			<form ng-submit="login(this)">
+				<div class="nk-form">
+					<div class="row">
+						<div class="input-group col-lg-12">
+							<span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-support"></i></span>
+							<div class="nk-int-st">
+								<input type="text" class="form-control" placeholder="Username" name="username" ng-model="account.username">
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="input-group col-lg-12">
+							<span class="input-group-addon nk-ic-st-pro"><i class="notika-icon notika-edit"></i></span>
+							<div class="nk-int-st">
+								<input type="password" class="form-control" placeholder="Password" name="password" ng-model="account.password">
+							</div>
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<button class="btn btn-success waves-effect" name="submit">Login</button>
+					</div>
+					
+					<div class="row">
+						<div class="alert-list" ng-show="views.incorrect">
+							<hr>
+							<div class="alert alert-danger alert-mg-b-0" role="alert">Username or password incorrect</div>
+						</div>
+					</div>
+					<!-- <a href="#l-register" data-ma-action="nk-login-switch" data-ma-block="#l-register" class="btn btn-login btn-success btn-float"><i class="notika-icon notika-right-arrow right-arrow-ant"></i></a> -->
+				</div>
+			</form>
             <div class="nk-navigation nk-lg-ic">
                 <a href="#" data-ma-action="nk-login-switch" data-ma-block="#l-register"><i class="notika-icon notika-plus-symbol"></i> <span>Register</span></a>
                 <a href="#" data-ma-action="nk-login-switch" data-ma-block="#l-forget-password"><i>?</i> <span>Forgot Password</span></a>
@@ -207,6 +233,11 @@
     <!-- main JS
 		============================================ -->
     <script src="js/main.js"></script>
+	<!--Angularjs 
+		============================================ -->
+	<script src="angular/angular.min.js"></script>
+	<script src="angular/modules/login/login.js"></script>
+	
 </body>
 
 </html>
