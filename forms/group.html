@@ -1,0 +1,53 @@
+<style type="text/css"> .switch {   position: relative;   display: inline-block;   width: 53px;   height: 25px; }  .switch input {display:none;}  .slider {   position: absolute;   cursor: pointer;   top: 0;   left: 0;   right: 0;   bottom: 0;   background-color: #c7c7c7;   -webkit-transition: .4s;   transition: .4s; }  .slider:before {   position: absolute;   content: "";   height: 20px;   width: 20px;   left: 4px;   bottom: 2px;   background-color: white;   -webkit-transition: .4s;   transition: .4s; }  input:checked + .slider {   background-color: #169F85; }  input:disabled + .slider {   background-color: #b1afaf; }  input:focus + .slider {   box-shadow: 0 0 1px #169F85; }  input:checked + .slider:before {   -webkit-transform: translateX(26px);   -ms-transform: translateX(26px);   transform: translateX(26px); }  /* Rounded sliders */ .slider.round {   border-radius: 34px; }  .slider.round:before {   border-radius: 50%; } </style>
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	<div class="normal-table-list mg-t-30">
+		<div class="form-example-wrap">
+			<form id="formHolder.group" name="formHolder.group" novalidate autocomplete="off">
+				<div class="row">
+					<button class="btn btn-success notika-btn-success waves-effect pull-right" ng-click="form.edit(this)" ng-disabled="controls.btn.edit">Edit</button>
+				</div>
+				<div class="row">
+					<div class="form-example-int">
+						<div class="form-group col-lg-6">
+							<label>Name</label>
+							<input type="text" class="form-control input-lg" ng-model="group.name" ng-disabled="controls.ok.btn" placeholder="Enter Name">
+						</div>
+						<div class="form-group col-lg-6">
+							<label>Description</label>
+							<input type="text" class="form-control input-lg" ng-model="group.description" ng-disabled="controls.ok.btn" placeholder="Enter Description">
+						</div>
+					</div>
+				</div>
+				<br>
+				<div class="row">
+					<div class="form-group col-lg-12" ng-repeat="p in privileges">
+						<div class="x_title">
+							<h4>{{p.description}}</h4>
+							<ul class="nav navbar-right panel_toolbox">
+							</ul>
+							<div class="clearfix"></div>
+						</div>
+						<div class="row">		
+							<div class="col-md-3 form-group" ng-repeat="pp in p.privileges">
+								  <!-- <div class="checkbox"> -->
+									<label class="switch">
+									  <input type="checkbox" class="flat" ng-checked="pp.value" ng-model="pp.value" ng-disabled="controls.ok.btn">
+									  <span class="slider round"></span>
+									</label>
+									<h6>{{pp.description}}</h6>
+								  <!-- </div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			
+			<div class="row">
+				<div class="col-lg-12">
+					<button class="btn btn-success notika-btn-success waves-effect" ng-click="form.save(this)" ng-disabled="controls.ok.btn">{{controls.ok.label}}</button>
+					<button class="btn btn-success notika-btn-success waves-effect" ng-click="form.cancel(this)" ng-disabled="controls.cancel.btn">{{controls.cancel.label}}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
