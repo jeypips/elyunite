@@ -63,7 +63,7 @@
     <script src="js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 
-<body ng-app="groups" ng-controller="groupsCtrl" account-profile>
+<body ng-app="profileSettings" ng-controller="profileSettingsCtrl" account-profile>
     <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -274,9 +274,9 @@
 		<?php require_once 'main-menu-navigation.php'?>
     <!-- Main Menu area End-->
 	
-    <!-- Normal Table area Start-->
-    <div class="normal-table-area">
-        <div class="container">
+	<!-- Breadcomb area Start-->
+	<div class="breadcomb-area">
+		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<div class="breadcomb-list">
@@ -284,10 +284,10 @@
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								<div class="breadcomb-wp">
 									<div class="breadcomb-icon">
-										<i class="fa fa-sitemap"></i>
+										<i class="fa fa-unlock-alt"></i>
 									</div>
 									<div class="breadcomb-ctn">
-										<h2>Groups</h2>
+										<h2>Security</h2>
 										<p>Elyunite Feedback System</p>
 									</div>
 								</div>
@@ -301,12 +301,87 @@
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+	<!-- Breadcomb area End-->
+	<!-- Form Element area Start-->
+    <div class="form-element-area">
+        <div class="container">
             <div class="row">
-                <div id="x_content"></div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-element-list">
+                        <div class="basic-tb-hd">
+                            <h2>Account Info<button class="btn btn-default pull-right" ng-click="form.editInfo(this)">Edit</button></h2>
+                        </div>
+						<br>
+						<form name="formHolder.info" novalidate autocomplete=off>
+							<div class="row">
+								<div class="form-group col-lg-12 col-md-12">
+									<label>Username</label>
+									<input type="text" class="form-control" placeholder="Enter Username" ng-model="settings.info.username" ng-disabled="settings.btns.info.edit" required>
+									<span class="text-danger" ng-show="formHolder.info.username.$invalid">Username is required</span>
+									<span class="text-danger" ng-show="settings.info.not_unique">Username already exists</span>
+									<span class="text-danger" ng-show="settings.info.alert.show">{{settings.info.alert.message}}</span>
+								</div>
+							</div>
+						</form>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<button class="btn btn-success notika-btn-success waves-effect pull-right" ng-disabled="settings.btns.info.edit" ng-click="form.info.update(this)">Update</button>
+							</div>
+						</div>
+                    </div>
+                </div>
+				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-element-list">
+                        <div class="basic-tb-hd">
+                            <h2>Account Security<button class="btn btn-default pull-right" ng-click="form.editSecurity(this)">Edit</button></h2>
+                        </div>
+						<br>
+						<form name="formHolder.security" novalidate autocomplete=off>
+							<div class="row">
+								<div class="form-group col-lg-12 col-md-12">
+									<label>Old Password</label>
+									<input type="{{form.inputType}}" class="form-control" placeholder="Enter Old Password" name="opw" ng-model="settings.security.opw" ng-disabled="settings.btns.security.edit" ng-class="{'border-danger': settings.security.alert.opw.required || settings.security.alert.opw.show}">
+									<span class="text-danger" ng-show="settings.security.alert.opw.required">Old password is required</span>
+									<span class="text-danger" ng-show="settings.security.alert.opw.show">{{settings.security.alert.opw.message}}</span>
+								</div>
+								<div class="form-group col-lg-12 col-md-12">
+									<label>New Password</label>
+									<input type="{{form.inputType}}" class="form-control" placeholder="Enter New Password" name="password" ng-model="settings.security.password" ng-disabled="settings.btns.security.edit" ng-class="{'border-danger': (formHolder.security.password.$invalid && formHolder.security.password.$touched) || settings.security.alert.password.show}">
+									<span class="text-danger" ng-show="(formHolder.security.password.$invalid && formHolder.security.password.$touched)">New password is required</span>												
+								</div>
+								<div class="form-group col-lg-12 col-md-12">
+									<label>Re-Type New Password</label>
+									<input type="{{form.inputType}}" class="form-control" placeholder="Type your new password again" name="rpw" ng-model="settings.security.rpw" ng-disabled="settings.btns.security.edit" ng-class="{'border-danger': (formHolder.security.rpw.$invalid && formHolder.security.rpw.$touched) || settings.security.alert.password.show}">
+									<span class="text-danger" ng-show="(formHolder.security.password.$invalid && formHolder.security.password.$touched)">New password is required</span>												
+									<span class="text-danger" ng-show="settings.security.alert.password.show">{{settings.security.alert.password.message}}</span>													
+								</div>
+							</div>
+						</form>
+						<div class="form-example-int form-horizental mg-t-15">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+                                </div>
+                                <div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
+                                    <div class="fm-checkbox">
+                                        <label><input type="checkbox" class="i-checks" ng-disabled="settings.btns.security.edit" ng-model="form.passwordCheckbox" ng-click="form.hideShowPassword()"> <i></i> Remember me</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+						<div class="row">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
+								<button class="btn btn-default notika-btn-success waves-effect pull-right margin-left" ng-disabled="settings.btns.security.edit" ng-model="form.passwordCheckbox" ng-click="form.hideShowPassword(this)">{{settings.security.showHide}}</button>
+								<button class="btn btn-success notika-btn-success waves-effect pull-right" ng-disabled="settings.btns.security.edit" ng-click="form.security.update(this)">Update</button>
+							</div>
+						</div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <!-- Normal Table area End-->
+		</div>
+	</div>
+	
     <!-- Start Footer area-->
     <div class="footer-copyright-area">
         <div class="container">
@@ -376,6 +451,10 @@
     <!-- plugins JS
 		============================================ -->
     <script src="js/plugins.js"></script>
+	<!-- icheck JS
+		============================================ -->
+    <script src="js/icheck/icheck.min.js"></script>
+    <script src="js/icheck/icheck-active.js"></script>
 	<!-- Data Table JS
 		============================================ -->
     <script src="js/data-table/jquery.dataTables.min.js"></script>
@@ -406,10 +485,10 @@
 	<script src="angular/modules/account/account.js"></script>
 	<script src="angular/modules/validation/validate.js"></script>
 	<script src="angular/modules/post/window-open-post.js"></script>
-	<script src="modules/groups.js"></script>
+	<script src="modules/profile-setting.js"></script>
 
 	<!-- controller -->
-	<script src="controllers/groups.js"></script>	
+    <script src="controllers/profile-setting.js"></script>
 </body>
 
 </html>
