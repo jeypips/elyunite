@@ -20,6 +20,37 @@ angular.module('bootstrap-modal',[]).service('bootstrapModal', function($compile
 		
 	};
 	
+	//changing password modal
+	this.confirmChange = function(scope,title,content,onOk,onCancel) {
+		
+		var dialog = bootbox.confirm({
+			title: title,
+			message: content,
+			buttons: {
+				cancel: {
+					label: 'Keep me logged in',
+					className: 'btn-default'
+				},
+				confirm: {
+					label: 'Ok',
+					className: 'btn-success notika-btn-success waves-effect'
+				}
+			},
+			callback: function (result) {
+				if (result) {
+					onOk(scope);
+				} else {
+					onCancel();
+				}
+			}
+		});
+		
+		dialog.init(function() {
+			$timeout(function() { $compile($('.bootbox-body')[0])(scope); }, 500);
+		});	
+		
+	};
+	
 	this.notify = function(scope,content,onOk) {
 
 		var dialog = bootbox.alert({

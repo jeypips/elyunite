@@ -250,10 +250,10 @@ body {}
     position: absolute;
     top: 100%;
     left: -100px;
-    width: 250px;
+    width: 100px;
     border: none;
     padding: 20px 0px;
-	z-index:9999;
+	z-index: 9999;
 }
 .header-top-menu .nav.notika-top-nav li .menu-dd .hd-mg-tt h2{
    font-size: 16px;
@@ -4686,4 +4686,8 @@ body.box-layout {
 }
 .margin-left{
 	margin-left: 5px;
+}
+.elyunite-logo{
+	width: 35px;
+	z-index: 1;
 }

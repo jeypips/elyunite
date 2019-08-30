@@ -1,4 +1,4 @@
-angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($compile,$timeout,$http,growl,bootstrapModal,validate,bui,$q) {
+angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($compile,$timeout,$http,growl,bootstrapModal,validate,bui,$q,$window) {
 	
 	function form() {
 		
@@ -13,6 +13,7 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 			
 			scope.settings.btns.info = {
 				edit: true,
+				
 			};			
 			
 			scope.settings.btns.security = {
@@ -272,7 +273,8 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 			};
 
 			scope.settings.btns.security.edit = !scope.settings.btns.security.edit;
-
+			
+			
 		};
 		
 		function validate(scope,form) {
@@ -324,7 +326,7 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 					
 					$http({
 						method: 'POST',
-						url: 'handlers/profile/update-info.php',
+						url: 'handlers/profile/info-update.php',
 						data: scope.settings.info
 					}).then(function mySuccess(response) {
 		
@@ -409,10 +411,19 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 					data: scope.settings.security
 				}).then(function mySuccess(response) {
 	
-					growl.show('alert alert-success no-border mb-2',{from: 'top', amount: 60},'Your password has been updated. Please logout then login again.');						
+					growl.show('alert alert-success no-border mb-2',{from: 'top', amount: 60},'Your password has been updated.');						
 					scope.settings.btns.security.edit = true;
+					
 					bui.hide();
-		
+					
+					var onOk = function() {
+				
+						$window.location.href = 'angular/modules/login/logout.php';
+						
+					};
+					
+					bootstrapModal.confirmChange(scope,'Your password has been changed','Do you want to logout?',onOk,function() {});
+					
 				}, function myError(response) {
 
 					bui.hide();
