@@ -203,9 +203,9 @@ function form(){
 			
 			if (scope.group.id == 0) {
 				scope.group.id = response.data;
-				growl.show('btn btn-success',{from: 'top', amount: 55},'Group Information successfully added.');
+				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Group Information successfully added.');
 				}	else{
-					growl.show('btn btn-success',{from: 'top', amount: 55},'Group Information successfully updated.');
+					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Group Information successfully updated.');
 				}
 			mode(scope,scope.group);
 			
@@ -231,7 +231,7 @@ function form(){
 
 				self.list(scope);
 				
-				growl.show('btn btn-danger',{from: 'top', amount: 55},'Group Information successfully deleted.');
+				growl.show('btn btn-success notika-btn-danger waves-effect',{from: 'top', amount: 55},'Group Information successfully deleted.');
 				
 			}, function myError(response) {
 				 

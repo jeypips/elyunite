@@ -34,7 +34,6 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 			
 			scope.settings.security.alert = {};
 			
-			scope.settings.security.showHide = 'Show password';
 			scope.settings.security.alert.opw = {};
 			scope.settings.security.alert.opw.show = false;
 			scope.settings.security.alert.opw.message = '';
@@ -486,12 +485,17 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 		self.hideShowPassword = function(scope){
 				
 			if (self.inputType == 'password'){
-				scope.settings.security.showHide = 'Hide password';
 				self.inputType = 'text';
 			}else{
-				scope.settings.security.showHide = 'Show password';
 				self.inputType = 'password';
 			};
+		};
+		
+		self.alert = function(scope){
+			
+			alert(1);
+			
+			
 		};
 		
 	};
