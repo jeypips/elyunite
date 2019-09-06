@@ -3,21 +3,26 @@
 		<div class="form-example-wrap">
 			<form id="formHolder.account" name="formHolder.account" novalidate autocomplete="off">
 				<div class="row">
-					<button class="btn btn-success notika-btn-success waves-effect pull-right" ng-click="form.edit(this)" ng-disabled="controls.btn.edit">Edit</button>
+					<div class="col-lg-12">
+						<button class="btn btn-default notika-btn-default waves-effect pull-right" ng-click="form.edit(this)" ng-disabled="controls.btn.edit">Edit</button>
+					</div>
 				</div>
 				<div class="row">
 					<div class="form-example-int">
 						<div class="form-group col-lg-4 col-md-12">
 							<label>First Name</label>
-							<input type="text" class="form-control input-lg" ng-model="account.firstname" ng-disabled="controls.ok.btn" placeholder="Enter First Name">
+							<input type="text" class="form-control input-lg" name="firstname" ng-model="account.firstname" ng-disabled="controls.ok.btn" placeholder="Enter First Name" ng-class="{'border-danger': formHolder.account.firstname.$touched && formHolder.account.firstname.$invalid}" required>
+							<span class="text-danger" ng-show="formHolder.account.firstname.$touched && formHolder.account.firstname.$invalid">First name is required</span>
 						</div>
 						<div class="form-group col-lg-4 col-md-12">
 							<label>Middle Name</label>
-							<input type="text" class="form-control input-lg" ng-model="account.middlename" ng-disabled="controls.ok.btn" placeholder="Enter Middle Name">
+							<input type="text" class="form-control input-lg" name="middlename" ng-model="account.middlename" ng-disabled="controls.ok.btn" placeholder="Enter Middle Name" ng-class="{'border-danger': formHolder.account.middlename.$touched && formHolder.account.middlename.$invalid}" required>
+							<span class="text-danger" ng-show="formHolder.account.middlename.$touched && formHolder.account.middlename.$invalid">Middle name is required</span>
 						</div>
 						<div class="form-group col-lg-4 col-md-12">
 							<label>Last Name</label>
-							<input type="text" class="form-control input-lg" ng-model="account.lastname" ng-disabled="controls.ok.btn" placeholder="Enter Last Name">
+							<input type="text" class="form-control input-lg" name="lastname" ng-model="account.lastname" ng-disabled="controls.ok.btn" placeholder="Enter Last Name" ng-class="{'border-danger': formHolder.account.lastname.$touched && formHolder.account.lastname.$invalid}" required>
+							<span class="text-danger" ng-show="formHolder.account.lastname.$touched && formHolder.account.lastname.$invalid">Last name is required</span>
 						</div>
 					</div>
 				</div>
@@ -25,15 +30,23 @@
 					<div class="form-example-int">
 						<div class="form-group col-lg-4 col-md-12">
 							<label>Username</label>
-							<input type="text" class="form-control input-lg" ng-model="account.username" ng-disabled="controls.ok.btn" placeholder="Enter Username">
+							<input type="text" class="form-control input-lg" name="username" ng-model="account.username" ng-disabled="controls.ok.btn" placeholder="Enter Username" ng-class="{'border-danger': formHolder.account.username.$touched && formHolder.account.username.$invalid}" required>
+							<span class="text-danger" ng-show="formHolder.account.username.$touched && formHolder.account.username.$invalid">Username is required</span>
 						</div>
 						<div class="form-group col-lg-4 col-md-12">
 							<label>Password</label>
-							<input type="text" class="form-control input-lg" ng-model="account.password" ng-disabled="controls.ok.btn" placeholder="Enter Password">
+							<input type="text" class="form-control input-lg" name="password" ng-change="analyze(account.password)" ng-model="account.password" ng-disabled="controls.ok.btn" placeholder="Enter Password" ng-class="{'border-danger': formHolder.account.password.$touched && formHolder.account.password.$invalid}" required>
+							<span class="text-danger" ng-show="formHolder.account.password.$touched && formHolder.account.password.$invalid">Password is required</span>
+							<div class="progress-bar_wrap">
+							  <div ng-style="progress_bar_item_1"></div>
+							  <div ng-style="progress_bar_item_2"></div>
+							  <div ng-style="progress_bar_item_3"></div>
+							</div>
 						</div>
 						<div class="form-group col-lg-4 col-md-12">
 							<label>Group</label>
-							<select class="form-control input-lg" ng-model="account.groups" ng-disabled="controls.ok.btn" ng-options="group.name for group in groups track by group.id"></select>
+							<select class="form-control input-lg" name="groups" ng-model="account.groups" ng-disabled="controls.ok.btn" ng-options="group.name for group in groups track by group.id" ng-class="{'border-danger': formHolder.account.groups.$touched && formHolder.account.groups.$invalid}" required></select>
+							<span class="text-danger" ng-show="formHolder.account.groups.$touched && formHolder.account.groups.$invalid">Group is required</span>
 						</div>
 					</div>
 				</div>

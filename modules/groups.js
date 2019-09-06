@@ -14,18 +14,9 @@ function form(){
 		scope.views.list = true;
 			
 		scope.controls = {
-			ok: {
-				btn: false,
-				label: 'Save'
-			},
-			cancel: {
-				btn: false,
-				label: 'Cancel'
-			},
-			btn: {
-				add: false,
-				edit: false
-			},
+			ok: { btn: false, label: 'Save' },
+			cancel: { btn: false, label: 'Cancel' },
+			btn: { add: false, edit: false},
 		};
 			
 		scope.group = {};
@@ -33,13 +24,10 @@ function form(){
 
 		scope.groups = []; // list
 		
-
 	};
 
 	function privileges(scope) {
-		
-		console.log(scope);
-			
+	
 		$http({
 		  method: 'POST',
 		  url: 'handlers/privileges.php',
@@ -53,7 +41,7 @@ function form(){
 			//
 			
 		});				
-		
+
 	};	
 	
 	self.list = function(scope) {
@@ -191,7 +179,7 @@ function form(){
 	self.save = function(scope) {
 		
 		if (validate(scope)){ 
-		growl.show('alert alert-danger alert-dismissible fade in',{from: 'top', amount: 55},' Please complete required fields.');
+		growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please complete required fields.');
 		return;
 		}
 		

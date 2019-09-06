@@ -39,15 +39,15 @@ function form(){
 	function groups(scope){
 		
 		$http({
-				method: 'POST',
-				url: 'api/suggestions/groups.php'
-			}).then(function mySucces(response) {
-				
-				scope.groups = response.data;
-				
-			},function myError(response) {
-				
-			});
+			method: 'POST',
+			url: 'api/suggestions/groups.php'
+		}).then(function mySucces(response) {
+			
+			scope.groups = response.data;
+			
+		},function myError(response) {
+			
+		});
 		
 	};
 	
@@ -185,7 +185,7 @@ function form(){
 	self.save = function(scope) {
 		
 		if (validate(scope)){ 
-		growl.show('alert alert-danger alert-dismissible fade in',{from: 'top', amount: 55},' Please complete required fields.');
+		growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please complete required fields.');
 		return;
 		}
 		
@@ -196,10 +196,10 @@ function form(){
 		}).then(function mySucces(response) {
 			
 			if (scope.account.id == 0) {
-				scope.account.id = response.data;
-				growl.show('btn btn-success',{from: 'top', amount: 55},'Account Information successfully added.');
+					scope.account.id = response.data;
+					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Account Information successfully added.');
 				}	else{
-					growl.show('btn btn-success',{from: 'top', amount: 55},'Account Information successfully updated.');
+					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Account Information successfully updated.');
 				}
 			mode(scope,scope.account);
 			
@@ -225,7 +225,7 @@ function form(){
 
 				self.list(scope);
 				
-				growl.show('btn btn-danger',{from: 'top', amount: 55},'Account Information successfully deleted.');
+				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},'Account Information successfully deleted.');
 				
 			}, function myError(response) {
 				 

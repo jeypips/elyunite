@@ -10,12 +10,14 @@
 				<div class="row">
 					<div class="form-example-int">
 						<div class="form-group col-lg-6">
-							<label>Name</label>
-							<input type="text" class="form-control input-lg" ng-model="group.name" ng-disabled="controls.ok.btn" placeholder="Enter Name">
+							<label>Group Name</label>
+							<input type="text" class="form-control input-lg" name="name" ng-model="group.name" ng-disabled="controls.ok.btn" placeholder="Enter Name" ng-class="{'border-danger': formHolder.group.name.$touched && formHolder.group.name.$invalid}" required>
+							<span class="text-danger" ng-show="formHolder.group.name.$touched && formHolder.group.name.$invalid">Group name is required</span>
 						</div>
 						<div class="form-group col-lg-6">
-							<label>Description</label>
-							<input type="text" class="form-control input-lg" ng-model="group.description" ng-disabled="controls.ok.btn" placeholder="Enter Description">
+							<label>Group Description</label>
+							<input type="text" class="form-control input-lg" name="description" ng-model="group.description" ng-disabled="controls.ok.btn" placeholder="Enter Description" ng-class="{'border-danger': formHolder.group.description.$touched && formHolder.group.description.$invalid}" required>
+							<span class="text-danger" ng-show="formHolder.group.description.$touched && formHolder.group.description.$invalid">Group description is required</span>
 						</div>
 					</div>
 				</div>

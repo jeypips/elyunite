@@ -329,7 +329,7 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 						data: scope.settings.info
 					}).then(function mySuccess(response) {
 		
-						growl.show('alert alert-success no-border mb-2',{from: 'top', amount: 60},'Your username has been updated.');						
+						growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 60},'Your username has been updated.');						
 						scope.settings.btns.info.edit = true;
 						bui.hide();
 			
@@ -410,7 +410,7 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 					data: scope.settings.security
 				}).then(function mySuccess(response) {
 	
-					growl.show('alert alert-success no-border mb-2',{from: 'top', amount: 60},'Your password has been updated.');						
+					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 60},'Your password has been updated.');						
 					scope.settings.btns.security.edit = true;
 					
 					bui.hide();
@@ -489,13 +489,6 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 			}else{
 				self.inputType = 'password';
 			};
-		};
-		
-		self.alert = function(scope){
-			
-			alert(1);
-			
-			
 		};
 		
 	};
