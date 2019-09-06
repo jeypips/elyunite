@@ -34,7 +34,6 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 			
 			scope.settings.security.alert = {};
 			
-			scope.settings.security.showHide = 'Show password';
 			scope.settings.security.alert.opw = {};
 			scope.settings.security.alert.opw.show = false;
 			scope.settings.security.alert.opw.message = '';
@@ -330,7 +329,7 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 						data: scope.settings.info
 					}).then(function mySuccess(response) {
 		
-						growl.show('alert alert-success no-border mb-2',{from: 'top', amount: 60},'Your username has been updated.');						
+						growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 60},'Your username has been updated.');						
 						scope.settings.btns.info.edit = true;
 						bui.hide();
 			
@@ -411,7 +410,7 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 					data: scope.settings.security
 				}).then(function mySuccess(response) {
 	
-					growl.show('alert alert-success no-border mb-2',{from: 'top', amount: 60},'Your password has been updated.');						
+					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 60},'Your password has been updated.');						
 					scope.settings.btns.security.edit = true;
 					
 					bui.hide();
@@ -486,10 +485,8 @@ angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator
 		self.hideShowPassword = function(scope){
 				
 			if (self.inputType == 'password'){
-				scope.settings.security.showHide = 'Hide password';
 				self.inputType = 'text';
 			}else{
-				scope.settings.security.showHide = 'Show password';
 				self.inputType = 'password';
 			};
 		};

@@ -26,7 +26,7 @@ class pdo_db {
 		$server = "localhost";
 		$username = "root";
 		$password = "root";
-		$db_name = "esurvey";
+		$db_name = "elyunite";
 		$dsn = "mysql:host=$server;dbname=$db_name;charset=utf8";
 
 		$this->db = new PDO($dsn, $username, $password, array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
