@@ -33,7 +33,6 @@ function form(){
 
 		scope.accounts = []; // list
 		
-
 	};
 	
 	function groups(scope){
@@ -49,6 +48,149 @@ function form(){
 			
 		});
 		
+	};
+	
+	function passwordMeter(scope){
+		
+		var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+		var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+		scope.label = "";
+		
+		scope.progress_bar_item_1 = {
+			
+			"display": "inline-block",
+			"height": "100%",
+			"width": "32.5%",
+			"margin-right": ".8%",
+			"border-radius": "5px",
+			"float": "left",
+			"transition": "background-color .2s, visisility .1s"
+			  
+		};
+		
+		scope.progress_bar_item_2 = {
+			
+			"display": "inline-block",
+			"height": "100%",
+			"width": "32.5%",
+			"margin-right": ".8%",
+			"border-radius": "5px",
+			"float": "left",
+			"transition": "background-color .2s, visisility .1s"
+			  
+		};
+		
+		scope.progress_bar_item_3 = {
+			
+			"display": "inline-block",
+			"height": "100%",
+			"width": "32.5%",
+			"margin-right": ".8%",
+			"border-radius": "5px",
+			"float": "left",
+			"transition": "background-color .2s, visisility .1s"
+			  
+		};
+		
+		scope.analyze = function(value) {
+		
+			if(strongRegex.test(value)) {
+				
+				scope.progress_bar_item_3["background-color"] = "#2DAF7D"; // green
+				
+				scope.label = "Strong";
+				scope.color = "#2DAF7D";
+				
+			} else {
+				
+				scope.label = "Medium";
+				scope.color = "#F9AE35";
+				
+				scope.progress_bar_item_3 = {
+			
+					"display": "inline-block",
+					"height": "100%",
+					"width": "32.5%",
+					"margin-right": ".8%",
+					"border-radius": "5px",
+					"float": "left",
+					"transition": "background-color .2s, visisility .1s"
+					  
+				};
+				
+			}
+			
+			if(mediumRegex.test(value)) {
+				
+				scope.progress_bar_item_2["background-color"] = "#F9AE35"; // yellow
+				
+			} else {
+				
+				scope.label = "Weak"
+				
+				scope.color = "#FF4B47";
+				
+				scope.progress_bar_item_2 = {
+			
+					"display": "inline-block",
+					"height": "100%",
+					"width": "32.5%",
+					"margin-right": ".8%",
+					"border-radius": "5px",
+					"float": "left",
+					"transition": "background-color .2s, visisility .1s"
+					  
+				};
+				
+			}
+		
+			if(value!=undefined) {
+
+				scope.progress_bar_item_1["background-color"] = "#FF4B47"; // red
+				
+			} else if (value==undefined) {
+					
+				scope.label = "";
+				
+				scope.progress_bar_item_1 = {
+					
+					"display": "inline-block",
+					"height": "100%",
+					"width": "32.5%",
+					"margin-right": ".8%",
+					"border-radius": "5px",
+					"float": "left",
+					"transition": "background-color .2s, visisility .1s"
+					  
+				};
+				
+				scope.progress_bar_item_2 = {
+					
+					"display": "inline-block",
+					"height": "100%",
+					"width": "32.5%",
+					"margin-right": ".8%",
+					"border-radius": "5px",
+					"float": "left",
+					"transition": "background-color .2s, visisility .1s"
+					  
+				};
+				
+				scope.progress_bar_item_3 = {
+					
+					"display": "inline-block",
+					"height": "100%",
+					"width": "32.5%",
+					"margin-right": ".8%",
+					"border-radius": "5px",
+					"float": "left",
+					"transition": "background-color .2s, visisility .1s"
+					  
+				};
+				
+			}
+		
+		};
 	};
 	
 	self.list = function(scope) {
@@ -131,9 +273,11 @@ function form(){
 		
 	};
 	
-	self.addEdit = function(scope,row) {	
-		
+	self.addEdit = function(scope,row) {
+
 		bui.show();
+		
+		passwordMeter(scope);
 		
 		scope.account = {};
 		scope.account.id = 0;
@@ -185,8 +329,8 @@ function form(){
 	self.save = function(scope) {
 		
 		if (validate(scope)){ 
-		growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please complete required fields.');
-		return;
+			growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please complete required fields.');
+			return;
 		}
 		
 		$http({
@@ -207,7 +351,9 @@ function form(){
 			 
 		  // error
 			
-		});			
+		});	
+
+		console.log(scope.account.password.length);		
 		
 	};	
 	
@@ -237,7 +383,18 @@ function form(){
 
 		bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this record?',onOk,function() {});
 			
+	};
+	
+	self.inputType = 'password';
+		  
+	self.hideShowPassword = function(scope){
+			
+		if (self.inputType == 'password'){
+			self.inputType = 'text';
+		}else{
+			self.inputType = 'password';
 		};
+	};
 
 
 };
