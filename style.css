@@ -186,6 +186,7 @@ body {}
 .header-top-area, .footer-copyright-area{
 	background:#1096ce;
 }
+
 .logo-area{
 	padding:14px 0px;
 }
@@ -845,7 +846,7 @@ ul.notika-menu-wrap li a{
 /*  11.  Footer CSS
 /*----------------------------------------*/
 .footer-copyright-area {
-    margin-top:40px;
+    margin-top:10px;
 }
 .footer-copyright-area p {
     margin: 0;
