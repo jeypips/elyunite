@@ -187,9 +187,7 @@ function form(){
 					"transition": "background-color .2s, visisility .1s"
 					  
 				};
-				
 			}
-		
 		};
 	};
 	
