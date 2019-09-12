@@ -4744,9 +4744,8 @@ body.box-layout {
           transform: rotate(45deg);
 }
 
-
 .progress-bar_wrap {
-  width: 300px;
+  width: 100%;
   height: 5px;
   background: #F6F6FA;
   display: inline-block;

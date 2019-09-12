@@ -91,52 +91,8 @@
                                                     <img src="img/post/1.jpg" alt="" />
                                                 </div>
                                                 <div class="hd-mg-ctn">
-                                                    <h3>David Belle</h3>
-                                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="hd-message-sn">
-                                                <div class="hd-message-img">
-                                                    <img src="img/post/2.jpg" alt="" />
-                                                </div>
-                                                <div class="hd-mg-ctn">
-                                                    <h3>Jonathan Morris</h3>
-                                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="hd-message-sn">
-                                                <div class="hd-message-img">
-                                                    <img src="img/post/4.jpg" alt="" />
-                                                </div>
-                                                <div class="hd-mg-ctn">
-                                                    <h3>Fredric Mitchell</h3>
-                                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="hd-message-sn">
-                                                <div class="hd-message-img">
-                                                    <img src="img/post/1.jpg" alt="" />
-                                                </div>
-                                                <div class="hd-mg-ctn">
-                                                    <h3>David Belle</h3>
-                                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="hd-message-sn">
-                                                <div class="hd-message-img">
-                                                    <img src="img/post/2.jpg" alt="" />
-                                                </div>
-                                                <div class="hd-mg-ctn">
-                                                    <h3>Glenn Jecobs</h3>
-                                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
+                                                    <h3>Alert!</h3>
+                                                    <p>ni ading mo nakatakki!</p>
                                                 </div>
                                             </div>
                                         </a>
@@ -239,17 +195,6 @@
                         </div>
 						<br>
 						<form name="formHolder.security" novalidate autocomplete=off>
-							<!-- <div class="row">
-								<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<div class="toggle-select-act fm-cmp-mg pull-right">
-										<div class="nk-toggle-switch" data-ts-color="red">
-											<label for="ts2" class="ts-label">Show password</label>
-											<input id="ts2" type="checkbox" hidden="hidden" ng-model="form.passwordCheckbox" ng-click="form.hideShowPassword(this)">
-											<label for="ts2" class="ts-helper"></label>
-										</div>
-									</div>
-								</div>
-							</div> -->
 							<div class="row">
 								<div class="form-group col-lg-12 col-md-12">
 									<label>Old password</label>
@@ -258,9 +203,14 @@
 									<span class="text-danger" ng-show="settings.security.alert.opw.show">{{settings.security.alert.opw.message}}</span>
 								</div>
 								<div class="form-group col-lg-12 col-md-12">
-									<label>New password</label>
-									<input type="{{form.inputType}}" class="form-control" placeholder="Enter New Password" name="password" ng-model="settings.security.password" ng-disabled="settings.btns.security.edit" ng-class="{'border-danger': (formHolder.security.password.$invalid && formHolder.security.password.$touched) || settings.security.alert.password.show}">
+									<label>New password</label> <small class="pull-right" style="color: {{color}};">{{label}}</small>
+									<input type="{{form.inputType}}" class="form-control" placeholder="Enter New Password" name="password" ng-model="settings.security.password" ng-change="analyze(settings.security.password)" ng-disabled="settings.btns.security.edit" ng-class="{'border-danger': (formHolder.security.password.$invalid && formHolder.security.password.$touched) || settings.security.alert.password.show}">
 									<span class="text-danger" ng-show="(formHolder.security.password.$invalid && formHolder.security.password.$touched)">New password is required</span>												
+									<div class="progress-bar_wrap">
+									  <div ng-style="progress_bar_item_1"></div>
+									  <div ng-style="progress_bar_item_2"></div>
+									  <div ng-style="progress_bar_item_3"></div>
+									</div>
 								</div>
 								<div class="form-group col-lg-12 col-md-12">
 									<label>Confirm new password</label>
@@ -269,9 +219,6 @@
 									<span class="text-danger" ng-show="settings.security.alert.password.show">{{settings.security.alert.password.message}}</span>													
 								</div>
 							</div>
-							
-							
-							  
 						</form>
 						<div class="row">
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
