@@ -22,7 +22,8 @@ class pdo_db {
 	var $insertId;
 	
 	function __construct($table = "") {
-
+		
+		// $server = "10.10.2.18";
 		$server = "localhost";
 		$username = "root";
 		$password = "root";
@@ -36,10 +37,19 @@ class pdo_db {
 
 	function getData($sql) {
 
+		try {
+	
 		$stmt = $this->db->query($sql);
 		$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		$this->rows = $stmt->rowCount();
 		return $results;
+		
+		} catch (PDOException $ex) {
+			
+			echo "Error occured in getData<br>QUERY = '$sql'<br>".$ex->getMessage();
+			exit();
+			
+		};
 
 	}	
 	
