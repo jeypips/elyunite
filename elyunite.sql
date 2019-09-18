@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 11, 2019 at 04:12 PM
+-- Generation Time: Sep 18, 2019 at 11:51 AM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -53,6 +53,7 @@ INSERT INTO `accounts` (`id`, `firstname`, `middlename`, `lastname`, `username`,
 
 CREATE TABLE `demographics` (
   `id` int(11) NOT NULL,
+  `survey_id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `type` varchar(100) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -79,6 +80,19 @@ CREATE TABLE `demographic_type_brackets` (
 --
 
 CREATE TABLE `demographic_type_checkboxes` (
+  `id` int(11) NOT NULL,
+  `demographic_id` int(11) DEFAULT NULL,
+  `item` varchar(500) DEFAULT NULL,
+  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `demographic_type_inputs`
+--
+
+CREATE TABLE `demographic_type_inputs` (
   `id` int(11) NOT NULL,
   `demographic_id` int(11) DEFAULT NULL,
   `item` varchar(500) DEFAULT NULL,
@@ -278,19 +292,7 @@ CREATE TABLE `surveys` (
   `id` int(11) NOT NULL,
   `name` varchar(500) DEFAULT NULL,
   `description` varchar(500) DEFAULT NULL,
-  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `survey_demographics`
---
-
-CREATE TABLE `survey_demographics` (
-  `id` int(11) NOT NULL,
-  `survey_id` int(11) DEFAULT NULL,
-  `demographic_id` int(11) DEFAULT NULL,
+  `survey_date` datetime DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -308,7 +310,8 @@ ALTER TABLE `accounts`
 -- Indexes for table `demographics`
 --
 ALTER TABLE `demographics`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `survey_id` (`survey_id`);
 
 --
 -- Indexes for table `demographic_type_brackets`
@@ -321,6 +324,13 @@ ALTER TABLE `demographic_type_brackets`
 -- Indexes for table `demographic_type_checkboxes`
 --
 ALTER TABLE `demographic_type_checkboxes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `demographic_id` (`demographic_id`);
+
+--
+-- Indexes for table `demographic_type_inputs`
+--
+ALTER TABLE `demographic_type_inputs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `demographic_id` (`demographic_id`);
 
@@ -425,14 +435,6 @@ ALTER TABLE `surveys`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `survey_demographics`
---
-ALTER TABLE `survey_demographics`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `survey_id` (`survey_id`),
-  ADD KEY `demographic_id` (`demographic_id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -455,6 +457,11 @@ ALTER TABLE `demographic_type_brackets`
 -- AUTO_INCREMENT for table `demographic_type_checkboxes`
 --
 ALTER TABLE `demographic_type_checkboxes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `demographic_type_inputs`
+--
+ALTER TABLE `demographic_type_inputs`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `demographic_type_radios`
@@ -527,13 +534,14 @@ ALTER TABLE `respondent_suggestions`
 ALTER TABLE `surveys`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `survey_demographics`
---
-ALTER TABLE `survey_demographics`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
---
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `demographics`
+--
+ALTER TABLE `demographics`
+  ADD CONSTRAINT `demographics_ibfk_1` FOREIGN KEY (`survey_id`) REFERENCES `surveys` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `demographic_type_brackets`
@@ -618,12 +626,6 @@ ALTER TABLE `respondent_general_comments`
 --
 ALTER TABLE `respondent_suggestions`
   ADD CONSTRAINT `respondent_suggestions_ibfk_1` FOREIGN KEY (`respondent_id`) REFERENCES `respondents` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
--- Constraints for table `survey_demographics`
---
-ALTER TABLE `survey_demographics`
-  ADD CONSTRAINT `survey_demographics_ibfk_1` FOREIGN KEY (`survey_id`) REFERENCES `surveys` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
