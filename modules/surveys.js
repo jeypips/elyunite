@@ -65,12 +65,11 @@ function form(){
 		$('#x_content').load('lists/surveys.html', function() {
 			$timeout(function() { $compile($('#x_content')[0])(scope); },100);								
 			// instantiate datable
-			$timeout(function() {
+			/* $timeout(function() {
 				$('#surveys').DataTable({
 					"ordering": true
 				});	
-			},200);
-			
+			},200); */
 		});
 		
 	};

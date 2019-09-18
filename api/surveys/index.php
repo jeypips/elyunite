@@ -23,7 +23,13 @@ $app->get('/list', function (Request $request, Response $response, array $args) 
 
 	$con = $this->con;
 	
-	$surveys = $con->getData("SELECT * FROM surveys");	
+	$surveys = $con->getData("SELECT * FROM surveys");
+	
+	foreach ($surveys as $i => $survey) {
+		
+		$surveys[$i]['survey_date'] = date("F j, Y",strtotime($survey['survey_date']));
+		
+	}
 
     return $response->withJson($surveys);
 
