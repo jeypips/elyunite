@@ -1,4 +1,4 @@
-angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,bui){
+angular.module('app-module',['ui.bootstrap','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,bui){
 
 function form(){
 
@@ -32,6 +32,23 @@ function form(){
 
 		scope.surveys = []; // list
 		
+		scope.pagination = {};
+		scope.pagination.surveys = {};
+		scope.pagination.currentPages = {};
+		scope.pagination.currentPages.surveys = 1;
+		
+		scope.search = {};
+		
+		scope.checks = {};
+		scope.checks.items = [];
+		
+	};
+	
+	self.chkSelected = function(scope) {
+		
+		if (scope.$id>2) scope = scope.$parent;
+		console.log(scope.checks);
+		
 	};
 	
 	self.list = function(scope) {
@@ -39,6 +56,10 @@ function form(){
 		bui.show();
 		
 		if (scope.$id > 2) scope = scope.$parent;	
+		
+		scope.pagination.surveys.currentPage = scope.pagination.currentPages.surveys;
+		scope.pagination.surveys.pageSize = 10;
+		scope.pagination.surveys.maxSize = 3;
 		
 		scope.views.list = true;
 		scope.controls.btn.add = false;
@@ -51,9 +72,12 @@ function form(){
 		  method: 'GET',
 		  url: 'api/surveys/list',
 		}).then(function mySucces(response) {
-			
-			scope.surveys = response.data;
-			
+
+			scope.surveys = angular.copy(response.data);	
+
+			scope.pagination.surveys.filterData = scope.surveys;
+			scope.pagination.surveys.currentPage = scope.pagination.currentPages.surveys;
+
 			bui.hide();
 			
 		}, function myError(response) {
@@ -111,8 +135,8 @@ function form(){
 
 		bui.show();
 		
-		scope.account = {};
-		scope.account.id = 0;
+		scope.survey = {};
+		scope.survey.id = 0;
 		
 		mode(scope,row);
 		

@@ -12,7 +12,7 @@ app.controller('surveysCtrl',function($scope,form) {
 
 });
 
-/* app.filter('pagination', function() {
+app.filter('pagination', function() {
 	  return function(input, currentPage, pageSize) {
 	    if(angular.isArray(input)) {
 	      var start = (currentPage-1)*pageSize;
@@ -20,4 +20,4 @@ app.controller('surveysCtrl',function($scope,form) {
 	      return input.slice(start, end);
 	    }
 	  };
-}); */
+});
