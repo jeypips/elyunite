@@ -1,4 +1,4 @@
-angular.module('app-module',['ui.bootstrap','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,bui){
+angular.module('app-module',['ui.bootstrap','ngSanitize','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,bui){
 
 function form(){
 
@@ -20,11 +20,7 @@ function form(){
 			cancel: {
 				btn: false,
 				label: 'Cancel'
-			},
-			btn: {
-				add: false,
-				edit: false
-			},
+			}
 		};
 			
 		scope.survey = {};
@@ -51,7 +47,7 @@ function form(){
 		
 	};
 	
-	self.list = function(scope) {
+	self.list = function(scope,view=true) {
 			
 		bui.show();
 		
@@ -60,10 +56,6 @@ function form(){
 		scope.pagination.surveys.currentPage = scope.pagination.currentPages.surveys;
 		scope.pagination.surveys.pageSize = 10;
 		scope.pagination.surveys.maxSize = 3;
-		
-		scope.views.list = true;
-		scope.controls.btn.add = false;
-		scope.controls.btn.edit = false;
 		
 		scope.survey = {};
 		scope.survey.id = 0;
@@ -86,15 +78,13 @@ function form(){
 			
 		});
 		
-		$('#x_content').load('lists/surveys.html', function() {
-			$timeout(function() { $compile($('#x_content')[0])(scope); },100);								
-			// instantiate datable
-			/* $timeout(function() {
-				$('#surveys').DataTable({
-					"ordering": true
-				});	
-			},200); */
-		});
+		if (view) {
+		
+			$('#x_content').load('lists/surveys.html', function() {
+				$timeout(function() { $compile($('#x_content')[0])(scope); },500);
+			});
+			
+		};
 		
 	};
 	
@@ -119,17 +109,49 @@ function form(){
 			scope.controls.ok.btn = false;
 			scope.controls.cancel.label = 'Cancel';
 			scope.controls.cancel.btn = false;
-			scope.controls.btn.add = true;
-			scope.controls.btn.edit = true;
 		} else {
 			scope.controls.ok.label = 'Update';
 			scope.controls.ok.btn = true;
 			scope.controls.cancel.label = 'Close';
-			scope.controls.cancel.btn = false;	
-			scope.controls.btn.edit = false;			
+			scope.controls.cancel.btn = false;			
 		}
 		
 	};
+	
+	self.add = function(scope) {
+		
+		bui.show();
+		
+		$('#survey-main').load('forms/survey.html', function() {
+			$('#select-demo').selectpicker();		
+			$timeout(function() {
+				$compile($('#survey-main')[0])(scope);
+			},500);
+		});		
+		
+		bui.hide();
+		
+	};
+	
+	self.edit = function(scope) {		
+		
+		if (scope.checks.items.length==0) {
+			
+			growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please select a survey');
+			return;
+			
+		};
+		
+		if (scope.checks.items.length>1) {
+			
+			growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please select only one survey');
+			return;
+			
+		};
+
+		
+		
+	};	
 	
 	self.addEdit = function(scope,row) {
 
@@ -171,13 +193,6 @@ function form(){
 		self.list(scope);
 
 	};
-	
-	self.edit = function(scope) {
-			
-		scope.controls.ok.btn = !scope.controls.ok.btn;
-		scope.controls.btn.edit = true;
-		
-	};
 		
 	self.save = function(scope) {
 		
@@ -187,9 +202,9 @@ function form(){
 		}
 		
 		$http({
-		  method: 'POST',
-		  url: 'handlers/accounts/save.php',
-		data: {account: scope.account}
+			method: 'POST',
+			url: 'handlers/accounts/save.php',
+			data: {account: scope.account}
 		}).then(function mySucces(response) {
 			
 			if (scope.account.id == 0) {
@@ -209,20 +224,29 @@ function form(){
 	};	
 	
 	self.delete = function(scope,row) {
+		
+		if (scope.checks.items.length==0) {
 			
+			growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please select a survey');
+			return;
+			
+		};	
+		
 		var onOk = function() {
 			
 			if (scope.$id > 2) scope = scope.$parent;			
 			
+			scope.pagination.currentPages.surveys = scope.pagination.surveys.currentPage;
+			
 			$http({
 			  method: 'POST',
-			  url: 'handlers/accounts/delete.php',
-			  data: {id: [row.id]}
+			  url: 'api/surveys/delete',
+			  data: {id: scope.checks.items}
 			}).then(function mySucces(response) {
 
 				self.list(scope);
 				
-				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},'Account Information successfully deleted.');
+				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},'Survey(s) successfully deleted.');
 				
 			}, function myError(response) {
 				 
@@ -232,7 +256,7 @@ function form(){
 
 		};
 
-		bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this record?',onOk,function() {});
+		bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this survey?',onOk,function() {});
 			
 	};
 

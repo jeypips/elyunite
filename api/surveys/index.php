@@ -18,7 +18,7 @@ $container['con'] = function ($container) {
 	return $con;
 };
 
-# list accounts
+# list surveys
 $app->get('/list', function (Request $request, Response $response, array $args) {
 
 	$con = $this->con;
@@ -28,6 +28,7 @@ $app->get('/list', function (Request $request, Response $response, array $args) 
 	foreach ($surveys as $i => $survey) {
 		
 		$surveys[$i]['survey_date'] = date("F j, Y",strtotime($survey['survey_date']));
+		$surveys[$i]['checked'] = false;
 		
 	}
 
@@ -99,14 +100,16 @@ $app->get('/view/{id}', function (Request $request, Response $response, array $a
 });
 
 # delete account
-$app->delete('/delete/{id}', function (Request $request, Response $response, array $args) {
+$app->post('/delete', function (Request $request, Response $response, array $args) {
 
 	$con = $this->con;
-	$con->table = "users";
-	
-	$user = array("id"=>$args['id']);
+	$con->table = "surveys";
 
-	$con->deleteData($user);
+	$data = $request->getParsedBody();
+
+	$delete = array("id"=>implode(",",$data['id']));
+
+	$con->deleteData($delete);
 
 });
 

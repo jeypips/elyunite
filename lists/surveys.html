@@ -1,69 +1,22 @@
-<!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	<div class="normal-table-list mg-t-30">
-		<div class="basic-tb-hd">
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">		
-				<h2>Surveys</h2>
-				<p>Add new survey or hover on one to modify</p>
-			</div>
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-3">
-				<div class="form-group">
-					<div class="nk-int-st search-input search-overt">
-						<input type="text" class="form-control" placeholder="Search">
-					</div>
-				</div>				
-			</div>
-		</div>
-		<div class="bsc-tbl">
-			<table class="table table-striped table-hover table-sc-ex">
-				<thead>
-					<tr>
-						<th>No</th>
-						<th>Name</th>
-						<th>Description</th>
-						<th>Date</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="s in surveys" ng-mouseover="row = $index" ng-mouseleave="row = -1">
-						<td ng-class="{'magnify-font': row == $index}">{{$index+1}}</td>
-						<td ng-class="{'magnify-font': row == $index}">{{s.name}}</td>
-						<td ng-class="{'magnify-font': row == $index}">{{s.description}}</td>
-						<td ng-class="{'magnify-font': row == $index}">{{s.survey_date}}</td>
-						<td>
-							<div class="btn-group btn-group-xs" ng-show="row == $index" style="margin-top: 10px;">
-								<button ng-show="row == $index" class="btn btn-info info-icon-notika waves-effect" ng-click="form.addEdit(this,s)" style="margin-right: 10px;"><i class="notika-icon notika-search"></i></button>
-								<button ng-show="row == $index" class="btn btn-deeporange deeporange-icon-notika waves-effect" ng-click="form.delete(this,s)"><i class="notika-icon notika-trash"></i></button>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-				</tfoot>
-			</table>
-		</div>
-	</div>
-</div> -->
-
 <div class="inbox-area">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				<div class="inbox-left-sd">
 					<div class="compose-ml">
-						<a class="btn waves-effect" href>New Survey</a>
+						<a class="btn waves-effect" href ng-click="form.add(this)">New Survey</a>
 					</div>
 					<div class="inbox-status">
-						<ul class="inbox-st-nav">
-							<li><a href><i class="notika-icon notika-form"></i> <strong>Surveys</strong></a></li>
-							<li><a href><i class="notika-icon notika-draft"></i> <strong>Edit</strong></a></li>
-							<li><a href><i class="notika-icon notika-trash"></i> <strong>Delete</strong></a></li>
+						<ul class="inbox-st-nav inbox-ft">
+							<li><a href="javascript:;" ng-click="form.list(this,false)"><i class="notika-icon notika-form"></i> Surveys<span class="pull-right" ng-bind-html="pagination.surveys.filterData.length"></span></a></li>
+							<li><a href="javascript:;" ng-click="form.edit(this)"><i class="notika-icon notika-draft"></i> Edit</a></li>
+							<li><a href="javascript:;" ng-click="form.delete(this)"><i class="notika-icon notika-trash"></i> Delete</a></li>
 						</ul>
 					</div>
 					<!-- <hr> -->
 				</div>
 			</div>
-			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			<div id="survey-main" class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
 				<div class="inbox-text-list sm-res-mg-t-30">
 					<div class="form-group">
 						<div class="nk-int-st search-input search-overt">
@@ -90,12 +43,12 @@
 							<tbody>
 								<tr ng-class-odd="'active'" ng-repeat="s in pagination.surveys.filterData = (surveys | filter:search.survey) | pagination: pagination.surveys.currentPage:pagination.surveys.pageSize">
 									<td class="">
-										<label class=""><div class="icheckbox_square-green" style="position: relative;"><input type="checkbox" class="i-checks" style="position: absolute; opacity: 0;" checklist-model="checks.items" checklist-value="s.id" ng-click="form.chkSelected(this)"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></label>
+										<label class=""><div ng-class="{'icheckbox_square-green': true, 'checked': s.checked}" style="position: relative;"><input type="checkbox" class="i-checks" style="position: absolute; opacity: 0;" checklist-model="checks.items" checklist-value="s.id" ng-click="s.checked=!s.checked" ng-checked="s.checked"><ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: rgb(255, 255, 255); border: 0px; opacity: 0;"></ins></div></label>
 									</td>
-									<td>{{s.id}}</td>
-									<td>{{s.name}}</td>
-									<td>{{s.description}}</td>
-									<td class="text-right mail-date">{{s.survey_date}}</td>
+									<td ng-bind-html="s.id"></td>
+									<td ng-bind-html="s.name"></td>
+									<td ng-bind-html="s.description"></td>
+									<td class="text-right mail-date" ng-bind-html="s.survey_date"></td>
 								</tr>								
 							</tbody>
 						</table>

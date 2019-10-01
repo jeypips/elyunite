@@ -10,7 +10,7 @@ if (!isset($_SESSION['elyunite_user_id'])) header('X-Error-Message: Session time
 
 $con = new pdo_db("accounts");
 
-$account = $con->get(["id"=>$_SESSION['id']],["CONCAT(firstname, ' ', lastname) fullname, username"]);
+$account = $con->get(["id"=>$_SESSION['elyunite_user_id']],["CONCAT(firstname, ' ', lastname) fullname, username"]);
 
 $avatar = "angular/modules/account/avatar.png";
 

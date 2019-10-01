@@ -616,7 +616,7 @@ class pdo_db {
 		$stmt = $this->db->prepare($prepare);
 		$q = $stmt->execute($insert);
 
-		return $q;
+		return $q;		
 
 	}
 
