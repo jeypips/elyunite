@@ -45,21 +45,25 @@
 			<p>Add demographics for this survey </p>
 		</div>
 		<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-				<div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
-					<h2>Serach Option</h2>
+			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+				<div class="form-example-int form-example-st">
+					<div class="form-group">													
+						<div class="nk-int-st">
+							<div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+								<h2>Data</h2>
+							</div>
+							<div class="bootstrap-select fm-cmp-mg">
+								<select id="select-demo" ng-model="add.demographic.item" ng-options="di.item_name for di in demographics_items track by di.id" class="selectpicker" data-live-search="true"></select>
+							</div>
+						</div>
+					</div>
+				</div>								
+			</div>
+			<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
+				<div class="form-example-int">
+					<button class="btn btn-success notika-btn-success">Add</button>
 				</div>
-				<div class="bootstrap-select fm-cmp-mg">
-					<select id="select-demo" class="selectpicker" data-live-search="true">
-						<option>Drama</option>
-						<option>Cariska</option>
-						<option>Cheriska</option>
-						<option>Malias</option>
-						<option>Kamines</option>
-						<option>Austranas</option>
-					</select>
-				</div>
-			</div>			
+			</div>						
 		</div>
 		
 	</div>

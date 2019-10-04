@@ -113,6 +113,20 @@ $app->post('/delete', function (Request $request, Response $response, array $arg
 
 });
 
+# demographics
+$app->get('/demographics/items', function (Request $request, Response $response, array $args) {
+
+	$con = $this->con;
+	$con->table = "demographics";
+
+	require_once '../classes.php';
+
+	$demographics = new demographics($con);
+
+	return $response->withJson($demographics->get_items());
+
+});
+
 $app->run();
 
 ?>

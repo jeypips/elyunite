@@ -9,9 +9,9 @@ function form(){
 		scope.mode = null;
 		
 		scope.views = {};
-
+		
 		scope.views.list = true;
-			
+		
 		scope.controls = {
 			ok: {
 				btn: false,
@@ -37,7 +37,13 @@ function form(){
 		
 		scope.checks = {};
 		scope.checks.items = [];
+
+		scope.demographics_items = [];
+		demographics_items(scope);
 		
+		scope.add = {};
+		scope.add.demographic = {};
+
 	};
 	
 	self.chkSelected = function(scope) {
@@ -123,9 +129,9 @@ function form(){
 		bui.show();
 		
 		$('#survey-main').load('forms/survey.html', function() {
-			$('#select-demo').selectpicker();		
+			$compile($('#survey-main')[0])(scope);			
 			$timeout(function() {
-				$compile($('#survey-main')[0])(scope);
+				$('#select-demo').selectpicker();
 			},500);
 		});		
 		
@@ -133,6 +139,21 @@ function form(){
 		
 	};
 	
+	function demographics_items(scope) {
+
+		$http({
+			url: 'api/surveys/demographics/items',
+			method: 'GET'
+		}).then(function success(response) {
+
+			scope.demographics_items = response.data;
+
+		}, function error(response) {
+
+		});
+
+	};
+
 	self.edit = function(scope) {		
 		
 		if (scope.checks.items.length==0) {

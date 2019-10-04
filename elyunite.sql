@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Sep 18, 2019 at 11:51 AM
+-- Generation Time: Oct 04, 2019 at 05:09 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -58,6 +58,58 @@ CREATE TABLE `demographics` (
   `type` varchar(100) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `demographics_items`
+--
+
+CREATE TABLE `demographics_items` (
+  `id` int(11) NOT NULL,
+  `item_name` varchar(200) DEFAULT NULL,
+  `item_type` int(11) DEFAULT NULL,
+  `predefinced_values` longtext,
+  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `demographics_items`
+--
+
+INSERT INTO `demographics_items` (`id`, `item_name`, `item_type`, `predefinced_values`, `system_log`) VALUES
+(1, 'Age Bracket', 1, NULL, '2019-10-04 15:33:23'),
+(2, 'Sex', 4, NULL, '2019-10-04 15:33:23'),
+(3, 'Current Marital Status', 4, NULL, '2019-10-04 15:34:32'),
+(4, 'Home Address', 3, NULL, '2019-10-04 15:34:32'),
+(5, 'Household Population', 3, NULL, '2019-10-04 15:35:30'),
+(6, 'Average Monthly Income', 3, NULL, '2019-10-04 15:35:30'),
+(7, 'Average Monthly Expenditures', 3, NULL, '2019-10-04 15:36:48'),
+(8, 'Average Monthly Savings', 3, NULL, '2019-10-04 15:36:48'),
+(9, 'Poverty Incidence', 3, NULL, '2019-10-04 15:37:21');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `demographics_types`
+--
+
+CREATE TABLE `demographics_types` (
+  `id` int(11) NOT NULL,
+  `description` longtext,
+  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `demographics_types`
+--
+
+INSERT INTO `demographics_types` (`id`, `description`, `system_log`) VALUES
+(1, 'Bracket', '2019-10-04 15:26:15'),
+(2, 'Checkbox', '2019-10-04 15:26:15'),
+(3, 'Text Input', '2019-10-04 15:26:41'),
+(4, 'Radios', '2019-10-04 15:26:41'),
+(5, 'Selections', '2019-10-04 15:26:53');
 
 -- --------------------------------------------------------
 
@@ -314,6 +366,19 @@ ALTER TABLE `demographics`
   ADD KEY `survey_id` (`survey_id`);
 
 --
+-- Indexes for table `demographics_items`
+--
+ALTER TABLE `demographics_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `item_type` (`item_type`);
+
+--
+-- Indexes for table `demographics_types`
+--
+ALTER TABLE `demographics_types`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `demographic_type_brackets`
 --
 ALTER TABLE `demographic_type_brackets`
@@ -449,6 +514,16 @@ ALTER TABLE `accounts`
 ALTER TABLE `demographics`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `demographics_items`
+--
+ALTER TABLE `demographics_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `demographics_types`
+--
+ALTER TABLE `demographics_types`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
 -- AUTO_INCREMENT for table `demographic_type_brackets`
 --
 ALTER TABLE `demographic_type_brackets`
@@ -544,6 +619,12 @@ ALTER TABLE `demographics`
   ADD CONSTRAINT `demographics_ibfk_1` FOREIGN KEY (`survey_id`) REFERENCES `surveys` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `demographics_items`
+--
+ALTER TABLE `demographics_items`
+  ADD CONSTRAINT `demographics_items_ibfk_1` FOREIGN KEY (`item_type`) REFERENCES `demographics_types` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `demographic_type_brackets`
 --
 ALTER TABLE `demographic_type_brackets`
@@ -554,6 +635,12 @@ ALTER TABLE `demographic_type_brackets`
 --
 ALTER TABLE `demographic_type_checkboxes`
   ADD CONSTRAINT `demographic_type_checkboxes_ibfk_1` FOREIGN KEY (`demographic_id`) REFERENCES `demographics` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `demographic_type_inputs`
+--
+ALTER TABLE `demographic_type_inputs`
+  ADD CONSTRAINT `demographic_type_inputs_ibfk_1` FOREIGN KEY (`demographic_id`) REFERENCES `demographics` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `demographic_type_radios`
