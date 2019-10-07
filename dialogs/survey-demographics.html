@@ -1,0 +1,37 @@
+<form novalidate autocomplete="off">
+	<div class="row">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="form-example-int form-example-st">
+				<div class="form-group">													
+					<div class="nk-int-st">
+						<div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+							<h2>Name</h2>
+						</div>
+						<div class="fm-cmp-mg">
+							<input type="text" class="form-control">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="form-example-int form-example-st">
+				<div class="form-group">													
+					<div class="nk-int-st">
+						<div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
+							<h2>Type</h2>
+						</div>
+						<div class="bootstrap-select fm-cmp-mg">
+							<select id="select-demo" ng-change="form.survey.selected(this)" ng-model="add.demographic.type" ng-options="dt.description for dt in demographics_types track by dt.id" class="selectpicker" data-live-search="true"></select>
+						</div>
+					</div>
+				</div>
+			</div>								
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div id="demographics-items" class="form-example-wrap mg-t-30"></div>
+		</div>
+	</div>
+</form>

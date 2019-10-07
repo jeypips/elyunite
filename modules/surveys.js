@@ -1,6 +1,6 @@
 angular.module('app-module',['ui.bootstrap','ngSanitize','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,bui){
 
-function form(){
+function form() {
 
 	var self = this;
 	
@@ -25,6 +25,8 @@ function form(){
 			
 		scope.survey = {};
 		scope.survey.id = 0;
+		scope.survey.demographics = [];
+		scope.survey.dels = [];
 
 		scope.surveys = []; // list
 		
@@ -39,10 +41,12 @@ function form(){
 		scope.checks.items = [];
 
 		scope.demographics_items = [];
-		demographics_items(scope);
+		// demographics_items(scope);
 		
+		scope.demographics_types = [];
+		demographics_types(scope);
+
 		scope.add = {};
-		scope.add.demographic = {};
 
 	};
 	
@@ -128,32 +132,19 @@ function form(){
 		
 		bui.show();
 		
+		scope.survey = {};
+		scope.survey.id = 0;
+		scope.survey.demographics = [];
+		scope.survey.dels = [];		
+		
 		$('#survey-main').load('forms/survey.html', function() {
-			$compile($('#survey-main')[0])(scope);			
-			$timeout(function() {
-				$('#select-demo').selectpicker();
-			},500);
+			$compile($('#survey-main')[0])(scope);
 		});		
 		
 		bui.hide();
 		
 	};
 	
-	function demographics_items(scope) {
-
-		$http({
-			url: 'api/surveys/demographics/items',
-			method: 'GET'
-		}).then(function success(response) {
-
-			scope.demographics_items = response.data;
-
-		}, function error(response) {
-
-		});
-
-	};
-
 	self.edit = function(scope) {		
 		
 		if (scope.checks.items.length==0) {
@@ -172,6 +163,36 @@ function form(){
 
 		
 		
+	};	
+	
+	function demographics_items(scope) {
+
+		$http({
+			url: 'api/surveys/demographics/items',
+			method: 'GET'
+		}).then(function success(response) {
+
+			scope.demographics_items = response.data;
+
+		}, function error(response) {
+
+		});
+
+	};
+	
+	function demographics_types(scope) {
+
+		$http({
+			url: 'api/surveys/demographics/types',
+			method: 'GET'
+		}).then(function success(response) {
+
+			scope.demographics_types = response.data;
+
+		}, function error(response) {
+
+		});
+
 	};	
 	
 	self.addEdit = function(scope,row) {
@@ -280,7 +301,76 @@ function form(){
 		bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this survey?',onOk,function() {});
 			
 	};
+	
+	self.survey = {
+		
+		demographics: function(scope) {
+			
+			scope.add.demographic = {};
+			// scope.add.demographic.type = {};
+			// demographics_types(scope);		
+			
+			let title = 'Add Demographics';
+			
+			let onLoad = function() {
+				
+				$('#select-demo').selectpicker();
+				
+			};
+			
+			let onOk = function() {
+				
+			};
+			
+			bootstrapModal.box3(scope,title,'dialogs/survey-demographics.html',onLoad,onOk,120);
+			
+		},
+		
+		selected: function(scope) {
+			
+			$('#demographics-items').html('');
+			
+			switch (scope.add.demographic.type.id) {
+				
+				case 1:
+				
+					$('#demographics-items').load('forms/demographics-bracket.html',function() {
+						
+					});
+				
+				break;
+				
+				case 2:
+				
+				break;
 
+				case 3:
+				
+				break;				
+				
+				case 4:
+				
+				break;
+
+				case 5:
+				
+				break;				
+				
+			};
+			
+		},
+		
+		add: function(scope) {
+
+			scope.survey.demographics.add({
+				id: 0,
+				name: '',
+				type: {}
+			});
+		
+		}
+		
+	};
 
 };
 

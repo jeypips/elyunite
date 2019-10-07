@@ -127,6 +127,20 @@ $app->get('/demographics/items', function (Request $request, Response $response,
 
 });
 
+# demographics types
+$app->get('/demographics/types', function (Request $request, Response $response, array $args) {
+
+	$con = $this->con;
+	$con->table = "demographics";
+
+	require_once '../classes.php';
+
+	$demographics = new demographics($con);
+
+	return $response->withJson($demographics->get_types());
+
+});
+
 $app->run();
 
 ?>

@@ -13,59 +13,59 @@
 		<!-- <p class="last-ph"><b>Date:</b> 15.03.2018</p> -->
 	</div>
 	<div class="view-mail-atn">
-
-		<div class="cmp-tb-hd bcs-hd">
-			<h2>Basic Information</h2>
-			<!-- <p>Place one add-on or button on either side of an input. You may also place one on both sides of an input. </p> -->
-		</div>
-		<div class="row">
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-				<div class="form-group ic-cmp-int">
-				<div class="form-ic-cmp">
-				<i class="fa fa-edit"></i>
-				</div>
-				<div class="nk-int-st">
-				<input type="text" class="form-control" placeholder="Name">
-				</div>
-				</div>
+		<form name="formHolder.survey" novalidate autocomplete="off">
+			<div class="cmp-tb-hd bcs-hd">
+				<h2>Basic Information</h2>
+				<!-- <p>Place one add-on or button on either side of an input. You may also place one on both sides of an input. </p> -->
 			</div>
-			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-				<div class="form-group ic-cmp-int">
-				<div class="form-ic-cmp">
-				<i class="fa fa-edit"></i>
-				</div>
-				<div class="nk-int-st">
-				<input type="text" class="form-control" placeholder="Description">
-				</div>
-				</div>
-			</div>
-		</div>
-		<div class="cmp-tb-hd bcs-hd" style="margin-top: 25px;">
-			<h2>Demographics</h2>
-			<p>Add demographics for this survey </p>
-		</div>
-		<div class="row">
-			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-				<div class="form-example-int form-example-st">
-					<div class="form-group">													
-						<div class="nk-int-st">
-							<div class="nk-int-mk sl-dp-mn sm-res-mg-t-10">
-								<h2>Data</h2>
-							</div>
-							<div class="bootstrap-select fm-cmp-mg">
-								<select id="select-demo" ng-model="add.demographic.item" ng-options="di.item_name for di in demographics_items track by di.id" class="selectpicker" data-live-search="true"></select>
-							</div>
-						</div>
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group ic-cmp-int">
+					<div class="form-ic-cmp">
+					<i class="fa fa-edit"></i>
 					</div>
-				</div>								
-			</div>
-			<div class="col-lg-4 col-md-4 col-sm-3 col-xs-12">
-				<div class="form-example-int">
-					<button class="btn btn-success notika-btn-success">Add</button>
+					<div class="nk-int-st">
+					<input type="text" class="form-control" placeholder="Name" required>
+					</div>
+					</div>
 				</div>
-			</div>						
-		</div>
-		
+				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+					<div class="form-group ic-cmp-int">
+					<div class="form-ic-cmp">
+					<i class="fa fa-edit"></i>
+					</div>
+					<div class="nk-int-st">
+					<input type="text" class="form-control" placeholder="Description" required>
+					</div>
+					</div>
+				</div>
+			</div>
+			<div class="cmp-tb-hd bcs-hd" style="margin-top: 30px;">
+				<h2>Survey Demographics</h2>
+				<!-- <p>Place one add-on or button on either side of an input. You may also place one on both sides of an input. </p> -->
+			</div>			
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="basic-tb-hd">
+							<button class="btn btn-success notika-btn-success" ng-click="form.survey.demographics(this)">Add</button>						
+                        </div>							
+						<div class="bsc-tbl">
+							<table class="table table-sc-ex">
+								<thead>
+									<tr>
+										<th>#</th><th>Name</th><th>Type</th><th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1</td><td>Age</td><td>Text</td><td></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+				</div>
+			</div>
+		</form>
 	</div>
 	<!-- <div class="file-download-system">
 		<div class="dw-st-ic mg-t-20">
