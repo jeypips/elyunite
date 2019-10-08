@@ -46,8 +46,6 @@ function form() {
 		scope.demographics_types = [];
 		demographics_types(scope);
 
-		scope.add = {};
-
 	};
 	
 	self.chkSelected = function(scope) {
@@ -304,11 +302,42 @@ function form() {
 	
 	self.survey = {
 		
-		demographics: function(scope) {
+		init: function() {
 			
-			scope.add.demographic = {};
-			// scope.add.demographic.type = {};
-			// demographics_types(scope);		
+			self.survey.form = {};	
+			self.survey.bracket = [];		
+			self.survey.bracket_dels = [];		
+			self.survey.checkbox = [];
+			self.survey.checkbox_dels = [];
+			self.survey.text = {};	
+			self.survey.radio = [];
+			self.survey.radio_dels = [];	
+			self.survey.selection = [];
+			self.survey.selection_dels = [];
+			
+		},
+		
+		form: {},
+		
+		bracket: [],
+		bracket_dels: [],
+		
+		checkbox: [],
+		checkbox_dels: [],
+		
+		text: {},
+		
+		radio: [],
+		radio_dels: [],
+		
+		selection: [],
+		selection_dels: [],
+		
+		demographics: function(scope) {					
+			
+			self.survey.init();
+			
+			self.survey.form.type = {id:"0", description:"Select type"};			
 			
 			let title = 'Add Demographics';
 			
@@ -320,31 +349,41 @@ function form() {
 			
 			let onOk = function() {
 				
+				self.survey.add(scope);
+				
 			};
 			
 			bootstrapModal.box3(scope,title,'dialogs/survey-demographics.html',onLoad,onOk,120);
 			
 		},
 		
-		selected: function(scope) {
+		selected: function(scope) {			
 			
-			$('#demographics-items').html('');
+			$('#demographics-items').html('');			
 			
-			switch (scope.add.demographic.type.id) {
+			switch (self.survey.form.type.id) {
 				
 				case 1:
 				
 					$('#demographics-items').load('forms/demographics-bracket.html',function() {
-						
+						$compile($('#demographics-items')[0])(scope);
 					});
 				
 				break;
 				
 				case 2:
 				
+					$('#demographics-items').load('forms/demographics-checkbox.html',function() {
+						$compile($('#demographics-items')[0])(scope);
+					});					
+				
 				break;
 
 				case 3:
+				
+					$('#demographics-items').load('forms/demographics-text.html',function() {
+						$compile($('#demographics-items')[0])(scope);
+					});					
 				
 				break;				
 				
@@ -360,13 +399,145 @@ function form() {
 			
 		},
 		
+		brackets: {
+			
+			add: function(scope) {
+				
+				self.survey.bracket.push({
+					id: 0
+				});
+
+			},
+			
+			delete: function(scope,row) {
+				
+				if (row.id > 0) {
+					self.survey.bracket_dels.push(row.id);
+				};
+				
+				let brackets = self.survey.bracket;
+				let index = self.survey.bracket.indexOf(row);
+				self.survey.bracket = [];	
+				
+				angular.forEach(brackets, function(d,i) {
+					
+					if (index != i) {
+						
+						delete d['$$hashKey'];
+						self.survey.bracket.push(d);
+						
+					};
+					
+				});				
+				
+			}
+			
+		},
+		
+		checkboxes: {
+			
+			add: function(scope) {
+
+				self.survey.checkbox.push({
+					id: 0
+				});
+
+			},
+
+			delete: function(scope,row) {
+				
+				if (row.id > 0) {
+					self.survey.checkbox_dels.push(row.id);
+				};
+				
+				let checkboxes = self.survey.checkbox;
+				let index = self.survey.checkbox.indexOf(row);
+				self.survey.checkbox = [];	
+				
+				angular.forEach(checkboxes, function(d,i) {
+					
+					if (index != i) {
+						
+						delete d['$$hashKey'];
+						self.survey.checkbox.push(d);
+						
+					};
+					
+				});				
+				
+			}			
+			
+		},
+		
 		add: function(scope) {
 
-			scope.survey.demographics.add({
-				id: 0,
-				name: '',
-				type: {}
-			});
+			switch (self.survey.form.type.id) {
+				
+				case 1:				
+				
+					scope.survey.demographics.push({
+						id: 0,
+						name: self.survey.form.name,
+						type: self.survey.form.type.id,
+						description: self.survey.form.type.description,
+						data: self.survey.bracket,
+						dels: self.survey.bracket_dels
+					});
+				
+				break;
+				
+				case 2:
+				
+					scope.survey.demographics.push({
+						id: 0,
+						name: self.survey.form.name,						
+						type: self.survey.form.type.id,
+						description: self.survey.form.type.description,						
+						data: self.survey.checkbox,
+						dels: self.survey.checkbox_dels						
+					});
+				
+				break;
+
+				case 3:
+				
+					scope.survey.demographics.push({
+						id: 0,
+						name: self.survey.form.name,						
+						type: self.survey.form.type.id,
+						description: self.survey.form.type.description,						
+						data: self.survey.text			
+					});				
+				
+				break;
+			
+			};
+			
+			console.log(scope.survey);
+			scope.$apply();
+		
+		},
+		
+		delete: function(scope,row) {
+
+			if (row.id > 0) {
+				scope.survey.dels.push(row.id);
+			};
+			
+			let demographics = scope.survey.demographics;
+			let index = scope.survey.demographics.indexOf(row);
+			scope.survey.demographics = [];
+			
+			angular.forEach(demographics, function(d,i) {
+				
+				if (index != i) {
+					
+					delete d['$$hashKey'];
+					scope.survey.demographics.push(d);
+					
+				};
+				
+			});				
 		
 		}
 		

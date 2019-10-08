@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 04, 2019 at 05:09 PM
+-- Generation Time: Oct 08, 2019 at 05:00 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -55,7 +55,7 @@ CREATE TABLE `demographics` (
   `id` int(11) NOT NULL,
   `survey_id` int(11) NOT NULL,
   `name` varchar(100) DEFAULT NULL,
-  `type` varchar(100) DEFAULT NULL,
+  `type` int(11) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -120,6 +120,7 @@ INSERT INTO `demographics_types` (`id`, `description`, `system_log`) VALUES
 CREATE TABLE `demographic_type_brackets` (
   `id` int(11) NOT NULL,
   `demographic_id` int(11) DEFAULT NULL,
+  `item` varchar(500) DEFAULT NULL,
   `bracket_from` varchar(100) DEFAULT NULL,
   `bracket_to` varchar(100) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -135,6 +136,7 @@ CREATE TABLE `demographic_type_checkboxes` (
   `id` int(11) NOT NULL,
   `demographic_id` int(11) DEFAULT NULL,
   `item` varchar(500) DEFAULT NULL,
+  `item_value` varchar(100) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -148,6 +150,7 @@ CREATE TABLE `demographic_type_inputs` (
   `id` int(11) NOT NULL,
   `demographic_id` int(11) DEFAULT NULL,
   `item` varchar(500) DEFAULT NULL,
+  `data_type` varchar(50) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -20,7 +20,16 @@ class demographics
 	
 	function get_types() {
 		
-		$types = $this->con->getData("SELECT id, description FROM demographics_types");
+		$get_types = $this->con->getData("SELECT id, description FROM demographics_types");
+		
+		$types = [];
+		$types[] = array("id"=>0,"description"=>"Select type");
+		foreach ($get_types as $type) {
+			
+			$types[] = $type;
+			
+		};
+		
 		return $types;
 		
 	}

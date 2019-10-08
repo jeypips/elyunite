@@ -25,7 +25,7 @@
 					<i class="fa fa-edit"></i>
 					</div>
 					<div class="nk-int-st">
-					<input type="text" class="form-control" placeholder="Name" required>
+					<input type="text" class="form-control" placeholder="Name" name="name" ng-model="survey.name" required>
 					</div>
 					</div>
 				</div>
@@ -35,7 +35,7 @@
 					<i class="fa fa-edit"></i>
 					</div>
 					<div class="nk-int-st">
-					<input type="text" class="form-control" placeholder="Description" required>
+					<input type="text" class="form-control" placeholder="Description" name="description" ng-model="survey.description" required>
 					</div>
 					</div>
 				</div>
@@ -57,8 +57,12 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-										<td>1</td><td>Age</td><td>Text</td><td></td>
+									<tr ng-repeat="sd in survey.demographics">
+										<td>{{$index}}</td><td>{{sd.name}}</td><td>{{sd.description}}</td>
+										<td>
+											<button class="btn btn-success notika-btn-success waves-effect" ng-click="form.survey.edit(this,sd)" style="margin-right: 5px;"><i class="notika-icon notika-edit"></i></button>
+											<button class="btn btn-danger notika-btn-danger waves-effect" ng-click="form.survey.delete(this,sd)"><i class="notika-icon notika-trash"></i></button>
+										</td>
 									</tr>
 								</tbody>
 							</table>
