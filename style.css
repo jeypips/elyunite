@@ -4682,8 +4682,8 @@ body.box-layout {
 
 /* -- additional -- */
 .border-danger {
-	border-color: #ec4545;
-	background-color: #f5e7e7;
+	border-color: #ec4545!important;
+	/* background-color: #f5e7e7; */
 }
 .margin-left{
 	margin-left: 5px;

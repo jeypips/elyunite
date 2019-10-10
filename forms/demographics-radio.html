@@ -1,0 +1,28 @@
+<div class="cmp-tb-hd bcs-hd" style="margin-bottom: 35px;">
+	<button class="btn btn-warning notika-btn-warning" ng-click="form.survey.selections.add(this)">Add</button>
+</div>
+<div class="row" ng-repeat="fss in form.survey.selection" style="margin-bottom: 25px;">
+	<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+		<div class="form-example-int form-example-st">
+			<div class="form-group">
+				<div class="nk-int-st">
+					<input type="text" class="form-control input-sm" placeholder="Display Name" ng-class="{'border-danger': formHolder.demographics.item{{$index}}['$invalid'] && formHolder.demographics.item{{$index}}['$touched']}" name="item{{$index}}" ng-model="fss.item" required>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+		<div class="form-example-int form-example-st">
+			<div class="form-group">
+				<div class="nk-int-st">
+					<input type="text" class="form-control input-sm" placeholder="Value" ng-class="{'border-danger': formHolder.demographics.item_value{{$index}}['$invalid'] && formHolder.demographics.item_value{{$index}}['$touched']}" name="item_value{{$index}}" ng-model="fss.item_value" required>
+				</div>
+			</div>
+		</div>
+	</div>					
+	<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12">
+		<div class="form-example-int">
+			<button class="btn btn-danger notika-btn-danger waves-effect" ng-click="form.survey.selections.delete(this,fss)"><i class="notika-icon notika-trash"></i></button>
+		</div>
+	</div>
+</div>

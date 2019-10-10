@@ -6,7 +6,7 @@
 		<div class="form-example-int form-example-st">
 			<div class="form-group">
 				<div class="nk-int-st">
-					<input type="text" class="form-control input-sm" placeholder="Display Name" name="item" ng-model="fsc.item">
+					<input type="text" class="form-control input-sm" placeholder="Display Name" ng-class="{'border-danger': formHolder.demographics.item{{$index}}['$invalid'] && formHolder.demographics.item{{$index}}['$touched']}" name="item{{$index}}" ng-model="fsc.item" required>
 				</div>
 			</div>
 		</div>
@@ -15,7 +15,7 @@
 		<div class="form-example-int form-example-st">
 			<div class="form-group">
 				<div class="nk-int-st">
-					<input type="text" class="form-control input-sm" placeholder="Value" name="item_value" ng-model="fsc.item_value">
+					<input type="text" class="form-control input-sm" placeholder="Value" ng-class="{'border-danger': formHolder.demographics.item_value{{$index}}['$invalid'] && formHolder.demographics.item_value{{$index}}['$touched']}" name="item_value{{$index}}" ng-model="fsc.item_value" required>
 				</div>
 			</div>
 		</div>

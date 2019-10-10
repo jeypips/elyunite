@@ -1,4 +1,4 @@
-angular.module('app-module',['ui.bootstrap','ngSanitize','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,bui){
+angular.module('app-module',['ui.bootstrap','ngSanitize','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','form-validator-dialog','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,validateDialog,bui){
 
 function form() {
 
@@ -45,6 +45,9 @@ function form() {
 		
 		scope.demographics_types = [];
 		demographics_types(scope);
+		
+		scope.demographics_text_types = [];
+		demographics_text_types(scope);
 
 	};
 	
@@ -93,20 +96,6 @@ function form() {
 			});
 			
 		};
-		
-	};
-	
-	function validate(scope) {
-		// change
-		var controls = scope.formHolder.account.$$controls;
-		
-		angular.forEach(controls,function(elem,i) {
-			
-			if (elem.$$attr.$attr.required) elem.$touched = elem.$invalid;
-								
-		});
-							 // change
-		return scope.formHolder.account.$invalid;
 		
 	};
 	
@@ -191,42 +180,22 @@ function form() {
 
 		});
 
-	};	
-	
-	self.addEdit = function(scope,row) {
-
-		bui.show();
-		
-		scope.survey = {};
-		scope.survey.id = 0;
-		
-		mode(scope,row);
-		
-		$('#x_content').load('forms/survey.html',function() {
-			$timeout(function() { $compile($('#x_content')[0])(scope); },200);
-		});
-		
-		if (row != null) {
-			
-			if (scope.$id > 2) scope = scope.$parent;				
-			$http({
-			  method: 'GET',
-			  url: 'api/surveys/get/'+row.id,
-			}).then(function mySucces(response) {
-				
-				scope.survey = response.data;
-				bui.hide();
-				
-			}, function myError(response) {
-				 
-				bui.hide();
-				
-			});					
-		};
-		
-		bui.hide();
-	
 	};
+	
+	function demographics_text_types(scope) {
+
+		$http({
+			url: 'api/surveys/demographics/text/types',
+			method: 'GET'
+		}).then(function success(response) {
+
+			scope.demographics_text_types = response.data;
+
+		}, function error(response) {
+
+		});
+
+	};	
 	
 	self.cancel = function(scope) {
 
@@ -333,13 +302,13 @@ function form() {
 		selection: [],
 		selection_dels: [],
 		
-		demographics: function(scope) {					
+		demographics: function(scope) {			
 			
 			self.survey.init();
 			
 			self.survey.form.type = {id:"0", description:"Select type"};			
 			
-			let title = 'Add Demographics';
+			let title = 'Add Demographic Item';
 			
 			let onLoad = function() {
 				
@@ -349,12 +318,55 @@ function form() {
 			
 			let onOk = function() {
 				
-				self.survey.add(scope);
+				return self.survey.add(scope);				
 				
 			};
 			
 			bootstrapModal.box3(scope,title,'dialogs/survey-demographics.html',onLoad,onOk,120);
 			
+		},
+		
+		edit: function(scope,d) {		
+			
+			if (scope.$id>2) scope = scope.$parent;			
+			
+			self.survey.init();	
+			
+			let title = 'Update Demographic Info';
+			
+			let onLoad = function() {
+				
+				switch (d.type) {
+					
+					case 1:					
+
+						// let index = scope.survey.demographics.indexOf(d);
+						self.survey.form.name = d.name;
+						self.survey.form.type = {id:d.type, description:d.description};
+						self.survey.bracket = d.data;
+						self.survey.bracket_dels = d.dels;
+						scope.$apply();						
+						self.survey.selected(scope);						
+						$timeout(function() {
+							scope.$apply();						
+						}, 100);
+					
+					break;
+					
+				};
+				
+				$('#select-demo').selectpicker();
+				
+			};
+			
+			let onOk = function() {
+				
+				return self.survey.update(scope,d);				
+				
+			};			
+			
+			bootstrapModal.box3(scope,title,'dialogs/survey-demographics.html',onLoad,onOk,120);
+		
 		},
 		
 		selected: function(scope) {			
@@ -383,15 +395,27 @@ function form() {
 				
 					$('#demographics-items').load('forms/demographics-text.html',function() {
 						$compile($('#demographics-items')[0])(scope);
-					});					
+						self.survey.text.data_type = {id:"0", description:"Select type"};						
+						$timeout(function() {
+							$('#select-text-type').selectpicker();
+						}, 100);
+					});			
 				
 				break;				
 				
 				case 4:
 				
+					$('#demographics-items').load('forms/demographics-radio.html',function() {
+						$compile($('#demographics-items')[0])(scope);
+					});				
+				
 				break;
 
 				case 5:
+				
+					$('#demographics-items').load('forms/demographics-select.html',function() {
+						$compile($('#demographics-items')[0])(scope);
+					});				
 				
 				break;				
 				
@@ -411,14 +435,16 @@ function form() {
 			
 			delete: function(scope,row) {
 				
+				if (scope.$id>2) scope = scope.$parent;
+				
 				if (row.id > 0) {
 					self.survey.bracket_dels.push(row.id);
 				};
 				
 				let brackets = self.survey.bracket;
 				let index = self.survey.bracket.indexOf(row);
-				self.survey.bracket = [];	
-				
+				self.survey.bracket = [];
+
 				angular.forEach(brackets, function(d,i) {
 					
 					if (index != i) {
@@ -469,11 +495,88 @@ function form() {
 			
 		},
 		
-		add: function(scope) {
+		radios: {
+			
+			add: function(scope) {
 
+				self.survey.radio.push({
+					id: 0
+				});
+
+			},
+
+			delete: function(scope,row) {
+				
+				if (row.id > 0) {
+					self.survey.radio_dels.push(row.id);
+				};
+				
+				let radios = self.survey.radio;
+				let index = self.survey.radio.indexOf(row);
+				self.survey.radio = [];	
+				
+				angular.forEach(radios, function(d,i) {
+					
+					if (index != i) {
+						
+						delete d['$$hashKey'];
+						self.survey.radio.push(d);
+						
+					};
+					
+				});				
+				
+			}			
+			
+		},		
+		
+		selections: {
+			
+			add: function(scope) {
+
+				self.survey.selection.push({
+					id: 0
+				});
+
+			},
+
+			delete: function(scope,row) {
+				
+				if (row.id > 0) {
+					self.survey.selection_dels.push(row.id);
+				};
+				
+				let selections = self.survey.selection;
+				let index = self.survey.selection.indexOf(row);
+				self.survey.selection = [];
+				
+				angular.forEach(selections, function(d,i) {
+					
+					if (index != i) {
+						
+						delete d['$$hashKey'];
+						self.survey.selection.push(d);
+						
+					};
+					
+				});				
+				
+			}			
+			
+		},		
+		
+		add: function(scope) {		
+			
+			if (validateDialog.form(scope,'demographics')) {
+
+				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please complete all fields that are highlighted with red');
+				return false;
+
+			};			
+			
 			switch (self.survey.form.type.id) {
 				
-				case 1:				
+				case 1:								
 				
 					scope.survey.demographics.push({
 						id: 0,
@@ -501,21 +604,89 @@ function form() {
 
 				case 3:
 				
+					if (self.survey.text.data_type.id == 0) {
+						
+						growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please select type');
+						return false;						
+						
+					};
+				
 					scope.survey.demographics.push({
 						id: 0,
 						name: self.survey.form.name,						
 						type: self.survey.form.type.id,
 						description: self.survey.form.type.description,						
-						data: self.survey.text			
+						data: self.survey.checkbox,
+						dels: self.survey.checkbox_dels						
+					});	
+				
+				break;
+				
+				case 4:
+				
+					scope.survey.demographics.push({
+						id: 0,
+						name: self.survey.form.name,						
+						type: self.survey.form.type.id,
+						description: self.survey.form.type.description,						
+						data: self.survey.radio,
+						dels: self.survey.radio_dels						
 					});				
+				
+				break;
+				
+				case 5:
+				
+					scope.survey.demographics.push({
+						id: 0,
+						name: self.survey.form.name,						
+						type: self.survey.form.type.id,
+						description: self.survey.form.type.description,						
+						data: self.survey.selection,
+						dels: self.survey.selection_dels						
+					});					
 				
 				break;
 			
 			};
 			
-			console.log(scope.survey);
+			// console.log(scope.survey);
 			scope.$apply();
+			
+			return true;
 		
+		},
+		
+		update: function(scope,d) {
+
+			if (validateDialog.form(scope,'demographics')) {
+
+				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please complete all fields that are highlighted with red');
+				return false;
+
+			};
+
+			let index = scope.survey.demographics.indexOf(d);
+
+			switch (d.type) {
+				
+				case 1:								
+
+					// if (scope.$id>2) scope = scope.$parent;
+					console.log('updated');
+
+					scope.survey.demographics[index] = {
+						name: self.survey.form.name,
+						type: self.survey.form.type.id,
+						description: self.survey.form.type.description,
+						data: self.survey.bracket,
+						dels: self.survey.bracket_dels
+					};
+
+				break;
+
+			};
+			
 		},
 		
 		delete: function(scope,row) {

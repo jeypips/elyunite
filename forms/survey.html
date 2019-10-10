@@ -21,22 +21,22 @@
 			<div class="row">
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					<div class="form-group ic-cmp-int">
-					<div class="form-ic-cmp">
-					<i class="fa fa-edit"></i>
-					</div>
-					<div class="nk-int-st">
-					<input type="text" class="form-control" placeholder="Name" name="name" ng-model="survey.name" required>
-					</div>
+						<div class="form-ic-cmp">
+							<i class="fa fa-edit"></i>
+						</div>
+						<div class="nk-int-st">
+							<input type="text" class="form-control" ng-class="{'border-danger': formHolder.survey.name.$invalid && formHolder.survey.name.$touched}" placeholder="Name" name="name" ng-model="survey.name" required>
+						</div>
 					</div>
 				</div>
 				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 					<div class="form-group ic-cmp-int">
-					<div class="form-ic-cmp">
-					<i class="fa fa-edit"></i>
-					</div>
-					<div class="nk-int-st">
-					<input type="text" class="form-control" placeholder="Description" name="description" ng-model="survey.description" required>
-					</div>
+						<div class="form-ic-cmp">
+							<i class="fa fa-edit"></i>
+						</div>
+						<div class="nk-int-st">
+							<input type="text" class="form-control" ng-class="{'border-danger': formHolder.survey.description.$invalid && formHolder.survey.description.$touched}" placeholder="Description" name="description" ng-model="survey.description" required>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -58,7 +58,7 @@
 								</thead>
 								<tbody>
 									<tr ng-repeat="sd in survey.demographics">
-										<td>{{$index}}</td><td>{{sd.name}}</td><td>{{sd.description}}</td>
+										<td>{{$index+1}}</td><td>{{sd.name}}</td><td>{{sd.description}}</td>
 										<td>
 											<button class="btn btn-success notika-btn-success waves-effect" ng-click="form.survey.edit(this,sd)" style="margin-right: 5px;"><i class="notika-icon notika-edit"></i></button>
 											<button class="btn btn-danger notika-btn-danger waves-effect" ng-click="form.survey.delete(this,sd)"><i class="notika-icon notika-trash"></i></button>

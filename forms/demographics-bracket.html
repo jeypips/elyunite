@@ -6,7 +6,7 @@
 		<div class="form-example-int form-example-st">
 			<div class="form-group">
 				<div class="nk-int-st">
-					<input type="text" class="form-control input-sm" placeholder="Display Name" name="item" ng-model="fsb.item">
+					<input type="text" class="form-control input-sm" placeholder="Display Name" ng-class="{'border-danger': formHolder.demographics.item{{$index}}['$invalid'] && formHolder.demographics.item{{$index}}['$touched']}" name="item{{$index}}" ng-model="fsb.item" required>
 				</div>
 			</div>
 		</div>
@@ -15,7 +15,7 @@
 		<div class="form-example-int form-example-st">
 			<div class="form-group">
 				<div class="nk-int-st">
-					<input type="text" class="form-control input-sm" placeholder="Start" name="bracket_from" ng-model="fsb.bracket_from">
+					<input type="text" class="form-control input-sm" placeholder="Minimum Value" ng-class="{'border-danger': formHolder.demographics.bracket_from{{$index}}['$invalid'] && formHolder.demographics.bracket_from{{$index}}['$touched']}" name="bracket_from{{$index}}" ng-model="fsb.bracket_from" required>
 				</div>
 			</div>
 		</div>
@@ -24,7 +24,7 @@
 		<div class="form-example-int form-example-st">
 			<div class="form-group">
 				<div class="nk-int-st">
-					<input type="text" class="form-control input-sm" placeholder="End" name="bracket_to" ng-model="fsb.bracket_to">
+					<input type="text" class="form-control input-sm" placeholder="Maximun Value" ng-class="{'border-danger': formHolder.demographics.bracket_to{{$index}}['$invalid'] && formHolder.demographics.bracket_to{{$index}}['$touched']}" name="bracket_to{{$index}}" ng-model="fsb.bracket_to" required>
 				</div>
 			</div>
 		</div>

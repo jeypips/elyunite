@@ -3,7 +3,7 @@
 		<div class="form-example-int form-example-st">
 			<div class="form-group">
 				<div class="nk-int-st">
-					<input type="text" class="form-control input-sm" placeholder="Display Name" name="item" ng-model="form.survey.text.item">
+					<input type="text" class="form-control input-sm" placeholder="Display Name" ng-class="{'border-danger': formHolder.demographics.item.$invalid && formHolder.demographics.item.$touched}" name="item" ng-model="form.survey.text.item" required>
 				</div>
 			</div>
 		</div>
@@ -11,9 +11,12 @@
 	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 		<div class="form-example-int form-example-st">
 			<div class="form-group">
-				<div class="nk-int-st">
-					<input type="text" class="form-control input-sm" placeholder="Data Type" name="data_type" ng-model="form.survey.text.data_type">
-				</div>
+				<div class="bootstrap-select fm-cmp-mg">
+					<select id="select-text-type" class="selectpicker" ng-class="{'border-danger': formHolder.demographics.data_type.$invalid && formHolder.demographics.data_type.$touched}" name="data_type" ng-model="form.survey.text.data_type" ng-options="dtt.description for dtt in demographics_text_types track by dtt.id" required></select>
+				</div>			
+				<!-- <div class="nk-int-st">
+					<input type="text" class="form-control input-sm" placeholder="Data Type" ng-class="{'border-danger': formHolder.demographics.data_type.$invalid && formHolder.demographics.data_type.$touched}" name="data_type" ng-model="form.survey.text.data_type" required>
+				</div> -->
 			</div>
 		</div>
 	</div>	

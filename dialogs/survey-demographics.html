@@ -8,7 +8,7 @@
 							<h2>Name</h2>
 						</div>
 						<div class="fm-cmp-mg">
-							<input type="text" class="form-control" name="name" ng-model="form.survey.form.name">
+							<input type="text" class="form-control" ng-class="{'border-danger': formHolder.demographics.name.$invalid && formHolder.demographics.name.$touched}" name="name" ng-model="form.survey.form.name" required>
 						</div>
 					</div>
 				</div>
@@ -22,8 +22,9 @@
 							<h2>Type</h2>
 						</div>
 						<div class="bootstrap-select fm-cmp-mg">
-						<div class="fm-cmp-mg">
-							<select id="select-demo" ng-change="form.survey.selected(this)" ng-model="form.survey.form.type" ng-options="dt.description for dt in demographics_types track by dt.id" class="selectpicker" data-live-search="true"></select>
+							<div class="fm-cmp-mg">
+								<select id="select-demo" ng-class="{'border-danger': formHolder.demographics.type.$invalid && formHolder.demographics.type.$touched}" name="type" ng-change="form.survey.selected(this)" ng-model="form.survey.form.type" ng-options="dt.description for dt in demographics_types track by dt.id" class="selectpicker" data-live-search="true" required></select>
+							</div>
 						</div>
 					</div>
 				</div>

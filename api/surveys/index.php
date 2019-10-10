@@ -141,6 +141,19 @@ $app->get('/demographics/types', function (Request $request, Response $response,
 
 });
 
+# demographics text type
+$app->get('/demographics/text/types', function (Request $request, Response $response, array $args) {
+
+	$types = array(
+		array("id"=>0,"description"=>"Select type"),
+		array("id"=>1,"description"=>"Number"),
+		array("id"=>2,"description"=>"String")
+	);
+
+	return $response->withJson($types);
+
+});
+
 $app->run();
 
 ?>
