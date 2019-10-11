@@ -328,8 +328,6 @@ function form() {
 		
 		edit: function(scope,d) {		
 			
-			if (scope.$id>2) scope = scope.$parent;			
-			
 			self.survey.init();	
 			
 			let title = 'Update Demographic Info';
@@ -345,7 +343,7 @@ function form() {
 						self.survey.form.type = {id:d.type, description:d.description};
 						self.survey.bracket = d.data;
 						self.survey.bracket_dels = d.dels;
-						scope.$apply();						
+						scope.$apply();		
 						self.survey.selected(scope);						
 						$timeout(function() {
 							scope.$apply();						
@@ -433,9 +431,7 @@ function form() {
 
 			},
 			
-			delete: function(scope,row) {
-				
-				if (scope.$id>2) scope = scope.$parent;
+			delete: function(scope,row) {				
 				
 				if (row.id > 0) {
 					self.survey.bracket_dels.push(row.id);
@@ -454,7 +450,7 @@ function form() {
 						
 					};
 					
-				});				
+				});
 				
 			}
 			
@@ -670,18 +666,13 @@ function form() {
 
 			switch (d.type) {
 				
-				case 1:								
+				case 1:
 
-					// if (scope.$id>2) scope = scope.$parent;
-					console.log('updated');
-
-					scope.survey.demographics[index] = {
-						name: self.survey.form.name,
-						type: self.survey.form.type.id,
-						description: self.survey.form.type.description,
-						data: self.survey.bracket,
-						dels: self.survey.bracket_dels
-					};
+					scope.survey.demographics[index]['name'] = self.survey.form.name;
+					scope.survey.demographics[index]['type'] = self.survey.form.type.id;
+					scope.survey.demographics[index]['description'] = self.survey.form.type.description;
+					scope.survey.demographics[index]['data'] = angular.copy(self.survey.bracket);
+					scope.survey.demographics[index]['dels'] = self.survey.bracket_dels;
 
 				break;
 
