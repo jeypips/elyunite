@@ -1,4 +1,8 @@
-var app = angular.module('surveys',['account-module','app-module']);
+var app = angular.module('surveys',['xeditable','account-module','app-module']);
+
+app.run(function(editableOptions) {
+  editableOptions.theme = 'bs4';
+});
 
 app.controller('surveysCtrl',function($scope,form) {
 	

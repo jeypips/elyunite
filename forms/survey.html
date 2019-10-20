@@ -13,9 +13,9 @@
 		<!-- <p class="last-ph"><b>Date:</b> 15.03.2018</p> -->
 	</div>
 	<div class="view-mail-atn">
-		<form name="formHolder.survey" novalidate autocomplete="off">
+		<form editable-form name="formHolder.survey" novalidate autocomplete="off">
 			<div class="cmp-tb-hd bcs-hd">
-				<h2>Basic Information</h2>
+				<h2>Survey Info</h2>
 				<!-- <p>Place one add-on or button on either side of an input. You may also place one on both sides of an input. </p> -->
 			</div>
 			<div class="row">
@@ -40,35 +40,106 @@
 					</div>
 				</div>
 			</div>
-			<div class="cmp-tb-hd bcs-hd" style="margin-top: 30px;">
-				<h2>Survey Demographics</h2>
-				<!-- <p>Place one add-on or button on either side of an input. You may also place one on both sides of an input. </p> -->
-			</div>			
+			
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div class="basic-tb-hd">
-							<button class="btn btn-success notika-btn-success" ng-click="form.survey.demographics(this)">Add</button>						
-                        </div>							
+					<div ng-repeat="ss in survey.sections">
+						<hr>
+						<div class="basic-tb-hd">
+							<button class="btn btn-sm notika-btn-deeporange waves-effect pull-right" ng-click="form.sections.remove(this,ss)"><span style="color: #fff;"><i class="notika-icon notika-trash"></i></span></button>						
+							<h2>
+							 <div class="popover-wrapper">
+								<a href="javascript:;" editable-text="ss.name" e-single>{{ ss.name || "Section Name" }}</a>
+							 </div>
+							</h2>
+							<p>Add immediate items to this section by clicking "Add Item" button below</p>
+						</div>
 						<div class="bsc-tbl">
-							<table class="table table-sc-ex">
+							<table class="table table-sc-ex" ng-if="ss.items.length>0">
 								<thead>
 									<tr>
-										<th>#</th><th>Name</th><th>Type</th><th></th>
+										<th>#</th><th>Name</th><th>Type</th><th>Values</th><th></th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="sd in survey.demographics">
-										<td>{{$index+1}}</td><td>{{sd.name}}</td><td>{{sd.description}}</td>
+									<tr ng-repeat="ssi in ss.items">
+										<td>{{$index+1}}</td>
 										<td>
-											<button class="btn btn-success notika-btn-success waves-effect" ng-click="form.survey.edit(this,sd)" style="margin-right: 5px;"><i class="notika-icon notika-edit"></i></button>
-											<button class="btn btn-danger notika-btn-danger waves-effect" ng-click="form.survey.delete(this,sd)"><i class="notika-icon notika-trash"></i></button>
+										 <div class="popover-wrapper">
+											<a href="javascript:;" editable-text="ssi.name" e-single>{{ssi.name || "Item Name"}}</a>
+										 </div>						
+										</td>
+										<td>
+										 <div class="popover-wrapper">
+											<a href="javascript:;" editable-select="ssi.type" e-ng-options="it.id as it.description for it in item_types" e-single>{{item_type_selected(ssi.type)}}</a>
+										 </div>											
+										</td>
+										<td>
+											
+										</td>
+										<td>
+											<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.section_items.remove(this,ss,ssi)"><i class="notika-icon notika-trash"></i></button>
 										</td>
 									</tr>
 								</tbody>
 							</table>
+							<button class="btn notika-btn-pink waves-effect pull-right" ng-click="form.section_items.add(this,ss)"><span style="color: #fff;">Add Item</span></button>
+							<div class="clearfix"></div>
 						</div>
+						
+						<div ng-repeat="sa in ss.aspects" style="margin-top: 35px;">
+							<div class="basic-tb-hd">
+								<button class="btn btn-sm notika-btn-deeporange waves-effect pull-right" ng-click="form.section_aspects.remove(this,ss,sa)"><span style="color: #fff;"><i class="notika-icon notika-trash"></i></span></button>						
+								<h2>
+								 <div class="popover-wrapper">
+									<a href="javascript:;" editable-text="sa.name" e-single>{{ sa.name || "Aspect Name" }}</a>
+								 </div>
+								</h2>
+								<p>Add items to this aspect by clicking "Add Item" button below</p>
+							</div>
+							<div class="bsc-tbl">
+								<table class="table table-sc-ex">
+									<thead>
+										<tr>
+											<th>#</th><th>Name</th><th>Type</th><th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="sai in sa.items">
+											<td>{{$index+1}}</td>
+											<td>
+											 <div class="popover-wrapper">
+												<a href="javascript:;" editable-text="sai.name" e-single>{{sai.name || "Item Name"}}</a>
+											 </div>						
+											</td>
+											<td>
+											 <div class="popover-wrapper">
+												<a href="javascript:;" editable-select="sai.type" e-ng-options="it.id as it.description for it in item_types" e-single>{{item_type_selected(sai.type)}}</a>
+											 </div>												
+											</td>
+											<td>
+												<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.aspect_items.remove(this,ss,sa,sai)"><i class="notika-icon notika-trash"></i></button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<button class="btn notika-btn-indigo btn-reco-mg btn-button-mg waves-effect pull-right" ng-click="form.aspect_items.add(this,ss,sa)"><span style="color: #fff;">Add Item</span></button>
+								<div class="clearfix"></div>								
+							</div>							
+						</div>
+						
+						<div class="basic-tb-hd" style="margin-top: 25px;">
+							<button class="btn btn-info waves-effect" ng-click="form.section_aspects.add(this,ss)">Add Aspects</button>
+                        </div>
+						
+					</div>
+					<hr>
+					<div class="cmp-tb-hd bcs-hd" style="margin-top: 25px;">
+						<button class="btn btn-info waves-effect" ng-click="form.sections.add(this)"><span style="color: #fff;">Add Section</span></button>
+					</div>					
 				</div>
 			</div>
+			
 		</form>
 	</div>
 	<!-- <div class="file-download-system">
@@ -84,7 +155,7 @@
 	<div class="vw-ml-action-ls text-right mg-t-20">
 		<div class="btn-group ib-btn-gp active-hook nk-email-inbox">
 			<button class="btn btn-default btn-sm waves-effect"><i class="fa fa-floppy-o"></i> Save</button>
-			<button class="btn btn-default btn-sm waves-effect"><i class="notika-icon notika-close"></i> Cancel</button>
+			<button class="btn btn-default btn-sm waves-effect" ng-click="form.cancel(this)"><i class="notika-icon notika-close"></i> Cancel</button>
 		</div>
 	</div>
 </div>

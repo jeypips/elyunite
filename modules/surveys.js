@@ -1,4 +1,4 @@
-angular.module('app-module',['ui.bootstrap','ngSanitize','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','form-validator-dialog','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,validateDialog,bui){
+angular.module('app-module',['ui.bootstrap','ngSanitize','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','form-validator-dialog','block-ui']).factory('form', function($http,$filter,$compile,$timeout,growl,bootstrapModal,validate,validateDialog,bui){
 
 function form() {
 
@@ -22,10 +22,74 @@ function form() {
 				label: 'Cancel'
 			}
 		};
-			
+		
+		scope.item_types = [
+			{
+				id: 1,
+				description: 'Bracket',
+			},
+			{
+				id: 2,
+				description: 'Checkbox',
+			},
+			{
+				id: 3,
+				description: 'Text Input',
+			},
+			{
+				id: 4,
+				description: 'Radios',
+			},
+			{
+				id: 5,
+				description: 'Selections',
+			}		
+		];
+		
+		scope.item_type_selected = function(value) {
+			let selected = $filter('filter')(scope.item_types, {id: value});
+			return (value && selected.length) ? selected[0].description : 'Not set';			
+		};
+		
+		/* 
+		scope.survey = {
+			id: 0,
+			name: '',
+			description: '',
+			sections: [
+				{
+					id: 0,
+					name: '',
+					items: [
+						{
+							id: 0,
+							name: '',
+							type: '',
+							values: ''
+						}
+					],
+					aspects: [
+						{
+							id: 0,
+							name: '',
+							items: [
+								{
+									id: 0,
+									name: '',
+									type: '',
+									values: ''
+								}							
+							]
+						}
+					],
+				}
+			]
+		};
+		 */
+		
 		scope.survey = {};
 		scope.survey.id = 0;
-		scope.survey.demographics = [];
+		scope.survey.sections = [];
 		scope.survey.dels = [];
 
 		scope.surveys = []; // list
@@ -121,7 +185,7 @@ function form() {
 		
 		scope.survey = {};
 		scope.survey.id = 0;
-		scope.survey.demographics = [];
+		scope.survey.sections = [];
 		scope.survey.dels = [];		
 		
 		$('#survey-main').load('forms/survey.html', function() {
@@ -267,6 +331,179 @@ function form() {
 
 		bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this survey?',onOk,function() {});
 			
+	};
+	
+	self.sections = {
+		
+		init: function() {
+			
+		},
+		
+		add: function(scope) {
+			
+			scope.survey.sections.push({
+				id: 0,
+				items: [],
+				aspects: []
+			});
+			
+		},
+		
+		remove: function(scope,ss) {
+		
+			if (ss.id > 0) {
+				// self.survey.checkbox_dels.push(row.id);
+			};
+			
+			let sections = scope.survey.sections;
+			let ss_index = scope.survey.sections.indexOf(ss);
+			scope.survey.sections = [];	
+			
+			angular.forEach(sections, function(d,i) {
+				
+				if (ss_index != i) {
+					
+					delete d['$$hashKey'];
+					scope.survey.sections.push(d);
+					
+				};
+				
+			});		
+		
+		}
+		
+	};
+	
+	self.section_items = {
+		
+		init: function() {
+			
+		},
+		
+		add: function(scope,ss) {
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+
+			scope.survey.sections[ss_index].items.push({
+				id: 0
+			});
+			
+		},
+		
+		remove: function(scope,ss,ssi) {
+		
+			// if (row.id > 0) {
+				// self.survey.checkbox_dels.push(row.id);
+			// };
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+			let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
+			
+			let section_items = scope.survey.sections[ss_index].items;
+			scope.survey.sections[ss_index].items = [];	
+			
+			angular.forEach(section_items, function(d,i) {
+				
+				if (ssi_index != i) {
+					
+					delete d['$$hashKey'];
+					scope.survey.sections[ss_index].items.push(d);
+					
+				};
+				
+			});		
+		
+		}		
+		
+	};
+	
+	self.section_aspects = {
+		
+		init: function() {
+			
+		},
+		
+		add: function(scope,ss) {
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+
+			scope.survey.sections[ss_index].aspects.push({
+				id: 0,
+				items: []
+			});
+			
+		},
+		
+		remove: function(scope,ss,sa) {
+		
+			// if (row.id > 0) {
+				// self.survey.checkbox_dels.push(row.id);
+			// };
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
+			
+			let section_aspects = scope.survey.sections[ss_index].aspects;
+			scope.survey.sections[ss_index].aspects = [];
+			
+			angular.forEach(section_aspects, function(d,i) {
+				
+				if (sa_index != i) {
+					
+					delete d['$$hashKey'];
+					scope.survey.sections[ss_index].aspects.push(d);
+					
+				};
+				
+			});		
+		
+		}		
+		
+	};	
+	
+	self.aspect_items = {
+		
+		init: function() {
+			
+		},
+		
+		add: function(scope,ss,sa) {
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
+			
+			scope.survey.sections[ss_index].aspects[sa_index].items.push({
+				id: 0
+			});
+			
+		},
+		
+		remove: function(scope,ss,sa,sai) {
+		
+			// if (row.id > 0) {
+				// self.survey.checkbox_dels.push(row.id);
+			// };
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
+			let sai_index = scope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
+			
+			let aspect_items = scope.survey.sections[ss_index].aspects[sa_index].items;
+			scope.survey.sections[ss_index].aspects[sa_index].items = [];
+			
+			angular.forEach(aspect_items, function(d,i) {
+				
+				if (sai_index != i) {
+					
+					delete d['$$hashKey'];
+					scope.survey.sections[ss_index].aspects[sa_index].items.push(d);
+					
+				};
+				
+			});		
+		
+		}		
+		
 	};
 	
 	self.survey = {
