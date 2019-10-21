@@ -64,8 +64,15 @@ function form() {
 						{
 							id: 0,
 							name: '',
-							type: '',
-							values: ''
+							type: 1,
+							values: [
+								{
+									id: 0,
+									display: '',
+									min: 0,
+									max: 0
+								}
+							]
 						}
 					],
 					aspects: [
@@ -76,8 +83,15 @@ function form() {
 								{
 									id: 0,
 									name: '',
-									type: '',
-									values: ''
+									type: 1,
+									values: [
+										{
+											id: 0,
+											display: '',
+											min: 0,
+											max: 0
+										}									
+									]
 								}							
 							]
 						}
@@ -385,7 +399,8 @@ function form() {
 			let ss_index = scope.survey.sections.indexOf(ss);
 
 			scope.survey.sections[ss_index].items.push({
-				id: 0
+				id: 0,
+				values: []
 			});
 			
 		},
@@ -459,7 +474,52 @@ function form() {
 		
 		}		
 		
-	};	
+	};
+	
+	self.section_item_values = {
+		
+		init: function() {
+			
+		},
+
+		add: function(scope,ss,ssi) {
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+			let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
+			
+			scope.survey.sections[ss_index].items[ssi_index].values.push({
+				id: 0
+			});			
+			
+		},
+		
+		remove: function(scope,ss,ssi,v) {
+		
+			// if (row.id > 0) {
+				// self.survey.checkbox_dels.push(row.id);
+			// };
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+			let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
+			let v_index = scope.survey.sections[ss_index].items[ssi_index].values.indexOf(v);
+			
+			let section_item_values = scope.survey.sections[ss_index].items[ssi_index].values;
+			scope.survey.sections[ss_index].items[ssi_index].values = [];
+			
+			angular.forEach(section_item_values, function(d,i) {
+				
+				if (v_index != i) {
+					
+					delete d['$$hashKey'];
+					scope.survey.sections[ss_index].items[ssi_index].values.push(d);
+					
+				};
+				
+			});		
+		
+		}		
+		
+	};
 	
 	self.aspect_items = {
 		
@@ -473,7 +533,8 @@ function form() {
 			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
 			
 			scope.survey.sections[ss_index].aspects[sa_index].items.push({
-				id: 0
+				id: 0,
+				values: []
 			});
 			
 		},
@@ -497,6 +558,54 @@ function form() {
 					
 					delete d['$$hashKey'];
 					scope.survey.sections[ss_index].aspects[sa_index].items.push(d);
+					
+				};
+				
+			});		
+		
+		}		
+		
+	};
+	
+	self.aspect_item_values = {
+		
+		init: function() {
+			
+		},
+
+		add: function(scope,ss,sa,sai) {
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
+			let sai_index = scope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
+			
+			scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.push({
+				id: 0,
+				values: []
+			});		
+			
+		},
+		
+		remove: function(scope,ss,sa,sai,v) {
+		
+			// if (row.id > 0) {
+				// self.survey.checkbox_dels.push(row.id);
+			// };
+			
+			let ss_index = scope.survey.sections.indexOf(ss);
+			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
+			let sai_index = scope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
+			let v_index = scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.indexOf(v);
+			
+			let aspect_item_values = scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values;
+			scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values = [];
+			
+			angular.forEach(aspect_item_values, function(d,i) {
+				
+				if (v_index != i) {
+					
+					delete d['$$hashKey'];
+					scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.push(d);
 					
 				};
 				

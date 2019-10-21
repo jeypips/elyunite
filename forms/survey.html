@@ -75,7 +75,33 @@
 										 </div>											
 										</td>
 										<td>
-											
+											<table class="table item-values">
+												<thead>
+													<tr><th>Display</th><th>Min</th><th>Max</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.section_item_values.add(this,ss,ssi)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></span></i></button></th></tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="v in ssi.values">
+														<td>
+															<div class="popover-wrapper">
+																<a href="javascript:;" editable-text="v.display" e-single>{{v.display || "Display Name"}}</a>
+															</div>														
+														</td>
+														<td>
+															<div class="popover-wrapper">
+																<a href="javascript:;" editable-text="v.min" e-single>{{v.min || "Min Value"}}</a>
+															</div>															
+														</td>
+														<td>
+															<div class="popover-wrapper">
+																<a href="javascript:;" editable-text="v.max" e-single>{{v.max || "Max Value"}}</a>
+															</div>																
+														</td>
+														<td>
+															<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.section_item_values.remove(this,ss,ssi,v)"><i class="notika-icon notika-trash"></i></button>															
+														</td>
+													</tr>
+												</tbody>
+											</table>
 										</td>
 										<td>
 											<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.section_items.remove(this,ss,ssi)"><i class="notika-icon notika-trash"></i></button>
@@ -101,7 +127,7 @@
 								<table class="table table-sc-ex">
 									<thead>
 										<tr>
-											<th>#</th><th>Name</th><th>Type</th><th></th>
+											<th>#</th><th>Name</th><th>Type</th><th>Values</th><th></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -116,6 +142,35 @@
 											 <div class="popover-wrapper">
 												<a href="javascript:;" editable-select="sai.type" e-ng-options="it.id as it.description for it in item_types" e-single>{{item_type_selected(sai.type)}}</a>
 											 </div>												
+											</td>
+											<td>
+												<table class="table item-values">
+													<thead>
+														<tr><th>Display</th><th>Min</th><th>Max</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.aspect_item_values.add(this,ss,sa,sai)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></span></i></button></th></tr>
+													</thead>
+													<tbody>
+														<tr ng-repeat="v in sai.values">
+															<td>
+																<div class="popover-wrapper">
+																	<a href="javascript:;" editable-text="v.display" e-single>{{v.display || "Display Name"}}</a>
+																</div>														
+															</td>
+															<td>
+																<div class="popover-wrapper">
+																	<a href="javascript:;" editable-text="v.min" e-single>{{v.min || "Min Value"}}</a>
+																</div>															
+															</td>
+															<td>
+																<div class="popover-wrapper">
+																	<a href="javascript:;" editable-text="v.max" e-single>{{v.max || "Max Value"}}</a>
+																</div>																
+															</td>
+															<td>
+																<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.aspect_item_values.remove(this,ss,sa,sai,v)"><i class="notika-icon notika-trash"></i></button>															
+															</td>
+														</tr>
+													</tbody>
+												</table>												
 											</td>
 											<td>
 												<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.aspect_items.remove(this,ss,sa,sai)"><i class="notika-icon notika-trash"></i></button>
