@@ -43,7 +43,11 @@ function form() {
 			{
 				id: 5,
 				description: 'Selections',
-			}		
+			},
+			{
+				id: 6,
+				description: 'Table'
+			}
 		];
 		
 		scope.item_type_selected = function(value) {
@@ -51,6 +55,22 @@ function form() {
 			return (value && selected.length) ? selected[0].description : 'Not set';			
 		};
 		
+		scope.text_input_types = [
+			{
+				id: 1,
+				description: 'String',
+			},
+			{
+				id: 1,
+				description: 'Number',
+			}			
+		];
+		
+		scope.text_input_type_selected = function(value) {
+			let selected = $filter('filter')(scope.text_input_types, {id: value});
+			return (value && selected.length) ? selected[0].description : 'Not set';			
+		};		
+
 		/* 
 		scope.survey = {
 			id: 0,
@@ -70,7 +90,8 @@ function form() {
 									id: 0,
 									display: '',
 									min: 0,
-									max: 0
+									max: 0,
+									sub_items: []
 								}
 							]
 						}
@@ -403,6 +424,8 @@ function form() {
 				values: []
 			});
 			
+			console.log(scope.survey.sections);
+			
 		},
 		
 		remove: function(scope,ss,ssi) {
@@ -488,7 +511,8 @@ function form() {
 			let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
 			
 			scope.survey.sections[ss_index].items[ssi_index].values.push({
-				id: 0
+				id: 0,
+				sub_items: []
 			});			
 			
 		},
@@ -612,6 +636,30 @@ function form() {
 			});		
 		
 		}		
+		
+	};
+	
+	self.value_sub_items = {
+		
+		init: function() {
+			
+		},
+
+		add: function(scope,rows) {
+			
+			rows.push({
+				id: 0
+			});
+			
+		},
+		
+		remove: function(scope,rows,row) {
+
+			let index = rows.indexOf(row);
+			
+			rows.splice(index,1);
+		
+		}
 		
 	};
 	
