@@ -46,8 +46,12 @@ function form() {
 			},
 			{
 				id: 6,
-				description: 'Table'
-			}
+				description: 'Single Row'
+			},
+			{
+				id: 7,
+				description: 'Multi Rows'
+			}			
 		];
 		
 		scope.item_type_selected = function(value) {
@@ -61,15 +65,31 @@ function form() {
 				description: 'String',
 			},
 			{
-				id: 1,
+				id: 2,
 				description: 'Number',
 			}			
-		];
+		];		
 		
 		scope.text_input_type_selected = function(value) {
 			let selected = $filter('filter')(scope.text_input_types, {id: value});
 			return (value && selected.length) ? selected[0].description : 'Not set';			
-		};		
+		};
+		
+		scope.multi_rows_row_types = [
+			{
+				id: 1,
+				description: 'Headers',
+			},
+			{
+				id: 2,
+				description: 'Row',
+			}			
+		];		
+
+		scope.multi_rows_row_type_selected = function(value) {
+			let selected = $filter('filter')(scope.multi_rows_row_types, {id: value});
+			return (value && selected.length) ? selected[0].description : 'Not set';			
+		};
 
 		/* 
 		scope.survey = {
@@ -89,12 +109,29 @@ function form() {
 								{
 									id: 0,
 									display: '',
+									item_value: '',
 									min: 0,
 									max: 0,
 									sub_items: []
 								}
 							]
-						}
+						},
+						{
+							id: 0,
+							name: '',
+							type: 6,
+							values: [
+								{
+									id: 0,
+									display: '',
+									item_value: '',
+									min: 0,
+									max: 0,
+									row_type: 1,
+									sub_items: []
+								}
+							]
+						}						
 					],
 					aspects: [
 						{
