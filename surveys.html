@@ -78,7 +78,19 @@
 		
 		.item-values th, .item-values td {
 			font-size: 11px!important;
-		};
+		}
+		
+		.ng-enter 
+		{
+			-webkit-transition: 1s;
+			transition: 1s;
+			opacity:0;
+		}
+		  
+		.ng-enter-active 
+		{
+			opacity:1;
+		}		
 	
 	</style>
 </head>
@@ -276,6 +288,7 @@
 
 	<!-- angular -->	
 	<script src="angular/angular.min.js"></script>
+	<script src="angular/angular-animate.min.js"></script>
 	<script src="angular/angular-route.min.js"></script>
 	<script src="angular/angular-sanitize.min.js"></script>	
 	<script src="angular/ui-bootstrap-tpls-3.0.6.js"></script>
