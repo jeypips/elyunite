@@ -36,27 +36,104 @@ $app->get('/list', function (Request $request, Response $response, array $args) 
 
 });
 
-# add account
-$app->post('/add', function (Request $request, Response $response, array $args) {
+# add
+$app->post('/save', function (Request $request, Response $response, array $args) {
+
+	require_once 'classes.php';	
 
 	$con = $this->con;
-	$con->table = "users";
+	$con->table = "surveys";
 
 	$data = $request->getParsedBody();
-	$user = $data['user'];
-	$privileges = $data['privileges'];
+
+	$sections = $data['sections'];
+	unset($data['sections']);
 	
-	require_once '../../classes.php';	
+	$section_dels = $data['section_dels'];
+	unset($data['section_dels']);
 	
-	$arrayHex = new ArrayHex();
-	$user['privileges'] = $arrayHex->toHex(json_encode($privileges));	
-	
-	unset($user['id']);
-	$con->insertObj($user);
+	# surveys
+	$save_survey = $con->insertData($data);
+	$id = $con->insertId;
+
+	# sections
+	foreach ($sections as $section) {
+		
+		$section['survey_id'] = $id;
+		$section_items = $section['items'];
+		unset($section['items']);
+		$section_aspects = $section['aspects'];
+		unset($section['aspects']);
+		
+		$con->table = "surveys_sections";		
+		if ($section['id']) {
+			
+			$section_id = $section['id'];
+			
+		} else {
+			
+			unset($section['id']);
+			$save_section = $con->insertData($section);
+			$section_id = $con->insertId;
+			
+		}
+		
+		# section items
+		foreach ($section_items as $section_item) {
+			
+			$section_item['section_id'] = $section_id;
+			
+			$section_item_values = $section_item['values'];
+			unset($section_item['values']);
+			
+			$con->table = "sections_items";
+			if ($section_item['id']) {
+				
+				$section_item_id = $section_item['id'];
+				
+			} else {
+				
+				unset($section_item['id']);
+				$save_section_item = $con->insertData($section_item);
+				$section_item_id = $con->insertId;
+				
+			};
+			
+			# section item values
+			foreach ($section_item_values as $si_value) {
+				
+				$si_value['section_item_id'] = $section_item_id;
+				
+				$value_sub_items = $si_value['sub_items'];
+				unset($si_value['sub_items']);
+				
+				$con->table = "section_item_values";
+				if ($si_value['id']) {
+					
+					$si_value_id = $si_value['id'];
+					
+				} else {
+					
+					unset($si_value['id']);
+					$save_si_value = $con->insertData($si_value);
+					$si_value_id = $con->insertId;
+					
+				};
+				
+				# section item value sub items
+				foreach ($value_sub_items as $vsi) {
+					
+				};
+				
+			};
+			
+		};
+		
+	};
 
 });
 
-# update account
+# update
 $app->put('/update', function (Request $request, Response $response, array $args) {
 
 	$con = $this->con;
@@ -75,7 +152,7 @@ $app->put('/update', function (Request $request, Response $response, array $args
 
 });
 
-# view account
+# view
 $app->get('/view/{id}', function (Request $request, Response $response, array $args) {
 
 	$con = $this->con;
@@ -110,47 +187,6 @@ $app->post('/delete', function (Request $request, Response $response, array $arg
 	$delete = array("id"=>implode(",",$data['id']));
 
 	$con->deleteData($delete);
-
-});
-
-# demographics
-$app->get('/demographics/items', function (Request $request, Response $response, array $args) {
-
-	$con = $this->con;
-	$con->table = "demographics";
-
-	require_once '../classes.php';
-
-	$demographics = new demographics($con);
-
-	return $response->withJson($demographics->get_items());
-
-});
-
-# demographics types
-$app->get('/demographics/types', function (Request $request, Response $response, array $args) {
-
-	$con = $this->con;
-	$con->table = "demographics";
-
-	require_once '../classes.php';
-
-	$demographics = new demographics($con);
-
-	return $response->withJson($demographics->get_types());
-
-});
-
-# demographics text type
-$app->get('/demographics/text/types', function (Request $request, Response $response, array $args) {
-
-	$types = array(
-		array("id"=>0,"description"=>"Select type"),
-		array("id"=>1,"description"=>"Number"),
-		array("id"=>2,"description"=>"String")
-	);
-
-	return $response->withJson($types);
 
 });
 

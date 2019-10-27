@@ -49,7 +49,7 @@
 							<button class="btn btn-sm notika-btn-deeporange waves-effect pull-right" ng-click="form.sections.remove(this,ss)"><span style="color: #fff;"><i class="notika-icon notika-trash"></i></span></button>						
 							<h1>
 							 <div class="popover-wrapper">
-								<a href="javascript:;" editable-text="ss.name" e-single>{{ ss.name || "Section Name" }}</a>
+								<a href="javascript:;" editable-text="ss.section_name" e-single>{{ ss.section_name || "Section Name" }}</a>
 							 </div>
 							</h1>
 							<p>Add immediate items to this section by clicking "Add Item" button below</p>
@@ -67,7 +67,7 @@
 											<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
 												<div class="nk-int-st">
 												 <div class="popover-wrapper">
-													<a href="javascript:;" editable-text="ssi.name" e-single>{{ssi.name || "Item Name"}}</a>
+													<a href="javascript:;" editable-text="ssi.item_name" e-single>{{ssi.item_name || "Item Name"}}</a>
 												 </div>
 												</div>
 											</div>
@@ -83,7 +83,7 @@
 											<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
 												<div class="nk-int-st">
 												 <div class="popover-wrapper">
-													<a href="javascript:;" editable-select="ssi.type" e-ng-options="it.id as it.description for it in item_types" e-single>{{item_type_selected(ssi.type)}}</a>
+													<a href="javascript:;" editable-select="ssi.item_type" e-ng-options="it.id as it.description for it in item_types" e-single>{{item_type_selected(ssi.item_type)}}</a>
 												 </div>
 												</div>
 											</div>
@@ -101,9 +101,9 @@
 
 													<div class="row">
 														<div class="col-lg-12">
-															<table class="table item-values" ng-show="ssi.type != undefined">
+															<table class="table item-values" ng-show="ssi.item_type != undefined">
 																<thead>
-																	<tr><th>Display</th><th ng-show="(ssi.type == 2) || (ssi.type == 4) || (ssi.type == 5) || (ssi.type == 6)">Value</th><th ng-show="ssi.type == 1">Min</th><th ng-show="ssi.type == 1">Max</th><th ng-show="ssi.type == 3">Data Type</th><th ng-show="ssi.type == 7">Row Type</th><th ng-show="(ssi.type == 1) || (ssi.type == 2) || (ssi.type == 4) || (ssi.type == 5) || (ssi.type == 7)">Sub</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.section_item_values.add(this,ss,ssi)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></span></i></button></th></tr>
+																	<tr><th>Display</th><th ng-show="(ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 6)">Value</th><th ng-show="ssi.item_type == 1">Min</th><th ng-show="ssi.item_type == 1">Max</th><th ng-show="ssi.item_type == 3">Data Type</th><th ng-show="ssi.item_type == 7">Row Type</th><th ng-show="(ssi.item_type == 1) || (ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 7)">Sub</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.section_item_values.add(this,ss,ssi)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></span></i></button></th></tr>
 																</thead>
 																<tbody>
 																	<tr ng-repeat="v in ssi.values">
@@ -112,36 +112,36 @@
 																				<a href="javascript:;" editable-text="v.display" e-single>{{v.display || "Display Name"}}</a>
 																			</div>														
 																		</td>
-																		<td ng-show="(ssi.type == 2) || (ssi.type == 4) || (ssi.type == 5) || (ssi.type == 6)">
+																		<td ng-show="(ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 6)">
 																			<div class="popover-wrapper">
-																				<a href="javascript:;" editable-text="v.item_value" e-single>{{v.item_value || "Value"}}</a>
+																				<a href="javascript:;" editable-text="v.siv_value" e-single>{{v.siv_value || "Value"}}</a>
 																			</div>																			
 																		</td>
-																		<td ng-show="ssi.type == 1">
+																		<td ng-show="ssi.item_type == 1">
 																			<div class="popover-wrapper">
-																				<a href="javascript:;" editable-text="v.min" e-single>{{v.min || "Min Value"}}</a>
+																				<a href="javascript:;" editable-text="v.siv_min" e-single>{{v.siv_min || "Min Value"}}</a>
 																			</div>															
 																		</td>
-																		<td ng-show="ssi.type == 1">
+																		<td ng-show="ssi.item_type == 1">
 																			<div class="popover-wrapper">
-																				<a href="javascript:;" editable-text="v.max" e-single>{{v.max || "Max Value"}}</a>
+																				<a href="javascript:;" editable-text="v.siv_max" e-single>{{v.siv_max || "Max Value"}}</a>
 																			</div>																
 																		</td>
-																		<td ng-show="ssi.type == 3">
+																		<td ng-show="ssi.item_type == 3">
 																			<div class="popover-wrapper">
 																				<a href="javascript:;" editable-select="v.data_type" e-ng-options="tit.id as tit.description for tit in text_input_types" e-single>{{text_input_type_selected(v.data_type)}}</a>
 																			</div>																			
 																		</td>
-																		<td ng-show="ssi.type == 7">
+																		<td ng-show="ssi.item_type == 7">
 																			<div class="popover-wrapper">
 																				<a href="javascript:;" editable-select="v.row_type" e-ng-options="rt.id as rt.description for rt in multi_rows_row_types" e-single>{{multi_rows_row_type_selected(v.row_type)}}</a>
 																			</div>																			
 																		</td>																		
-																		<td ng-show="(ssi.type == 1) || (ssi.type == 2) || (ssi.type == 4) || (ssi.type == 5) || (ssi.type == 7)">
+																		<td ng-show="(ssi.item_type == 1) || (ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 7)">
 																			
-																			<table class="table item-values" ng-show="(ssi.type == 1) || (ssi.type == 2) || (ssi.type == 4) || (ssi.type == 5) || ((ssi.type == 7) && (v.row_type == 1))">
+																			<table class="table item-values" ng-show="(ssi.item_type == 1) || (ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || ((ssi.item_type == 7) && (v.row_type == 1))">
 																				<thead>
-																					<tr><th>Display</th><th ng-show="(ssi.type == 2) || (ssi.type == 4) || (ssi.type == 5) || (ssi.type == 6) || (ssi.type == 7)">Value</th><th ng-show="ssi.type == 1">Min</th><th ng-show="ssi.type == 1">Max</th><th ng-show="ssi.type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.value_sub_items.add(this,v.sub_items)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></i></span></button></th></tr>
+																					<tr><th>Display</th><th ng-show="(ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 6) || (ssi.item_type == 7)">Value</th><th ng-show="ssi.item_type == 1">Min</th><th ng-show="ssi.item_type == 1">Max</th><th ng-show="ssi.item_type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.value_sub_items.add(this,v.sub_items)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></i></span></button></th></tr>
 																				</thead>
 																				<tbody>
 																					<tr ng-repeat="vsi in v.sub_items">																						
@@ -150,22 +150,22 @@
 																								<a href="javascript:;" editable-text="vsi.display" e-single>{{vsi.display || "Display Name"}}</a>
 																							</div>														
 																						</td>
-																						<td ng-show="(ssi.type == 2) || (ssi.type == 4) || (ssi.type == 5) || (ssi.type == 6) || (ssi.type == 7)">
+																						<td ng-show="(ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 6) || (ssi.item_type == 7)">
 																							<div class="popover-wrapper">
 																								<a href="javascript:;" editable-text="vsi.item_value" e-single>{{vsi.item_value || "Value"}}</a>
 																							</div>																			
 																						</td>
-																						<td ng-show="ssi.type == 1">
+																						<td ng-show="ssi.item_type == 1">
 																							<div class="popover-wrapper">
 																								<a href="javascript:;" editable-text="vsi.min" e-single>{{vsi.min || "Min Value"}}</a>
 																							</div>															
 																						</td>
-																						<td ng-show="ssi.type == 1">
+																						<td ng-show="ssi.item_type == 1">
 																							<div class="popover-wrapper">
 																								<a href="javascript:;" editable-text="vsi.max" e-single>{{vsi.max || "Max Value"}}</a>
 																							</div>																
 																						</td>
-																						<td ng-show="ssi.type == 3">
+																						<td ng-show="ssi.item_type == 3">
 																							<div class="popover-wrapper">
 																								<a href="javascript:;" editable-select="vsi.data_type" e-ng-options="tit.id as tit.description for tit in text_input_types" e-single>{{text_input_type_selected(vsi.data_type)}}</a>
 																							</div>																			
@@ -255,10 +255,10 @@
 													<div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
 														<div class="nk-int-st">
 															<div class="row">
-																<div class="col-lg-8">														
+																<div class="col-lg-12">														
 																	<table class="table item-values" ng-show="sai.type != undefined">
 																		<thead>
-																			<tr><th>Display</th><th ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5)">Value</th><th ng-show="sai.type == 1">Min</th><th ng-show="sai.type == 1">Max</th><th ng-show="sai.type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.aspect_item_values.add(this,ss,sa,sai)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></span></i></button></th></tr>
+																			<tr><th>Display</th><th ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 6)">Value</th><th ng-show="sai.type == 1">Min</th><th ng-show="sai.type == 1">Max</th><th ng-show="sai.type == 3">Data Type</th><th ng-show="sai.type == 7">Row Type</th><th ng-show="(sai.type == 1) || (sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 7)">Sub</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.aspect_item_values.add(this,ss,sa,sai)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></span></i></button></th></tr>
 																		</thead>
 																		<tbody>
 																			<tr ng-repeat="v in sai.values">
@@ -267,7 +267,7 @@
 																						<a href="javascript:;" editable-text="v.display" e-single>{{v.display || "Display Name"}}</a>
 																					</div>														
 																				</td>
-																				<td ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5)">
+																				<td ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 6)">
 																					<div class="popover-wrapper">
 																						<a href="javascript:;" editable-text="v.item_value" e-single>{{v.item_value || "Value"}}</a>
 																					</div>																			
@@ -287,6 +287,53 @@
 																						<a href="javascript:;" editable-select="v.data_type" e-ng-options="tit.id as tit.description for tit in text_input_types" e-single>{{text_input_type_selected(v.data_type)}}</a>
 																					</div>																			
 																				</td>
+																				<td ng-show="sai.type == 7">
+																					<div class="popover-wrapper">
+																						<a href="javascript:;" editable-select="v.row_type" e-ng-options="rt.id as rt.description for rt in multi_rows_row_types" e-single>{{multi_rows_row_type_selected(v.row_type)}}</a>
+																					</div>																			
+																				</td>
+																				<td ng-show="(sai.type == 1) || (sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 7)">
+																					
+																					<table class="table item-values" ng-show="(sai.type == 1) || (sai.type == 2) || (sai.type == 4) || (sai.type == 5) || ((sai.type == 7) && (v.row_type == 1))">
+																						<thead>
+																							<tr><th>Display</th><th ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 6) || (sai.type == 7)">Value</th><th ng-show="sai.type == 1">Min</th><th ng-show="sai.type == 1">Max</th><th ng-show="sai.type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.value_sub_items.add(this,v.sub_items)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></i></span></button></th></tr>
+																						</thead>
+																						<tbody>
+																							<tr ng-repeat="vsi in v.sub_items">																						
+																								<td>
+																									<div class="popover-wrapper">
+																										<a href="javascript:;" editable-text="vsi.display" e-single>{{vsi.display || "Display Name"}}</a>
+																									</div>														
+																								</td>
+																								<td ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 6) || (sai.type == 7)">
+																									<div class="popover-wrapper">
+																										<a href="javascript:;" editable-text="vsi.item_value" e-single>{{vsi.item_value || "Value"}}</a>
+																									</div>																			
+																								</td>
+																								<td ng-show="sai.type == 1">
+																									<div class="popover-wrapper">
+																										<a href="javascript:;" editable-text="vsi.min" e-single>{{vsi.min || "Min Value"}}</a>
+																									</div>															
+																								</td>
+																								<td ng-show="sai.type == 1">
+																									<div class="popover-wrapper">
+																										<a href="javascript:;" editable-text="vsi.max" e-single>{{vsi.max || "Max Value"}}</a>
+																									</div>																
+																								</td>
+																								<td ng-show="sai.type == 3">
+																									<div class="popover-wrapper">
+																										<a href="javascript:;" editable-select="vsi.data_type" e-ng-options="tit.id as tit.description for tit in text_input_types" e-single>{{text_input_type_selected(vsi.data_type)}}</a>
+																									</div>																			
+																								</td>
+																								<td>
+																									<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.value_sub_items.remove(this,v.sub_items,vsi)"><i class="notika-icon notika-trash"></i></button>																							
+																								</td>
+																							</tr>
+																						</tbody>																				
+																					</table>
+																					
+																				
+																				</td>																				
 																				<td>
 																					<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.aspect_item_values.remove(this,ss,sa,sai,v)"><i class="notika-icon notika-trash"></i></button>															
 																				</td>
@@ -334,7 +381,7 @@
 	</div> -->
 	<div class="vw-ml-action-ls text-right mg-t-20">
 		<div class="btn-group ib-btn-gp active-hook nk-email-inbox">
-			<button class="btn btn-default btn-sm waves-effect"><i class="fa fa-floppy-o"></i> Save</button>
+			<button class="btn btn-default btn-sm waves-effect" ng-click="form.save(this)"><i class="fa fa-floppy-o"></i> Save</button>
 			<button class="btn btn-default btn-sm waves-effect" ng-click="form.cancel(this)"><i class="notika-icon notika-close"></i> Cancel</button>
 		</div>
 	</div>
