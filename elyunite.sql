@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 27, 2019 at 11:24 PM
+-- Generation Time: Oct 28, 2019 at 09:57 AM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -83,13 +83,6 @@ CREATE TABLE `sections_items` (
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `sections_items`
---
-
-INSERT INTO `sections_items` (`id`, `section_id`, `item_name`, `item_type`, `system_log`) VALUES
-(1, 1, 'Sex', 4, '2019-10-27 23:11:26');
-
 -- --------------------------------------------------------
 
 --
@@ -111,6 +104,23 @@ CREATE TABLE `section_item_values` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `siv_sub_items`
+--
+
+CREATE TABLE `siv_sub_items` (
+  `id` int(11) NOT NULL,
+  `vsi_id` int(11) DEFAULT NULL,
+  `display` varchar(500) DEFAULT NULL,
+  `vsi_value` varchar(100) DEFAULT NULL,
+  `vsi_min` varchar(100) DEFAULT NULL,
+  `vsi_max` varchar(100) DEFAULT NULL,
+  `data_type` int(11) DEFAULT NULL,
+  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `surveys`
 --
 
@@ -120,13 +130,6 @@ CREATE TABLE `surveys` (
   `description` varchar(500) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `surveys`
---
-
-INSERT INTO `surveys` (`id`, `name`, `description`, `system_log`) VALUES
-(1, 'Life Satisfaction', 'Satisfaction', '2019-10-27 23:11:26');
 
 -- --------------------------------------------------------
 
@@ -140,13 +143,6 @@ CREATE TABLE `surveys_sections` (
   `section_name` varchar(100) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `surveys_sections`
---
-
-INSERT INTO `surveys_sections` (`id`, `survey_id`, `section_name`, `system_log`) VALUES
-(1, 1, 'Basic Information', '2019-10-27 23:11:26');
 
 --
 -- Indexes for dumped tables
@@ -177,6 +173,13 @@ ALTER TABLE `sections_items`
 ALTER TABLE `section_item_values`
   ADD PRIMARY KEY (`id`),
   ADD KEY `section_item_id` (`section_item_id`);
+
+--
+-- Indexes for table `siv_sub_items`
+--
+ALTER TABLE `siv_sub_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vsi_id` (`vsi_id`);
 
 --
 -- Indexes for table `surveys`
@@ -214,7 +217,12 @@ ALTER TABLE `sections_items`
 -- AUTO_INCREMENT for table `section_item_values`
 --
 ALTER TABLE `section_item_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `siv_sub_items`
+--
+ALTER TABLE `siv_sub_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `surveys`
 --
@@ -240,6 +248,12 @@ ALTER TABLE `sections_items`
 --
 ALTER TABLE `section_item_values`
   ADD CONSTRAINT `section_item_values_ibfk_1` FOREIGN KEY (`section_item_id`) REFERENCES `sections_items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `siv_sub_items`
+--
+ALTER TABLE `siv_sub_items`
+  ADD CONSTRAINT `siv_sub_items_ibfk_1` FOREIGN KEY (`vsi_id`) REFERENCES `section_item_values` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `surveys_sections`

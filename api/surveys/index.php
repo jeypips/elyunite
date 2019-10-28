@@ -39,8 +39,6 @@ $app->get('/list', function (Request $request, Response $response, array $args) 
 # add
 $app->post('/save', function (Request $request, Response $response, array $args) {
 
-	require_once 'classes.php';	
-
 	$con = $this->con;
 	$con->table = "surveys";
 
@@ -110,18 +108,30 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 				$con->table = "section_item_values";
 				if ($si_value['id']) {
 					
-					$si_value_id = $si_value['id'];
+					$vsi_id = $si_value['id'];
 					
 				} else {
 					
 					unset($si_value['id']);
 					$save_si_value = $con->insertData($si_value);
-					$si_value_id = $con->insertId;
+					$vsi_id = $con->insertId;
 					
 				};
 				
 				# section item value sub items
 				foreach ($value_sub_items as $vsi) {
+					
+					$vsi['vsi_id'] = $vsi_id;
+				
+					$con->table = "siv_sub_items";
+					if ($vsi['id']) {						
+						
+					} else {
+						
+						unset($vsi['id']);
+						$save_vsi = $con->insertData($vsi);
+						
+					};
 					
 				};
 				
