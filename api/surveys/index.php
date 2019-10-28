@@ -231,47 +231,17 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 
 });
 
-# update
-$app->put('/update', function (Request $request, Response $response, array $args) {
-
-	$con = $this->con;
-	$con->table = "users";
-
-	$data = $request->getParsedBody();
-	$user = $data['user'];
-	$privileges = $data['privileges'];	
-
-	require_once '../../classes.php';
-
-	$arrayHex = new ArrayHex();
-	$user['privileges'] = $arrayHex->toHex(json_encode($privileges));
-
-	$con->updateObj($user,'id');
-
-});
-
-# view
 $app->get('/view/{id}', function (Request $request, Response $response, array $args) {
 
-	$con = $this->con;
-	$con->table = "users";
-
-	$user = $con->get(array("id"=>$args['id']));
+	require_once 'classes.php';
 	
-	$group_id = ($user[0]['group_id'])?$user[0]['group_id']:0;
+	$con = $this->con;
+	$con->table = "surveys";
 
-	$group = $con->getData("SELECT id, group_name FROM groups WHERE id = $group_id");
+	$id = $args['id'];
 
-	$user[0]['group_id'] = ($user[0]['group_id'])?$group[0]:array("id"=>0,"group_name"=>"");
-
-	$div_id = ($user[0]['div_id'])?$user[0]['div_id']:0;
-
-	$office = $con->getData("SELECT id, office FROM offices WHERE id = $div_id");
-
-	$user[0]['div_id'] = ($office)?$office[0]:array("id"=>0,"office"=>"");
-
-    return $response->withJson($user[0]);
-
+	
+	
 });
 
 # delete account
