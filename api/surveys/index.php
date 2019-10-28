@@ -104,6 +104,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 				
 				$value_sub_items = $si_value['sub_items'];
 				unset($si_value['sub_items']);
+				unset($si_value['show_subitems']);
 				
 				$con->table = "section_item_values";
 				if ($si_value['id']) {
@@ -130,6 +131,93 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 						
 						unset($vsi['id']);
 						$save_vsi = $con->insertData($vsi);
+						
+					};
+					
+				};
+				
+			};
+			
+		};
+		
+		# section aspects
+		foreach ($section_aspects as $aspect) {
+			
+			$aspect['section_id'] = $section_id;
+			
+			$aspect_items = $aspect['items'];
+			unset($aspect['items']);
+			
+			$con->table = "sections_aspects";
+			if ($aspect['id']) {
+				
+				$aspect_id = $aspect['id'];
+				
+			} else {
+
+				unset($aspect['id']);
+				$save_aspect = $con->insertData($aspect);
+				$aspect_id = $con->insertId;
+				
+			};
+			
+			# aspect items
+			foreach ($aspect_items as $aspect_item) {
+				
+				$aspect_item['aspect_id'] = $aspect_id;
+				
+				$aspect_item_values = $aspect_item['values'];
+				unset($aspect_item['values']);
+				
+				$con->table = "aspects_items";
+				if ($aspect_item['id']) {
+					
+					$aspect_item_id = $aspect_item['id'];
+					
+				} else {
+					
+					unset($aspect_item['id']);
+					$save_aspect_item = $con->insertData($aspect_item);
+					$aspect_item_id = $con->insertId;
+					
+				};
+				
+				# section item values
+				foreach ($aspect_item_values as $ai_value) {
+					
+					$ai_value['aspect_item_id'] = $aspect_item_id;
+					
+					$value_sub_items = $ai_value['sub_items'];
+					unset($ai_value['sub_items']);
+					unset($ai_value['show_subitems']);
+					
+					$con->table = "aspect_item_values";
+					if ($ai_value['id']) {
+						
+						$vsi_id = $ai_value['id'];
+						
+					} else {
+						
+						unset($ai_value['id']);
+						$save_si_value = $con->insertData($ai_value);
+						$vsi_id = $con->insertId;
+						
+					};			
+					
+					# aspect item value sub items
+					foreach ($value_sub_items as $vsi) {
+						
+						$vsi['vsi_id'] = $vsi_id;
+					
+						$con->table = "aiv_sub_items";
+						if ($vsi['id']) {						
+							
+						} else {
+							
+							unset($vsi['id']);
+							$save_vsi = $con->insertData($vsi);
+							
+						};
 						
 					};
 					

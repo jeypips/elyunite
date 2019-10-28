@@ -138,8 +138,8 @@
 																			</div>																			
 																		</td>																		
 																		<td ng-show="(ssi.item_type == 1) || (ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 7)">
-																			
-																			<table class="table item-values" ng-show="(ssi.item_type == 1) || (ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || ((ssi.item_type == 7) && (v.row_type == 1))">
+																			Show Sub Items: <input ng-model="v.show_subitems" ng-checked="v.show_subitems" class="checkbox" type="checkbox" style="display: inline-block; margin-left: 3px; position: relative; top: 3px;">
+																			<table class="table item-values" ng-show="v.show_subitems">
 																				<thead>
 																					<tr><th>Display</th><th ng-show="(ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 6) || (ssi.item_type == 7)">Value</th><th ng-show="ssi.item_type == 1">Min</th><th ng-show="ssi.item_type == 1">Max</th><th ng-show="ssi.item_type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.value_sub_items.add(this,v.sub_items)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></i></span></button></th></tr>
 																				</thead>
@@ -207,7 +207,7 @@
 									<div class="cmp-tb-hd cmp-int-hd" style="margin-top: 10px;">
 										<h5>
 										 <div class="popover-wrapper">
-											<a href="javascript:;" editable-text="sa.name" e-single>{{ sa.name || "Aspect Name" }}</a>
+											<a href="javascript:;" editable-text="sa.aspect_name" e-single>{{ sa.aspect_name || "Aspect Name" }}</a>
 										 </div>										
 										</h5>
 										<p style="margin-top: 8px;">Add items to this aspect by clicking "Add Item" button below</p>
@@ -223,7 +223,7 @@
 													<div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
 														<div class="nk-int-st">
 															<div class="popover-wrapper">
-																<a href="javascript:;" editable-text="sai.name" e-single>{{sai.name || "Item Name"}}</a>
+																<a href="javascript:;" editable-text="sai.item_name" e-single>{{sai.item_name || "Item Name"}}</a>
 															</div>														
 														</div>
 													</div>
@@ -239,7 +239,7 @@
 													<div class="col-lg-8 col-md-7 col-sm-7 col-xs-12">
 														<div class="nk-int-st">
 															<div class="popover-wrapper">
-																<a href="javascript:;" editable-select="sai.type" e-ng-options="it.id as it.description for it in item_types" e-single>{{item_type_selected(sai.type)}}</a>
+																<a href="javascript:;" editable-select="sai.item_type" e-ng-options="it.id as it.description for it in item_types" e-single>{{item_type_selected(sai.item_type)}}</a>
 															</div>														
 														</div>
 													</div>
@@ -256,9 +256,9 @@
 														<div class="nk-int-st">
 															<div class="row">
 																<div class="col-lg-12">														
-																	<table class="table item-values" ng-show="sai.type != undefined">
+																	<table class="table item-values" ng-show="sai.item_type != undefined">
 																		<thead>
-																			<tr><th>Display</th><th ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 6)">Value</th><th ng-show="sai.type == 1">Min</th><th ng-show="sai.type == 1">Max</th><th ng-show="sai.type == 3">Data Type</th><th ng-show="sai.type == 7">Row Type</th><th ng-show="(sai.type == 1) || (sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 7)">Sub</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.aspect_item_values.add(this,ss,sa,sai)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></span></i></button></th></tr>
+																			<tr><th>Display</th><th ng-show="(sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 6)">Value</th><th ng-show="sai.item_type == 1">Min</th><th ng-show="sai.item_type == 1">Max</th><th ng-show="sai.item_type == 3">Data Type</th><th ng-show="sai.item_type == 7">Row Type</th><th ng-show="(sai.item_type == 1) || (sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 7)">Sub</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.aspect_item_values.add(this,ss,sa,sai)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></span></i></button></th></tr>
 																		</thead>
 																		<tbody>
 																			<tr ng-repeat="v in sai.values">
@@ -267,36 +267,36 @@
 																						<a href="javascript:;" editable-text="v.display" e-single>{{v.display || "Display Name"}}</a>
 																					</div>														
 																				</td>
-																				<td ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 6)">
+																				<td ng-show="(sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 6)">
 																					<div class="popover-wrapper">
-																						<a href="javascript:;" editable-text="v.item_value" e-single>{{v.item_value || "Value"}}</a>
+																						<a href="javascript:;" editable-text="v.siv_value" e-single>{{v.siv_value || "Value"}}</a>
 																					</div>																			
 																				</td>
-																				<td ng-show="sai.type == 1">
+																				<td ng-show="sai.item_type == 1">
 																					<div class="popover-wrapper">
-																						<a href="javascript:;" editable-text="v.min" e-single>{{v.min || "Min Value"}}</a>
+																						<a href="javascript:;" editable-text="v.siv_min" e-single>{{v.siv_min || "Min Value"}}</a>
 																					</div>															
 																				</td>
-																				<td ng-show="sai.type == 1">
+																				<td ng-show="sai.item_type == 1">
 																					<div class="popover-wrapper">
-																						<a href="javascript:;" editable-text="v.max" e-single>{{v.max || "Max Value"}}</a>
+																						<a href="javascript:;" editable-text="v.siv_max" e-single>{{v.siv_max || "Max Value"}}</a>
 																					</div>																
 																				</td>
-																				<td ng-show="sai.type == 3">
+																				<td ng-show="sai.item_type == 3">
 																					<div class="popover-wrapper">
 																						<a href="javascript:;" editable-select="v.data_type" e-ng-options="tit.id as tit.description for tit in text_input_types" e-single>{{text_input_type_selected(v.data_type)}}</a>
 																					</div>																			
 																				</td>
-																				<td ng-show="sai.type == 7">
+																				<td ng-show="sai.item_type == 7">
 																					<div class="popover-wrapper">
 																						<a href="javascript:;" editable-select="v.row_type" e-ng-options="rt.id as rt.description for rt in multi_rows_row_types" e-single>{{multi_rows_row_type_selected(v.row_type)}}</a>
 																					</div>																			
 																				</td>
-																				<td ng-show="(sai.type == 1) || (sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 7)">
-																					
-																					<table class="table item-values" ng-show="(sai.type == 1) || (sai.type == 2) || (sai.type == 4) || (sai.type == 5) || ((sai.type == 7) && (v.row_type == 1))">
+																				<td ng-show="(sai.item_type == 1) || (sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 7)">
+																					Show Sub Items: <input ng-model="v.show_subitems" ng-checked="v.show_subitems" class="checkbox" type="checkbox" style="display: inline-block; margin-left: 3px; position: relative; top: 3px;">
+																					<table class="table item-values" ng-show="v.show_subitems">
 																						<thead>
-																							<tr><th>Display</th><th ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 6) || (sai.type == 7)">Value</th><th ng-show="sai.type == 1">Min</th><th ng-show="sai.type == 1">Max</th><th ng-show="sai.type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.value_sub_items.add(this,v.sub_items)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></i></span></button></th></tr>
+																							<tr><th>Display</th><th ng-show="(sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 6) || (sai.item_type == 7)">Value</th><th ng-show="sai.item_type == 1">Min</th><th ng-show="sai.item_type == 1">Max</th><th ng-show="sai.item_type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.value_sub_items.add(this,v.sub_items)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></i></span></button></th></tr>
 																						</thead>
 																						<tbody>
 																							<tr ng-repeat="vsi in v.sub_items">																						
@@ -305,22 +305,22 @@
 																										<a href="javascript:;" editable-text="vsi.display" e-single>{{vsi.display || "Display Name"}}</a>
 																									</div>														
 																								</td>
-																								<td ng-show="(sai.type == 2) || (sai.type == 4) || (sai.type == 5) || (sai.type == 6) || (sai.type == 7)">
+																								<td ng-show="(sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 6) || (sai.item_type == 7)">
 																									<div class="popover-wrapper">
-																										<a href="javascript:;" editable-text="vsi.item_value" e-single>{{vsi.item_value || "Value"}}</a>
+																										<a href="javascript:;" editable-text="vsi.vsi_value" e-single>{{vsi.vsi_value || "Value"}}</a>
 																									</div>																			
 																								</td>
-																								<td ng-show="sai.type == 1">
+																								<td ng-show="sai.item_type == 1">
 																									<div class="popover-wrapper">
-																										<a href="javascript:;" editable-text="vsi.min" e-single>{{vsi.min || "Min Value"}}</a>
+																										<a href="javascript:;" editable-text="vsi.vsi_min" e-single>{{vsi.vsi_min || "Min Value"}}</a>
 																									</div>															
 																								</td>
-																								<td ng-show="sai.type == 1">
+																								<td ng-show="sai.item_type == 1">
 																									<div class="popover-wrapper">
-																										<a href="javascript:;" editable-text="vsi.max" e-single>{{vsi.max || "Max Value"}}</a>
+																										<a href="javascript:;" editable-text="vsi.vsi_max" e-single>{{vsi.vsi_max || "Max Value"}}</a>
 																									</div>																
 																								</td>
-																								<td ng-show="sai.type == 3">
+																								<td ng-show="sai.item_type == 3">
 																									<div class="popover-wrapper">
 																										<a href="javascript:;" editable-select="vsi.data_type" e-ng-options="tit.id as tit.description for tit in text_input_types" e-single>{{text_input_type_selected(vsi.data_type)}}</a>
 																									</div>																			

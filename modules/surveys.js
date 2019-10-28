@@ -323,11 +323,15 @@ function form() {
 			return;
 		}
 		
+		bui.show();
+		
 		$http({
 			method: 'POST',
 			url: 'api/surveys/save',
 			data: scope.survey
 		}).then(function mySucces(response) {
+			
+			bui.hide();
 			
 			/* if (scope.account.id == 0) {
 				scope.account.id = response.data;
@@ -337,7 +341,8 @@ function form() {
 			} */
 			
 		}, function myError(response) {
-			 
+			
+			bui.hide();			
 		  // error
 			
 		});

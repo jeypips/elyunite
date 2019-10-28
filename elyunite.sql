@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 28, 2019 at 09:57 AM
+-- Generation Time: Oct 28, 2019 at 04:47 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -49,6 +49,55 @@ INSERT INTO `accounts` (`id`, `firstname`, `middlename`, `lastname`, `username`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `aiv_sub_items`
+--
+
+CREATE TABLE `aiv_sub_items` (
+  `id` int(11) NOT NULL,
+  `vsi_id` int(11) DEFAULT NULL,
+  `display` varchar(500) DEFAULT NULL,
+  `vsi_value` varchar(100) DEFAULT NULL,
+  `vsi_min` varchar(100) DEFAULT NULL,
+  `vsi_max` varchar(100) DEFAULT NULL,
+  `data_type` int(11) DEFAULT NULL,
+  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aspects_items`
+--
+
+CREATE TABLE `aspects_items` (
+  `id` int(11) NOT NULL,
+  `aspect_id` int(11) DEFAULT NULL,
+  `item_name` varchar(100) DEFAULT NULL,
+  `item_type` int(11) DEFAULT NULL,
+  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `aspect_item_values`
+--
+
+CREATE TABLE `aspect_item_values` (
+  `id` int(11) NOT NULL,
+  `aspect_item_id` int(11) DEFAULT NULL,
+  `display` varchar(500) DEFAULT NULL,
+  `siv_value` varchar(100) DEFAULT NULL,
+  `siv_min` varchar(100) DEFAULT NULL,
+  `siv_max` varchar(100) DEFAULT NULL,
+  `data_type` int(11) DEFAULT NULL,
+  `row_type` int(11) DEFAULT NULL,
+  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `groups`
 --
 
@@ -68,6 +117,19 @@ INSERT INTO `groups` (`id`, `name`, `description`, `privileges`) VALUES
 (2, 'User', 'User', '225B7B5C2269645C223A5C2264617368626F6172645C222C5C226465736372697074696F6E5C223A5C2244617368626F6172645C222C5C2270726976696C656765735C223A5B7B5C2269645C223A312C5C226465736372697074696F6E5C223A5C2253686F772044617368626F6172645C222C5C2276616C75655C223A747275657D5D7D2C7B5C2269645C223A5C226D61696E74656E616E63655C222C5C226465736372697074696F6E5C223A5C224D61696E74656E616E63655C222C5C2270726976696C656765735C223A5B7B5C2269645C223A312C5C226465736372697074696F6E5C223A5C2253686F77204D61696E74656E616E63655C222C5C2276616C75655C223A66616C73657D5D7D5D22'),
 (3, 'Jp', 'Pogi', '225B7B5C2269645C223A5C2264617368626F6172645C222C5C226465736372697074696F6E5C223A5C2244617368626F6172645C222C5C2270726976696C656765735C223A5B7B5C2269645C223A312C5C226465736372697074696F6E5C223A5C2253686F772044617368626F6172645C222C5C2276616C75655C223A66616C73657D5D7D2C7B5C2269645C223A5C226D61696E74656E616E63655C222C5C226465736372697074696F6E5C223A5C224D61696E74656E616E63655C222C5C2270726976696C656765735C223A5B7B5C2269645C223A312C5C226465736372697074696F6E5C223A5C2253686F77204D61696E74656E616E63655C222C5C2276616C75655C223A66616C73657D5D7D5D22'),
 (4, 'OPS', 'OPS Office', '225B7B5C2269645C223A5C2264617368626F6172645C222C5C226465736372697074696F6E5C223A5C2244617368626F6172645C222C5C2270726976696C656765735C223A5B7B5C2269645C223A312C5C226465736372697074696F6E5C223A5C2253686F772044617368626F6172645C222C5C2276616C75655C223A66616C73657D5D7D2C7B5C2269645C223A5C226D61696E74656E616E63655C222C5C226465736372697074696F6E5C223A5C224D61696E74656E616E63655C222C5C2270726976696C656765735C223A5B7B5C2269645C223A312C5C226465736372697074696F6E5C223A5C2253686F77204D61696E74656E616E63655C222C5C2276616C75655C223A66616C73657D5D7D5D22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `sections_aspects`
+--
+
+CREATE TABLE `sections_aspects` (
+  `id` int(11) NOT NULL,
+  `section_id` int(11) DEFAULT NULL,
+  `aspect_name` varchar(100) DEFAULT NULL,
+  `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -155,10 +217,38 @@ ALTER TABLE `accounts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `aiv_sub_items`
+--
+ALTER TABLE `aiv_sub_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vsi_id` (`vsi_id`);
+
+--
+-- Indexes for table `aspects_items`
+--
+ALTER TABLE `aspects_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `aspect_id` (`aspect_id`);
+
+--
+-- Indexes for table `aspect_item_values`
+--
+ALTER TABLE `aspect_item_values`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `aspect_item_id` (`aspect_item_id`);
+
+--
 -- Indexes for table `groups`
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `sections_aspects`
+--
+ALTER TABLE `sections_aspects`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `section_id` (`section_id`);
 
 --
 -- Indexes for table `sections_items`
@@ -204,10 +294,30 @@ ALTER TABLE `surveys_sections`
 ALTER TABLE `accounts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
+-- AUTO_INCREMENT for table `aiv_sub_items`
+--
+ALTER TABLE `aiv_sub_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `aspects_items`
+--
+ALTER TABLE `aspects_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `aspect_item_values`
+--
+ALTER TABLE `aspect_item_values`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `groups`
 --
 ALTER TABLE `groups`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `sections_aspects`
+--
+ALTER TABLE `sections_aspects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `sections_items`
 --
@@ -227,15 +337,39 @@ ALTER TABLE `siv_sub_items`
 -- AUTO_INCREMENT for table `surveys`
 --
 ALTER TABLE `surveys`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `surveys_sections`
 --
 ALTER TABLE `surveys_sections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `aiv_sub_items`
+--
+ALTER TABLE `aiv_sub_items`
+  ADD CONSTRAINT `aiv_sub_items_ibfk_1` FOREIGN KEY (`vsi_id`) REFERENCES `aspect_item_values` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `aspects_items`
+--
+ALTER TABLE `aspects_items`
+  ADD CONSTRAINT `aspects_items_ibfk_1` FOREIGN KEY (`aspect_id`) REFERENCES `sections_aspects` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `aspect_item_values`
+--
+ALTER TABLE `aspect_item_values`
+  ADD CONSTRAINT `aspect_item_values_ibfk_1` FOREIGN KEY (`aspect_item_id`) REFERENCES `aspects_items` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `sections_aspects`
+--
+ALTER TABLE `sections_aspects`
+  ADD CONSTRAINT `sections_aspects_ibfk_1` FOREIGN KEY (`section_id`) REFERENCES `surveys_sections` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `sections_items`
