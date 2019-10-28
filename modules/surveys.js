@@ -291,7 +291,7 @@ function form() {
 		
 	};
 	
-	self.edit = function(scope) {		
+	self.edit = function(scope) {
 		
 		if (scope.checks.items.length==0) {
 			
@@ -305,8 +305,26 @@ function form() {
 			growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please select only one survey');
 			return;
 			
-		};
+		};		
 		
+		$http({
+			method: 'GET',
+			url: 'api/surveys/view/'+scope.checks.items[0]
+		}).then(function mySucces(response) {
+			
+			$('#survey-main').load('forms/survey.html', function() {
+				$compile($('#survey-main')[0])(scope);
+				scope.survey = response.data;
+			});
+			
+			bui.hide();
+			
+		}, function myError(response) {
+			
+			bui.hide();			
+			// error
+			
+		});		
 		
 	};	
 	
@@ -333,12 +351,12 @@ function form() {
 			
 			bui.hide();
 			
-			/* if (scope.account.id == 0) {
-				scope.account.id = response.data;
-				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Account Information successfully added.');
+			if (scope.survey.id == 0) {
+				// scope.survey.id = response.data;
+				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'New survey successfully added.');
 			} else {
-				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Account Information successfully updated.');
-			} */
+				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Survey info successfully updated.');
+			}
 			
 		}, function myError(response) {
 			

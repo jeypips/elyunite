@@ -27,7 +27,7 @@ $app->get('/list', function (Request $request, Response $response, array $args) 
 	
 	foreach ($surveys as $i => $survey) {
 		
-		$surveys[$i]['survey_date'] = date("F j, Y",strtotime($survey['survey_date']));
+		$surveys[$i]['survey_date'] = date("F j, Y",strtotime($survey['system_log']));
 		$surveys[$i]['checked'] = false;
 		
 	}
@@ -240,7 +240,25 @@ $app->get('/view/{id}', function (Request $request, Response $response, array $a
 
 	$id = $args['id'];
 
+	$survey = new survey($con,$id);
 	
+    return $response->withJson($survey->get());
+	
+});
+
+$app->get('/get/{id}', function (Request $request, Response $response, array $args) {
+
+	require_once 'classes.php';
+	
+	$con = $this->con;
+	$con->table = "surveys";
+
+	$id = $args['id'];
+
+	$survey = new survey($con,$id);
+	
+	$r = "<pre>".json_encode($survey->get(),JSON_PRETTY_PRINT)."</pre>";
+	return $response->write($r);
 	
 });
 
