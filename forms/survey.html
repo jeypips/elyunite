@@ -381,8 +381,8 @@
 	</div> -->
 	<div class="vw-ml-action-ls text-right mg-t-20">
 		<div class="btn-group ib-btn-gp active-hook nk-email-inbox">
-			<button class="btn btn-default btn-sm waves-effect" ng-click="form.save(this)"><i class="fa fa-floppy-o"></i> Save</button>
-			<button class="btn btn-default btn-sm waves-effect" ng-click="form.cancel(this)"><i class="notika-icon notika-close"></i> Cancel</button>
+			<button class="btn btn-default btn-sm waves-effect" ng-disabled="controls.ok.btn" ng-click="form.save(this)"><i class="fa fa-floppy-o"></i> {{controls.ok.label}}</button>
+			<button class="btn btn-default btn-sm waves-effect" ng-disabled="controls.cancel.btn" ng-click="form.cancel(this)"><i class="notika-icon notika-close"></i> {{controls.cancel.label}}</button>
 		</div>
 	</div>
 </div>

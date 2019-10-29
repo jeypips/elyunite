@@ -226,6 +226,32 @@ function form() {
 
 	};
 	
+	function mode(scope,opt) {
+		
+		switch (opt) {
+			
+			case 1: // add
+			
+				scope.controls.ok.btn = false;
+				scope.controls.ok.label = 'Save';
+				scope.controls.cancel.btn = false;
+				scope.controls.cancel.label = 'Cancel';
+			
+			break;
+			
+			case 2: // edit
+
+				scope.controls.ok.btn = false;
+				scope.controls.ok.label = 'Update';
+				scope.controls.cancel.btn = false;
+				scope.controls.cancel.label = 'Close';
+			
+			break;	
+		
+		};
+		
+	};
+	
 	self.chkSelected = function(scope) {
 		
 		if (scope.$id>2) scope = scope.$parent;
@@ -278,6 +304,8 @@ function form() {
 		
 		bui.show();
 		
+		mode(scope,1);
+		
 		scope.survey = {};
 		scope.survey.id = 0;
 		scope.survey.sections = [];
@@ -306,6 +334,8 @@ function form() {
 			return;
 			
 		};		
+		
+		mode(scope,2);
 		
 		$http({
 			method: 'GET',
@@ -357,6 +387,8 @@ function form() {
 			} else {
 				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Survey info successfully updated.');
 			}
+			
+			self.list(scope);
 			
 		}, function myError(response) {
 			
