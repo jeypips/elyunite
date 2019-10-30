@@ -43,29 +43,67 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 	$con->table = "surveys";
 
 	$data = $request->getParsedBody();
+	
+	// $r = "<pre>".json_encode($data,JSON_PRETTY_PRINT)."</pre>";
+    // return $response->write($r);		
 
 	$sections = $data['sections'];
 	unset($data['sections']);
 	
-	$section_dels = $data['section_dels'];
-	unset($data['section_dels']);
-	
-	# surveys
-	$save_survey = $con->insertData($data);
-	$id = $con->insertId;
+	$sections_dels = $data['sections_dels'];
+	unset($data['sections_dels']);
+
+	# surveys	
+	if ($data['id']) {
+		
+		$save_survey = $con->updateData($data,'id');
+		$id = $data['id'];
+		
+	} else {
+		
+		$save_survey = $con->insertData($data);
+		$id = $con->insertId;		
+		
+	};
+
+	# delete sections
+	if (count($sections_dels)) {
+		
+		$con->table = "surveys_sections";
+		$delete_sections = array("id"=>implode(",",$sections_dels));
+		$con->deleteData($delete_sections);
+		
+	};
 
 	# sections
 	foreach ($sections as $section) {
 		
 		$section['survey_id'] = $id;
 		$section_items = $section['items'];
-		unset($section['items']);
+		unset($section['items']);		
+		
+		$items_dels = $section['items_dels'];
+		unset($section['items_dels']);		
+		
 		$section_aspects = $section['aspects'];
 		unset($section['aspects']);
+		
+		$aspects_dels = $section['aspects_dels'];
+		unset($section['aspects_dels']);		
+		
+		# delete items
+		if (count($items_dels)) {
+			
+			$con->table = "sections_items";
+			$delete_items = array("id"=>implode(",",$items_dels));
+			$con->deleteData($delete_items);			
+			
+		};		
 		
 		$con->table = "surveys_sections";		
 		if ($section['id']) {
 			
+			$save_section = $con->updateData($section,'id');
 			$section_id = $section['id'];
 			
 		} else {
@@ -79,14 +117,27 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 		# section items
 		foreach ($section_items as $section_item) {
 			
-			$section_item['section_id'] = $section_id;
+			$section_item['section_id'] = $section_id;			
 			
 			$section_item_values = $section_item['values'];
 			unset($section_item['values']);
+
+			$values_dels = $section_item['values_dels'];
+			unset($section_item['values_dels']);		
 			
+			# delete item values
+			if (count($values_dels)) {
+				
+				$con->table = "section_item_values";
+				$delete_values = array("id"=>implode(",",$values_dels));
+				$con->deleteData($delete_values);					
+				
+			};
+
 			$con->table = "sections_items";
 			if ($section_item['id']) {
 				
+				$save_section_item = $con->updateData($section_item,'id');
 				$section_item_id = $section_item['id'];
 				
 			} else {
@@ -106,9 +157,22 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 				unset($si_value['sub_items']);
 				unset($si_value['show_subitems']);
 				
+				$sub_items_dels = $si_value['sub_items_dels'];
+				unset($si_value['sub_items_dels']);
+				
+				# delete sub items
+				if ($sub_items_dels) {
+					
+					$con->table = "siv_sub_items";
+					$delete_sub_items = array("id"=>implode(",",$sub_items_dels));
+					$con->deleteData($delete_sub_items);						
+					
+				};
+				
 				$con->table = "section_item_values";
 				if ($si_value['id']) {
 					
+					$save_si_value = $con->updateData($si_value,'id');
 					$vsi_id = $si_value['id'];
 					
 				} else {
@@ -125,7 +189,9 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 					$vsi['vsi_id'] = $vsi_id;
 				
 					$con->table = "siv_sub_items";
-					if ($vsi['id']) {						
+					if ($vsi['id']) {
+						
+						$save_vsi = $con->updateData($vsi,'id');
 						
 					} else {
 						
@@ -140,6 +206,15 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 			
 		};
 		
+		# delete aspects
+		if (count($aspects_dels)) {
+			
+			$con->table = "sections_aspects";
+			$delete_aspects = array("id"=>implode(",",$aspects_dels));
+			$con->deleteData($delete_aspects);			
+			
+		};			
+		
 		# section aspects
 		foreach ($section_aspects as $aspect) {
 			
@@ -148,9 +223,22 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 			$aspect_items = $aspect['items'];
 			unset($aspect['items']);
 			
+			$items_dels = $aspect['items_dels'];
+			unset($aspect['items_dels']);				
+			
+			# delete items
+			if (count($items_dels)) {
+				
+				$con->table = "aspects_items";
+				$delete_items = array("id"=>implode(",",$items_dels));
+				$con->deleteData($delete_items);		
+				
+			};
+			
 			$con->table = "sections_aspects";
 			if ($aspect['id']) {
 				
+				$save_aspect = $con->updateData($aspect,'id');
 				$aspect_id = $aspect['id'];
 				
 			} else {
@@ -169,9 +257,22 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 				$aspect_item_values = $aspect_item['values'];
 				unset($aspect_item['values']);
 				
+				$values_dels = $aspect_item['values_dels'];
+				unset($aspect_item['values_dels']);		
+				
+				# delete item values
+				if (count($values_dels)) {
+					
+					$con->table = "aspect_item_values";
+					$delete_values = array("id"=>implode(",",$values_dels));
+					$con->deleteData($delete_values);					
+					
+				};				
+
 				$con->table = "aspects_items";
 				if ($aspect_item['id']) {
 					
+					$save_aspect_item = $con->updateData($aspect_item,'id');
 					$aspect_item_id = $aspect_item['id'];
 					
 				} else {
@@ -182,7 +283,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 					
 				};
 				
-				# section item values
+				# aspect item values
 				foreach ($aspect_item_values as $ai_value) {
 					
 					$ai_value['aspect_item_id'] = $aspect_item_id;
@@ -191,9 +292,22 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 					unset($ai_value['sub_items']);
 					unset($ai_value['show_subitems']);
 					
+					$sub_items_dels = $ai_value['sub_items_dels'];
+					unset($ai_value['sub_items_dels']);
+					
+					# delete sub items
+					if ($sub_items_dels) {
+						
+						$con->table = "aiv_sub_items";
+						$delete_sub_items = array("id"=>implode(",",$sub_items_dels));
+						$con->deleteData($delete_sub_items);						
+						
+					};			
+					
 					$con->table = "aspect_item_values";
 					if ($ai_value['id']) {
 						
+						$save_si_value = $con->updateData($ai_value,'id');
 						$vsi_id = $ai_value['id'];
 						
 					} else {
@@ -211,6 +325,8 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 					
 						$con->table = "aiv_sub_items";
 						if ($vsi['id']) {						
+							
+							$save_vsi = $con->updateData($vsi,'id');
 							
 						} else {
 							

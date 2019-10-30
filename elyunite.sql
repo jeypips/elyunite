@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2019 at 04:02 PM
+-- Generation Time: Oct 30, 2019 at 04:53 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -57,8 +57,11 @@ CREATE TABLE `aiv_sub_items` (
   `vsi_id` int(11) DEFAULT NULL,
   `display` varchar(500) DEFAULT NULL,
   `vsi_value` varchar(100) DEFAULT NULL,
+  `vsi_value_other` tinyint(4) DEFAULT NULL,
   `vsi_min` varchar(100) DEFAULT NULL,
+  `min_below` tinyint(4) DEFAULT NULL,
   `vsi_max` varchar(100) DEFAULT NULL,
+  `max_above` tinyint(4) DEFAULT NULL,
   `data_type` int(11) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -67,12 +70,12 @@ CREATE TABLE `aiv_sub_items` (
 -- Dumping data for table `aiv_sub_items`
 --
 
-INSERT INTO `aiv_sub_items` (`id`, `vsi_id`, `display`, `vsi_value`, `vsi_min`, `vsi_max`, `data_type`, `system_log`) VALUES
-(1, 2, 'Buy and Sell', 'Buy and Sell', NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(2, 2, 'Tourism Related', 'Tourism Related', NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(3, 2, 'Agriculture, Fishery, Livestock', 'Agriculture, Fishery, Livestock', NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(4, 2, 'Services (Manicure, masseur)', 'Services (Manicure, masseur)', NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(5, 2, 'Others', 'Others', NULL, NULL, NULL, '2019-10-28 20:40:29');
+INSERT INTO `aiv_sub_items` (`id`, `vsi_id`, `display`, `vsi_value`, `vsi_value_other`, `vsi_min`, `min_below`, `vsi_max`, `max_above`, `data_type`, `system_log`) VALUES
+(1, 2, 'Buy and Sell', 'Buy and Sell', NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(2, 2, 'Tourism Related', 'Tourism Related', NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(3, 2, 'Agriculture, Fishery, Livestock', 'Agriculture, Fishery, Livestock', NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(4, 2, 'Services (Manicure, masseur)', 'Services (Manicure, masseur)', NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(5, 2, 'Others', 'Others', NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29');
 
 -- --------------------------------------------------------
 
@@ -106,8 +109,11 @@ CREATE TABLE `aspect_item_values` (
   `aspect_item_id` int(11) DEFAULT NULL,
   `display` varchar(500) DEFAULT NULL,
   `siv_value` varchar(100) DEFAULT NULL,
+  `siv_value_other` tinyint(4) DEFAULT NULL,
   `siv_min` varchar(100) DEFAULT NULL,
+  `min_below` tinyint(4) DEFAULT NULL,
   `siv_max` varchar(100) DEFAULT NULL,
+  `max_above` tinyint(4) DEFAULT NULL,
   `data_type` int(11) DEFAULT NULL,
   `row_type` int(11) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -117,12 +123,12 @@ CREATE TABLE `aspect_item_values` (
 -- Dumping data for table `aspect_item_values`
 --
 
-INSERT INTO `aspect_item_values` (`id`, `aspect_item_id`, `display`, `siv_value`, `siv_min`, `siv_max`, `data_type`, `row_type`, `system_log`) VALUES
-(1, 1, 'Employed', 'Employed', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(2, 1, 'Self-employed', 'Self-employed', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(3, 1, 'Unemployed', 'Unemployed', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(4, 1, 'Schooling', 'Schooling', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(5, 1, 'Retired', 'Retired', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29');
+INSERT INTO `aspect_item_values` (`id`, `aspect_item_id`, `display`, `siv_value`, `siv_value_other`, `siv_min`, `min_below`, `siv_max`, `max_above`, `data_type`, `row_type`, `system_log`) VALUES
+(1, 1, 'Employed', 'Employed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(2, 1, 'Self-employed', 'Self-employed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(3, 1, 'Unemployed', 'Unemployed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(4, 1, 'Schooling', 'Schooling', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(5, 1, 'Retired', 'Retired', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29');
 
 -- --------------------------------------------------------
 
@@ -201,8 +207,11 @@ CREATE TABLE `section_item_values` (
   `section_item_id` int(11) DEFAULT NULL,
   `display` varchar(500) DEFAULT NULL,
   `siv_value` varchar(100) DEFAULT NULL,
+  `siv_value_other` tinyint(4) DEFAULT NULL,
   `siv_min` varchar(100) DEFAULT NULL,
+  `min_below` tinyint(4) DEFAULT NULL,
   `siv_max` varchar(100) DEFAULT NULL,
+  `max_above` tinyint(4) DEFAULT NULL,
   `data_type` int(11) DEFAULT NULL,
   `row_type` int(11) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -212,19 +221,19 @@ CREATE TABLE `section_item_values` (
 -- Dumping data for table `section_item_values`
 --
 
-INSERT INTO `section_item_values` (`id`, `section_item_id`, `display`, `siv_value`, `siv_min`, `siv_max`, `data_type`, `row_type`, `system_log`) VALUES
-(1, 1, 'Male', 'Male', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(2, 1, 'Female', 'Female', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(3, 2, 'Single', 'Single', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(4, 2, 'Married', 'Married', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(5, 2, 'Live-in', 'Live-in', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(6, 2, 'Widowed', 'Widowed', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(7, 2, 'Separated', 'Separated', NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
-(8, 3, '18 - 29 years old', NULL, '18', '29', NULL, NULL, '2019-10-28 20:40:29'),
-(9, 3, '30 - 39 years old', NULL, '30', '39', NULL, NULL, '2019-10-28 20:40:29'),
-(10, 3, '40 - 49 years old', NULL, '40', '49', NULL, NULL, '2019-10-28 20:40:29'),
-(11, 3, '50 - 59 years old', NULL, '50', '59', NULL, NULL, '2019-10-28 20:40:29'),
-(12, 3, '60 years old and above', NULL, '60', '60', NULL, NULL, '2019-10-28 20:40:29');
+INSERT INTO `section_item_values` (`id`, `section_item_id`, `display`, `siv_value`, `siv_value_other`, `siv_min`, `min_below`, `siv_max`, `max_above`, `data_type`, `row_type`, `system_log`) VALUES
+(1, 1, 'Male', 'Male', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(2, 1, 'Female', 'Female', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(3, 2, 'Single', 'Single', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(4, 2, 'Married', 'Married', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(5, 2, 'Live-in', 'Live-in', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(6, 2, 'Widowed', 'Widowed', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(7, 2, 'Separated', 'Separated', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(8, 3, '18 - 29 years old', NULL, NULL, '18', NULL, '29', NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(9, 3, '30 - 39 years old', NULL, NULL, '30', NULL, '39', NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(10, 3, '40 - 49 years old', NULL, NULL, '40', NULL, '49', NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(11, 3, '50 - 59 years old', NULL, NULL, '50', NULL, '59', NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(12, 3, '60 years old and above', NULL, NULL, '60', NULL, '60', NULL, NULL, NULL, '2019-10-28 20:40:29');
 
 -- --------------------------------------------------------
 
@@ -237,8 +246,11 @@ CREATE TABLE `siv_sub_items` (
   `vsi_id` int(11) DEFAULT NULL,
   `display` varchar(500) DEFAULT NULL,
   `vsi_value` varchar(100) DEFAULT NULL,
+  `vsi_value_other` tinyint(4) DEFAULT NULL,
   `vsi_min` varchar(100) DEFAULT NULL,
+  `min_below` tinyint(4) DEFAULT NULL,
   `vsi_max` varchar(100) DEFAULT NULL,
+  `max_above` tinyint(4) DEFAULT NULL,
   `data_type` int(11) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -380,12 +392,12 @@ ALTER TABLE `aiv_sub_items`
 -- AUTO_INCREMENT for table `aspects_items`
 --
 ALTER TABLE `aspects_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `aspect_item_values`
 --
 ALTER TABLE `aspect_item_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -395,7 +407,7 @@ ALTER TABLE `groups`
 -- AUTO_INCREMENT for table `sections_aspects`
 --
 ALTER TABLE `sections_aspects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `sections_items`
 --
@@ -410,7 +422,7 @@ ALTER TABLE `section_item_values`
 -- AUTO_INCREMENT for table `siv_sub_items`
 --
 ALTER TABLE `siv_sub_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `surveys`
 --

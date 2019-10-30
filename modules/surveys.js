@@ -54,9 +54,9 @@ function form() {
 			}			
 		];
 		
-		scope.item_type_selected = function(value) {
-			let selected = $filter('filter')(scope.item_types, {id: value});
-			return (value && selected.length) ? selected[0].description : 'Not set';			
+		scope.item_type_selected = function(item_type) {
+			let selected = $filter('filter')(scope.item_types, {id: item_type});
+			return (item_type && selected.length) ? selected[0].description : 'Not set';			
 		};
 		
 		scope.text_input_types = [
@@ -90,127 +90,11 @@ function form() {
 			let selected = $filter('filter')(scope.multi_rows_row_types, {id: value});
 			return (value && selected.length) ? selected[0].description : 'Not set';			
 		};
-
-		/* 
-		scope.survey = {
-			id: 0,
-			name: '',
-			description: '',
-			sections: [
-				{
-					id: 0,
-					section_name: '',
-					items: [
-						{
-							id: 0,
-							name: '',
-							item_type: 1,
-							values: [
-								{
-									id: 0,
-									display: '',
-									item_value: '',
-									min: 0,
-									max: 0,
-									sub_items: []
-								}
-							]
-						},
-						{
-							id: 0,
-							name: '',
-							item_type: 6,
-							values: [
-								{
-									id: 0,
-									display: '',
-									item_value: '',
-									min: 0,
-									max: 0,
-									row_type: 1,
-									sub_items: []
-								}
-							]
-						},
-						{
-							id: 0,
-							name: '',
-							item_type: 7,
-							values: [
-								{
-									id: 0,
-									display: '',
-									item_value: '',
-									min: 0,
-									max: 0,
-									row_type: 1,
-									sub_items: []
-								}
-							]
-						}						
-					],
-					aspects: [
-						{
-							id: 0,
-							name: '',
-							items: [
-								{
-									id: 0,
-									name: '',
-									item_type: 1,
-									values: [
-										{
-											id: 0,
-											display: '',
-											min: 0,
-											max: 0
-										}									
-									]
-								},
-								{
-									id: 0,
-									name: '',
-									item_type: 6,
-									values: [
-										{
-											id: 0,
-											display: '',
-											item_value: '',
-											min: 0,
-											max: 0,
-											row_type: 1,
-											sub_items: []
-										}
-									]
-								},
-								{
-									id: 0,
-									name: '',
-									item_type: 7,
-									values: [
-										{
-											id: 0,
-											display: '',
-											item_value: '',
-											min: 0,
-											max: 0,
-											row_type: 1,
-											sub_items: []
-										}
-									]
-								}								
-							]
-						}
-					],
-				}
-			]
-		};
-		 */
 		
 		scope.survey = {};
 		scope.survey.id = 0;
 		scope.survey.sections = [];
-		scope.survey.section_dels = [];
+		scope.survey.sections_dels = [];
 
 		scope.surveys = []; // list
 		
@@ -309,7 +193,7 @@ function form() {
 		scope.survey = {};
 		scope.survey.id = 0;
 		scope.survey.sections = [];
-		scope.survey.section_dels = [];		
+		scope.survey.sections_dels = [];		
 		
 		$('#survey-main').load('forms/survey.html', function() {
 			$compile($('#survey-main')[0])(scope);
@@ -346,6 +230,8 @@ function form() {
 				$compile($('#survey-main')[0])(scope);
 				scope.survey = response.data;
 			});
+			
+			scope.checks.items = [];
 			
 			bui.hide();
 			
@@ -384,11 +270,10 @@ function form() {
 			if (scope.survey.id == 0) {
 				// scope.survey.id = response.data;
 				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'New survey successfully added.');
+				self.list(scope);
 			} else {
 				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Survey info successfully updated.');
 			}
-			
-			self.list(scope);
 			
 		}, function myError(response) {
 			
@@ -447,7 +332,9 @@ function form() {
 			scope.survey.sections.push({
 				id: 0,
 				items: [],
-				aspects: []
+				items_dels: [],
+				aspects: [],
+				aspects_dels: []
 			});
 			
 		},
@@ -455,7 +342,7 @@ function form() {
 		remove: function(scope,ss) {
 		
 			if (ss.id > 0) {
-				// self.survey.checkbox_dels.push(row.id);
+				scope.survey.sections_dels.push(ss.id);
 			};
 			
 			let sections = scope.survey.sections;
@@ -489,19 +376,20 @@ function form() {
 
 			scope.survey.sections[ss_index].items.push({
 				id: 0,
-				values: []
+				values: [],
+				values_dels: []
 			});
 			
 		},
 		
-		remove: function(scope,ss,ssi) {
-		
-			// if (row.id > 0) {
-				// self.survey.checkbox_dels.push(row.id);
-			// };
+		remove: function(scope,ss,ssi) {			
 			
 			let ss_index = scope.survey.sections.indexOf(ss);
 			let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
+			
+			if (ssi.id > 0) {
+				scope.survey.sections[ss_index].items_dels.push(ssi.id);
+			};			
 			
 			let section_items = scope.survey.sections[ss_index].items;
 			scope.survey.sections[ss_index].items = [];	
@@ -533,19 +421,20 @@ function form() {
 
 			scope.survey.sections[ss_index].aspects.push({
 				id: 0,
-				items: []
+				items: [],
+				items_dels: []			
 			});
 			
 		},
 		
 		remove: function(scope,ss,sa) {
-		
-			// if (row.id > 0) {
-				// self.survey.checkbox_dels.push(row.id);
-			// };
 			
 			let ss_index = scope.survey.sections.indexOf(ss);
 			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
+			
+			if (sa.id > 0) {
+				scope.survey.sections[ss_index].aspects_dels.push(sa.id);
+			};			
 			
 			let section_aspects = scope.survey.sections[ss_index].aspects;
 			scope.survey.sections[ss_index].aspects = [];
@@ -578,20 +467,21 @@ function form() {
 			
 			scope.survey.sections[ss_index].items[ssi_index].values.push({
 				id: 0,
-				sub_items: []
+				sub_items: [],
+				sub_items_dels: []
 			});			
 			
 		},
 		
 		remove: function(scope,ss,ssi,v) {
-		
-			// if (row.id > 0) {
-				// self.survey.checkbox_dels.push(row.id);
-			// };
 			
 			let ss_index = scope.survey.sections.indexOf(ss);
 			let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
 			let v_index = scope.survey.sections[ss_index].items[ssi_index].values.indexOf(v);
+			
+			if (v.id > 0) {
+				scope.survey.sections[ss_index].items[ssi_index].values_dels.push(v.id);
+			};			
 			
 			let section_item_values = scope.survey.sections[ss_index].items[ssi_index].values;
 			scope.survey.sections[ss_index].items[ssi_index].values = [];
@@ -624,20 +514,21 @@ function form() {
 			
 			scope.survey.sections[ss_index].aspects[sa_index].items.push({
 				id: 0,
-				values: []
+				values: [],
+				values_dels: []
 			});
 			
 		},
 		
 		remove: function(scope,ss,sa,sai) {
-		
-			// if (row.id > 0) {
-				// self.survey.checkbox_dels.push(row.id);
-			// };
 			
 			let ss_index = scope.survey.sections.indexOf(ss);
 			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
 			let sai_index = scope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
+			
+			if (sai.id > 0) {
+				scope.survey.sections[ss_index].aspects[sa_index].items_dels.push(sai.id);
+			};
 			
 			let aspect_items = scope.survey.sections[ss_index].aspects[sa_index].items;
 			scope.survey.sections[ss_index].aspects[sa_index].items = [];
@@ -671,21 +562,22 @@ function form() {
 			
 			scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.push({
 				id: 0,
-				sub_items: []
+				sub_items: [],
+				sub_items_dels: []				
 			});		
 			
 		},
 		
 		remove: function(scope,ss,sa,sai,v) {
-		
-			// if (row.id > 0) {
-				// self.survey.checkbox_dels.push(row.id);
-			// };
 			
 			let ss_index = scope.survey.sections.indexOf(ss);
 			let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
 			let sai_index = scope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
 			let v_index = scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.indexOf(v);
+			
+			if (v.id > 0) {
+				scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values_dels.push(v.id);
+			};			
 			
 			let aspect_item_values = scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values;
 			scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values = [];
@@ -719,7 +611,13 @@ function form() {
 			
 		},
 		
-		remove: function(scope,rows,row) {
+		remove: function(scope,v,rows,row) {
+
+			if (row.id > 0) {
+				
+				v.sub_items_dels.push(row.id);
+				
+			};
 
 			let index = rows.indexOf(row);
 			

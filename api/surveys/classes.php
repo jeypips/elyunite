@@ -23,7 +23,7 @@ class survey {
 		
 		$survey = $survey[0];
 		$survey['sections'] = $this->sections($this->id);
-		$survey['section_dels'] = [];
+		$survey['sections_dels'] = [];
 		
 		return $survey;
 		
@@ -36,7 +36,9 @@ class survey {
 		foreach ($sections as $i => $section) {
 			
 			$sections[$i]['items'] = $this->section_items($section['id']);
-			$sections[$i]['aspects'] = $this->section_aspects($section['id']);			
+			$sections[$i]['items_dels'] = [];
+			$sections[$i]['aspects'] = $this->section_aspects($section['id']);
+			$sections[$i]['aspects_dels'] = [];
 			
 		};
 		
@@ -49,8 +51,9 @@ class survey {
 		$items = $this->con->getData("SELECT id, section_id, item_name, item_type FROM sections_items WHERE section_id = $id");
 		
 		foreach ($items as $i => $item) {
-			
+						
 			$items[$i]['values'] = $this->section_item_values($item['id']);
+			$items[$i]['values_dels'] = [];
 			
 		}
 		
@@ -65,6 +68,7 @@ class survey {
 		foreach ($aspects as $i => $aspect) {
 			
 			$aspects[$i]['items'] = $this->aspect_items($aspect['id']);
+			$aspects[$i]['items_dels'] = [];		
 			
 		}
 		
@@ -79,6 +83,7 @@ class survey {
 		foreach ($items as $i => $item) {
 			
 			$items[$i]['values'] = $this->aspect_item_values($item['id']);
+			$items[$i]['values_dels'] = [];
 			
 		}
 		
@@ -88,13 +93,17 @@ class survey {
 	
 	private function section_item_values($id) {
 		
-		$item_values = $this->con->getData("SELECT id, section_item_id, display, siv_value, siv_min, siv_max, data_type, row_type FROM section_item_values WHERE section_item_id = $id");
+		$item_values = $this->con->getData("SELECT id, section_item_id, display, siv_value, siv_value_other, siv_min, min_below, siv_max, max_above, data_type, row_type FROM section_item_values WHERE section_item_id = $id");
 		
 		foreach ($item_values as $i => $item_value) {
 			
 			$sub_items = $this->siv_sub_items($item_value['id']);
 			$item_values[$i]['show_subitems'] = (count($sub_items))?true:false;
 			$item_values[$i]['sub_items'] = $sub_items;
+			$item_values[$i]['sub_items_dels'] = [];
+			$item_values[$i]['siv_value_other'] = ($item_value['siv_value_other']==1)?true:false;
+			$item_values[$i]['min_below'] = ($item_value['min_below']==1)?true:false;
+			$item_values[$i]['max_above'] = ($item_value['max_above']==1)?true:false;
 			
 		}
 		
@@ -104,13 +113,17 @@ class survey {
 	
 	private function aspect_item_values($id) {
 		
-		$item_values = $this->con->getData("SELECT id, aspect_item_id, display, siv_value, siv_min, siv_max, data_type, row_type FROM aspect_item_values WHERE aspect_item_id = $id");
+		$item_values = $this->con->getData("SELECT id, aspect_item_id, display, siv_value, siv_value_other, siv_min, min_below, siv_max, max_above, data_type, row_type FROM aspect_item_values WHERE aspect_item_id = $id");
 		
 		foreach ($item_values as $i => $item_value) {
 			
 			$sub_items = $this->aiv_sub_items($item_value['id']);
 			$item_values[$i]['show_subitems'] = (count($sub_items))?true:false;
 			$item_values[$i]['sub_items'] = $sub_items;
+			$item_values[$i]['sub_items_dels'] = [];
+			$item_values[$i]['siv_value_other'] = ($item_value['siv_value_other']==1)?true:false;			
+			$item_values[$i]['min_below'] = ($item_value['min_below']==1)?true:false;			
+			$item_values[$i]['max_above'] = ($item_value['max_above']==1)?true:false;			
 			
 		}
 		
@@ -120,7 +133,13 @@ class survey {
 	
 	private function siv_sub_items($id) {
 		
-		$sub_items = $this->con->getData("SELECT id, vsi_id, display, vsi_value, vsi_min, vsi_max, data_type FROM siv_sub_items WHERE vsi_id = $id");
+		$sub_items = $this->con->getData("SELECT id, vsi_id, display, vsi_value, vsi_value_other, vsi_min, min_below, vsi_max, max_above, data_type FROM siv_sub_items WHERE vsi_id = $id");
+
+		foreach ($sub_items as $i => $si) {
+			
+			$sub_items[$i]['vsi_value_other'] = ($si['vsi_value_other']==1)?true:false;
+			
+		};
 		
 		return $sub_items;
 		
@@ -128,7 +147,13 @@ class survey {
 	
 	private function aiv_sub_items($id) {
 		
-		$sub_items = $this->con->getData("SELECT id, vsi_id, display, vsi_value, vsi_min, vsi_max, data_type FROM aiv_sub_items WHERE vsi_id = $id");
+		$sub_items = $this->con->getData("SELECT id, vsi_id, display, vsi_value, vsi_value_other, vsi_min, min_below, vsi_max, max_above, data_type FROM aiv_sub_items WHERE vsi_id = $id");
+		
+		foreach ($sub_items as $i => $si) {
+			
+			$sub_items[$i]['vsi_value_other'] = ($si['vsi_value_other']==1)?true:false;
+			
+		};		
 		
 		return $sub_items;
 		
