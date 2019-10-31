@@ -114,7 +114,7 @@
 																		</td>
 																		<td ng-show="(ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 6)">
 																			<div class="popover-wrapper">
-																				<input type="checkbox" ng-model="v.siv_value_other" ng-checked="v.siv_value_other" style="display: inline-block; margin-right: 3px; position: relative;">
+																				<input type="checkbox" ng-show="ssi.item_type == 4" ng-model="v.siv_value_other" ng-checked="v.siv_value_other" style="display: inline-block; margin-right: 3px; position: relative;">
 																				<a href="javascript:;" editable-text="v.siv_value" e-single>{{v.siv_value || "Value"}}</a>
 																			</div>																			
 																		</td>
@@ -155,7 +155,7 @@
 																						</td>
 																						<td ng-show="(ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 6) || (ssi.item_type == 7)">
 																							<div class="popover-wrapper">
-																								<input type="checkbox" ng-model="vsi.vsi_value_other" ng-checked="vsi.vsi_value_other" style="display: inline-block; margin-right: 3px; position: relative;">
+																								<input type="checkbox" ng-show="ssi.item_type == 4" ng-model="vsi.vsi_value_other" ng-checked="vsi.vsi_value_other" style="display: inline-block; margin-right: 3px; position: relative;">
 																								<a href="javascript:;" editable-text="vsi.vsi_value" e-single>{{vsi.vsi_value || "Value"}}</a>
 																							</div>																			
 																						</td>
@@ -275,7 +275,7 @@
 																				</td>
 																				<td ng-show="(sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 6)">
 																					<div class="popover-wrapper">
-																						<input type="checkbox" ng-model="v.siv_value_other" ng-checked="v.siv_value_other" style="display: inline-block; margin-right: 3px; position: relative;">
+																						<input type="checkbox" ng-show="sai.item_type == 4" ng-model="v.siv_value_other" ng-checked="v.siv_value_other" style="display: inline-block; margin-right: 3px; position: relative;">
 																						<a href="javascript:;" editable-text="v.siv_value" e-single>{{v.siv_value || "Value"}}</a>
 																					</div>																			
 																				</td>
@@ -316,7 +316,7 @@
 																								</td>
 																								<td ng-show="(sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 6) || (sai.item_type == 7)">
 																									<div class="popover-wrapper">
-																										<input type="checkbox" ng-model="vsi.vsi_value_other" ng-checked="vsi.vsi_value_other" style="display: inline-block; margin-right: 3px; position: relative;">																									
+																										<input type="checkbox" ng-show="sai.item_type == 4" ng-model="vsi.vsi_value_other" ng-checked="vsi.vsi_value_other" style="display: inline-block; margin-right: 3px; position: relative;">																									
 																										<a href="javascript:;" editable-text="vsi.vsi_value" e-single>{{vsi.vsi_value || "Value"}}</a>
 																									</div>																			
 																								</td>

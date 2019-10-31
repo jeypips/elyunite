@@ -117,7 +117,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 		# section items
 		foreach ($section_items as $section_item) {
 			
-			$section_item['section_id'] = $section_id;			
+			$section_item['section_id'] = $section_id;		
 			
 			$section_item_values = $section_item['values'];
 			unset($section_item['values']);
@@ -150,6 +150,106 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 			
 			# section item values
 			foreach ($section_item_values as $si_value) {
+				
+				switch ($section_item['item_type']) {
+					
+					case 1: # Bracket
+					
+						unset($si_value['siv_value']);
+						unset($si_value['siv_value_other']);
+						// $si_value['siv_min'];
+						// $si_value['min_below'];
+						// $si_value['siv_max'];
+						// $si_value['max_above'];
+						unset($si_value['data_type']);
+						unset($si_value['row_type']);
+						
+						$si_value['min_below'] = ($si_value['min_below'])?1:0;
+						$si_value['max_above'] = ($si_value['max_above'])?1:0;							
+					
+					break;
+					
+					case 2: # Checkbox
+					
+						// $si_value['siv_value'];
+						unset($si_value['siv_value_other']);
+						unset($si_value['siv_min']);
+						unset($si_value['min_below']);
+						unset($si_value['siv_max']);
+						unset($si_value['max_above']);
+						unset($si_value['data_type']);
+						unset($si_value['row_type']);					
+					
+					break;
+					
+					case 3: # Text Input
+					
+						unset($si_value['siv_value']);
+						unset($si_value['siv_value_other']);
+						unset($si_value['siv_min']);
+						unset($si_value['min_below']);
+						unset($si_value['siv_max']);
+						unset($si_value['max_above']);
+						// $si_value['data_type'];
+						unset($si_value['row_type']);						
+					
+					break;
+					
+					case 4: # Radios
+					
+						// $si_value['siv_value'];
+						// $si_value['siv_value_other'];
+						unset($si_value['siv_min']);
+						unset($si_value['min_below']);
+						unset($si_value['siv_max']);
+						unset($si_value['max_above']);
+						unset($si_value['data_type']);
+						unset($si_value['row_type']);
+
+						$si_value['siv_value_other'] = ($si_value['siv_value_other'])?1:0;						
+					
+					break;
+					
+					case 5: # Selections
+					
+						// $si_value['siv_value'];
+						unset($si_value['siv_value_other']);
+						unset($si_value['siv_min']);
+						unset($si_value['min_below']);
+						unset($si_value['siv_max']);
+						unset($si_value['max_above']);
+						unset($si_value['data_type']);
+						unset($si_value['row_type']);					
+					
+					break;
+					
+					case 6: # Single Row
+					
+						// $si_value['siv_value'];
+						unset($si_value['siv_value_other']);
+						unset($si_value['siv_min']);
+						unset($si_value['min_below']);
+						unset($si_value['siv_max']);
+						unset($si_value['max_above']);
+						unset($si_value['data_type']);
+						unset($si_value['row_type']);					
+					
+					break;
+					
+					case 7: # Multi Rows
+					
+						unset($si_value['siv_value']);
+						unset($si_value['siv_value_other']);
+						unset($si_value['siv_min']);
+						unset($si_value['min_below']);
+						unset($si_value['siv_max']);
+						unset($si_value['max_above']);
+						// $si_value['data_type'];
+						unset($si_value['row_type']);						
+					
+					break;
+					
+				};
 				
 				$si_value['section_item_id'] = $section_item_id;
 				
@@ -186,7 +286,107 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 				# section item value sub items
 				foreach ($value_sub_items as $vsi) {
 					
-					$vsi['vsi_id'] = $vsi_id;
+					switch ($section_item['item_type']) {
+						
+						case 1: # Bracket
+						
+							unset($vsi['vsi_value']);
+							unset($vsi['vsi_value_other']);
+							// $vsi['vsi_min'];
+							// $vsi['min_below'];
+							// $vsi['vsi_max'];
+							// $vsi['max_above'];
+							unset($vsi['data_type']);
+							unset($vsi['row_type']);
+							
+							$vsi['vsi_min'] = ($vsi['vsi_min'])?1:0;
+							$vsi['vsi_max'] = ($vsi['vsi_max'])?1:0;								
+						
+						break;
+						
+						case 2: # Checkbox
+						
+							// $vsi['vsi_value'];
+							unset($vsi['vsi_value_other']);
+							unset($vsi['vsi_min']);
+							unset($vsi['min_below']);
+							unset($vsi['vsi_max']);
+							unset($vsi['max_above']);
+							unset($vsi['data_type']);
+							unset($vsi['row_type']);					
+						
+						break;
+						
+						case 3: # Text Input
+						
+							unset($vsi['vsi_value']);
+							unset($vsi['vsi_value_other']);
+							unset($vsi['vsi_min']);
+							unset($vsi['min_below']);
+							unset($vsi['vsi_max']);
+							unset($vsi['max_above']);
+							// $vsi['data_type'];
+							unset($vsi['row_type']);						
+						
+						break;
+						
+						case 4: # Radios
+						
+							// $vsi['vsi_value'];
+							// $vsi['vsi_value_other'];
+							unset($vsi['vsi_min']);
+							unset($vsi['min_below']);
+							unset($vsi['vsi_max']);
+							unset($vsi['max_above']);
+							unset($vsi['data_type']);
+							unset($vsi['row_type']);
+
+							$vsi['vsi_value_other'] = ($vsi['vsi_value_other'])?1:0;							
+						
+						break;
+						
+						case 5: # Selections
+						
+							// $vsi['vsi_value'];
+							unset($vsi['vsi_value_other']);
+							unset($vsi['vsi_min']);
+							unset($vsi['min_below']);
+							unset($vsi['vsi_max']);
+							unset($vsi['max_above']);
+							unset($vsi['data_type']);
+							unset($vsi['row_type']);					
+						
+						break;
+						
+						case 6: # Single Row
+						
+							// $vsi['vsi_value'];
+							unset($vsi['vsi_value_other']);
+							unset($vsi['vsi_min']);
+							unset($vsi['min_below']);
+							unset($vsi['vsi_max']);
+							unset($vsi['max_above']);
+							unset($vsi['data_type']);
+							unset($vsi['row_type']);					
+						
+						break;
+						
+						case 7: # Multi Rows
+						
+							unset($vsi['vsi_value']);
+							unset($vsi['vsi_value_other']);
+							unset($vsi['vsi_min']);
+							unset($vsi['min_below']);
+							unset($vsi['vsi_max']);
+							unset($vsi['max_above']);
+							// $vsi['data_type'];
+							unset($vsi['row_type']);						
+						
+						break;
+						
+					};					
+					
+					$vsi['vsi_id'] = $vsi_id;			
 				
 					$con->table = "siv_sub_items";
 					if ($vsi['id']) {
@@ -286,6 +486,106 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 				# aspect item values
 				foreach ($aspect_item_values as $ai_value) {
 					
+					switch ($aspect_item['item_type']) {
+						
+						case 1: # Bracket
+						
+							unset($ai_value['siv_value']);
+							unset($ai_value['siv_value_other']);
+							// $ai_value['siv_min'];
+							// $ai_value['min_below'];
+							// $ai_value['siv_max'];
+							// $ai_value['max_above'];
+							unset($ai_value['data_type']);
+							unset($ai_value['row_type']);
+							
+							$ai_value['min_below'] = ($ai_value['min_below'])?1:0;
+							$ai_value['max_above'] = ($ai_value['max_above'])?1:0;								
+						
+						break;
+						
+						case 2: # Checkbox
+						
+							// $ai_value['siv_value'];
+							unset($ai_value['siv_value_other']);
+							unset($ai_value['siv_min']);
+							unset($ai_value['min_below']);
+							unset($ai_value['siv_max']);
+							unset($ai_value['max_above']);
+							unset($ai_value['data_type']);
+							unset($ai_value['row_type']);					
+						
+						break;
+						
+						case 3: # Text Input
+						
+							unset($ai_value['siv_value']);
+							unset($ai_value['siv_value_other']);
+							unset($ai_value['siv_min']);
+							unset($ai_value['min_below']);
+							unset($ai_value['siv_max']);
+							unset($ai_value['max_above']);
+							// $ai_value['data_type'];
+							unset($ai_value['row_type']);						
+						
+						break;
+						
+						case 4: # Radios
+						
+							// $ai_value['siv_value'];
+							// $ai_value['siv_value_other'];
+							unset($ai_value['siv_min']);
+							unset($ai_value['min_below']);
+							unset($ai_value['siv_max']);
+							unset($ai_value['max_above']);
+							unset($ai_value['data_type']);
+							unset($ai_value['row_type']);
+
+							$ai_value['siv_value_other'] = ($ai_value['siv_value_other'])?1:0;											
+						
+						break;
+						
+						case 5: # Selections
+						
+							// $ai_value['siv_value'];
+							unset($ai_value['siv_value_other']);
+							unset($ai_value['siv_min']);
+							unset($ai_value['min_below']);
+							unset($ai_value['siv_max']);
+							unset($ai_value['max_above']);
+							unset($ai_value['data_type']);
+							unset($ai_value['row_type']);					
+						
+						break;
+						
+						case 6: # Single Row
+						
+							// $ai_value['siv_value'];
+							unset($ai_value['siv_value_other']);
+							unset($ai_value['siv_min']);
+							unset($ai_value['min_below']);
+							unset($ai_value['siv_max']);
+							unset($ai_value['max_above']);
+							unset($ai_value['data_type']);
+							unset($ai_value['row_type']);					
+						
+						break;
+						
+						case 7: # Multi Rows
+						
+							unset($ai_value['siv_value']);
+							unset($ai_value['siv_value_other']);
+							unset($ai_value['siv_min']);
+							unset($ai_value['min_below']);
+							unset($ai_value['siv_max']);
+							unset($ai_value['max_above']);
+							// $ai_value['data_type'];
+							unset($ai_value['row_type']);						
+						
+						break;
+						
+					};					
+					
 					$ai_value['aspect_item_id'] = $aspect_item_id;
 					
 					$value_sub_items = $ai_value['sub_items'];
@@ -320,6 +620,107 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 					
 					# aspect item value sub items
 					foreach ($value_sub_items as $vsi) {
+						
+						switch ($aspect_item['item_type']) {
+							
+							case 1: # Bracket
+							
+								unset($vsi['vsi_value']);
+								unset($vsi['vsi_value_other']);
+								// $vsi['vsi_min'];
+								// $vsi['min_below'];
+								// $vsi['vsi_max'];
+								// $vsi['max_above'];
+								unset($vsi['data_type']);
+								unset($vsi['row_type']);
+								
+								$vsi['vsi_min'] = ($vsi['vsi_min'])?1:0;
+								$vsi['vsi_max'] = ($vsi['vsi_max'])?1:0;								
+								
+							
+							break;
+							
+							case 2: # Checkbox
+							
+								// $vsi['vsi_value'];
+								unset($vsi['vsi_value_other']);
+								unset($vsi['vsi_min']);
+								unset($vsi['min_below']);
+								unset($vsi['vsi_max']);
+								unset($vsi['max_above']);
+								unset($vsi['data_type']);
+								unset($vsi['row_type']);					
+							
+							break;
+							
+							case 3: # Text Input
+							
+								unset($vsi['vsi_value']);
+								unset($vsi['vsi_value_other']);
+								unset($vsi['vsi_min']);
+								unset($vsi['min_below']);
+								unset($vsi['vsi_max']);
+								unset($vsi['max_above']);
+								// $vsi['data_type'];
+								unset($vsi['row_type']);						
+							
+							break;
+							
+							case 4: # Radios
+							
+								// $vsi['vsi_value'];
+								// $vsi['vsi_value_other'];
+								unset($vsi['vsi_min']);
+								unset($vsi['min_below']);
+								unset($vsi['vsi_max']);
+								unset($vsi['max_above']);
+								unset($vsi['data_type']);
+								unset($vsi['row_type']);
+
+								$vsi['vsi_value_other'] = ($vsi['vsi_value_other'])?1:0;								
+							
+							break;
+							
+							case 5: # Selections
+							
+								// $vsi['vsi_value'];
+								unset($vsi['vsi_value_other']);
+								unset($vsi['vsi_min']);
+								unset($vsi['min_below']);
+								unset($vsi['vsi_max']);
+								unset($vsi['max_above']);
+								unset($vsi['data_type']);
+								unset($vsi['row_type']);					
+							
+							break;
+							
+							case 6: # Single Row
+							
+								// $vsi['vsi_value'];
+								unset($vsi['vsi_value_other']);
+								unset($vsi['vsi_min']);
+								unset($vsi['min_below']);
+								unset($vsi['vsi_max']);
+								unset($vsi['max_above']);
+								unset($vsi['data_type']);
+								unset($vsi['row_type']);					
+							
+							break;
+							
+							case 7: # Multi Rows
+							
+								unset($vsi['vsi_value']);
+								unset($vsi['vsi_value_other']);
+								unset($vsi['vsi_min']);
+								unset($vsi['min_below']);
+								unset($vsi['vsi_max']);
+								unset($vsi['max_above']);
+								// $vsi['data_type'];
+								unset($vsi['row_type']);						
+							
+							break;
+							
+						};						
 						
 						$vsi['vsi_id'] = $vsi_id;
 					
