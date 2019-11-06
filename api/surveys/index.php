@@ -206,7 +206,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 						unset($si_value['data_type']);
 						unset($si_value['row_type']);
 
-						$si_value['siv_value_other'] = ($si_value['siv_value_other'])?1:0;						
+						$si_value['siv_value_other'] = ((isset($si_value['siv_value_other']))&&($si_value['siv_value_other']))?1:0;						
 					
 					break;
 					

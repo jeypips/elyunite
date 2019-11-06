@@ -48,7 +48,7 @@ class survey {
 	
 	private function section_items($id) {
 		
-		$items = $this->con->getData("SELECT id, section_id, item_name, item_type FROM sections_items WHERE section_id = $id");
+		$items = $this->con->getData("SELECT id, section_id, item_name, item_infographic, item_type FROM sections_items WHERE section_id = $id");
 		
 		foreach ($items as $i => $item) {
 						

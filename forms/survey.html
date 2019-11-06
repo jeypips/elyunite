@@ -43,7 +43,7 @@
 			
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					<div ng-repeat="ss in survey.sections">
+					<div ng-repeat="(section_index,ss) in survey.sections track by section_index">
 						<hr>
 						<div class="basic-tb-hd">
 							<button class="btn btn-sm notika-btn-deeporange waves-effect pull-right" ng-click="form.sections.remove(this,ss)"><span style="color: #fff;"><i class="notika-icon notika-trash"></i></span></button>						
@@ -56,7 +56,7 @@
 						</div>
 						<div class="bsc-tbl">						
 							
-							<div class="form-example-wrap" ng-repeat="ssi in ss.items">
+							<div class="form-example-wrap" ng-repeat="(section_item_index,ssi) in ss.items track by section_item_index">
 								<div class="form-example-int form-horizental">
 									<button class="btn btn-xs btn-danger notika-btn-danger waves-effect" ng-click="form.section_items.remove(this,ss,ssi)"><i class="notika-icon notika-trash"></i></button>
 									<div class="form-group">
@@ -90,6 +90,37 @@
 										</div>
 									</div>
 								</div>
+								<div class="form-example-int form-horizental mg-t-15">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+												<label class="hrzn-fm">Infographic</label>
+											</div>
+											<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+												<div class="nk-int-st">
+													<div class="images-container">													
+														<div ng-show="ssi.item_infographic != null" class="image-container">
+															<div class="controls">
+																<a href="javascript:;" class="control-btn remove" remove-ssi-ig="{{section_index}},{{section_item_index}}">
+																	<i class="notika-icon notika-trash"></i>
+																</a>
+															</div>														
+															<img id="ssi_{{section_item_index}}" class="image ssi-infographic" src="{{ssi.item_infographic}}">
+														</div>
+														<input type="file" style="display: none;" id="upload-ssi-infographic_{{section_item_index}}" add-ssi-ig="{{section_index}},{{section_item_index}}">
+														<a ng-show="ssi.item_infographic == null" href="javascript:;" ng-click="form.addSsiIg(this,section_item_index)">
+															<div class="image-container new">
+																<div class="ssi-infographic">
+																	<i class="notika-icon notika-plus-symbol"></i>
+																</div>
+															</div>
+														</a>	
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>								
 								<div class="form-example-int form-horizental mg-t-15">
 									<div class="form-group">
 										<div class="row">
