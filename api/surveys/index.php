@@ -134,6 +134,8 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 				
 			};
 
+			$section_item['use_images'] = ((isset($section_item['use_images']))&&($section_item['use_images']))?1:0;
+
 			$con->table = "sections_items";
 			if ($section_item['id']) {
 				
@@ -164,8 +166,8 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 						unset($si_value['data_type']);
 						unset($si_value['row_type']);
 						
-						$si_value['min_below'] = ($si_value['min_below'])?1:0;
-						$si_value['max_above'] = ($si_value['max_above'])?1:0;							
+						$si_value['min_below'] = ((isset($si_value['min_below']))&&($si_value['min_below']))?1:0;
+						$si_value['max_above'] = ((isset($si_value['max_above']))&&($si_value['max_above']))?1:0;							
 					
 					break;
 					
@@ -232,7 +234,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 						unset($si_value['siv_max']);
 						unset($si_value['max_above']);
 						unset($si_value['data_type']);
-						unset($si_value['row_type']);					
+						unset($si_value['row_type']);
 					
 					break;
 					
@@ -299,8 +301,8 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 							unset($vsi['data_type']);
 							unset($vsi['row_type']);
 							
-							$vsi['vsi_min'] = ($vsi['vsi_min'])?1:0;
-							$vsi['vsi_max'] = ($vsi['vsi_max'])?1:0;								
+							$vsi['vsi_min'] = ((isset($vsi['vsi_min']))&&($vsi['vsi_min']))?1:0;
+							$vsi['vsi_max'] = ((isset($vsi['vsi_max']))&&($vsi['vsi_max']))?1:0;								
 						
 						break;
 						
@@ -341,7 +343,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 							unset($vsi['data_type']);
 							unset($vsi['row_type']);
 
-							$vsi['vsi_value_other'] = ($vsi['vsi_value_other'])?1:0;							
+							$vsi['vsi_value_other'] = ((isset($vsi['vsi_value_other']))&&($vsi['vsi_value_other']))?1:0;							
 						
 						break;
 						
@@ -469,6 +471,8 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 					
 				};				
 
+				$aspect_item['use_images'] = ((isset($aspect_item['use_images']))&&($aspect_item['use_images']))?1:0;
+
 				$con->table = "aspects_items";
 				if ($aspect_item['id']) {
 					
@@ -499,8 +503,8 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 							unset($ai_value['data_type']);
 							unset($ai_value['row_type']);
 							
-							$ai_value['min_below'] = ($ai_value['min_below'])?1:0;
-							$ai_value['max_above'] = ($ai_value['max_above'])?1:0;								
+							$ai_value['min_below'] = ((isset($ai_value['min_below']))&&($ai_value['min_below']))?1:0;
+							$ai_value['max_above'] = ((isset($ai_value['max_above']))&&($ai_value['max_above']))?1:0;								
 						
 						break;
 						
@@ -541,7 +545,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 							unset($ai_value['data_type']);
 							unset($ai_value['row_type']);
 
-							$ai_value['siv_value_other'] = ($ai_value['siv_value_other'])?1:0;											
+							$ai_value['siv_value_other'] = ((isset($ai_value['siv_value_other']))&&($ai_value['siv_value_other']))?1:0;											
 						
 						break;
 						
@@ -634,8 +638,8 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 								unset($vsi['data_type']);
 								unset($vsi['row_type']);
 								
-								$vsi['vsi_min'] = ($vsi['vsi_min'])?1:0;
-								$vsi['vsi_max'] = ($vsi['vsi_max'])?1:0;								
+								$vsi['vsi_min'] = ((isset($vsi['vsi_min']))&&($vsi['vsi_min']))?1:0;
+								$vsi['vsi_max'] = ((isset($vsi['vsi_max']))&&($vsi['vsi_max']))?1:0;								
 								
 							
 							break;
@@ -677,7 +681,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 								unset($vsi['data_type']);
 								unset($vsi['row_type']);
 
-								$vsi['vsi_value_other'] = ($vsi['vsi_value_other'])?1:0;								
+								$vsi['vsi_value_other'] = ((isset($vsi['vsi_value_other']))&&($vsi['vsi_value_other']))?1:0;								
 							
 							break;
 							

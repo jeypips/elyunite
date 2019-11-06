@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 06, 2019 at 04:34 PM
+-- Generation Time: Nov 06, 2019 at 11:14 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -78,6 +78,7 @@ CREATE TABLE `aspects_items` (
   `item_name` varchar(100) DEFAULT NULL,
   `item_type` int(11) DEFAULT NULL,
   `item_infographic` longtext,
+  `use_images` tinyint(4) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -151,6 +152,7 @@ CREATE TABLE `sections_items` (
   `item_name` varchar(100) DEFAULT NULL,
   `item_type` int(11) DEFAULT NULL,
   `item_infographic` longtext,
+  `use_images` tinyint(4) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -323,7 +325,7 @@ ALTER TABLE `aspects_items`
 -- AUTO_INCREMENT for table `aspect_item_values`
 --
 ALTER TABLE `aspect_item_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `groups`
 --

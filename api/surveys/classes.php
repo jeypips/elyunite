@@ -21,7 +21,7 @@ class survey {
 		
 		$survey = $this->con->getData("SELECT id, name, description FROM surveys WHERE id = ".$this->id);
 		
-		$survey = $survey[0];
+		$survey = (count($survey))?$survey[0]:$survey;
 		$survey['sections'] = $this->sections($this->id);
 		$survey['sections_dels'] = [];
 		
@@ -48,12 +48,13 @@ class survey {
 	
 	private function section_items($id) {
 		
-		$items = $this->con->getData("SELECT id, section_id, item_name, item_infographic, item_type FROM sections_items WHERE section_id = $id");
+		$items = $this->con->getData("SELECT id, section_id, item_name, item_infographic, item_type, use_images FROM sections_items WHERE section_id = $id");
 		
 		foreach ($items as $i => $item) {
 						
 			$items[$i]['values'] = $this->section_item_values($item['id']);
 			$items[$i]['values_dels'] = [];
+			$items[$i]['use_images'] = ($item['use_images'])?true:false;
 			
 		}
 		
@@ -78,12 +79,13 @@ class survey {
 	
 	private function aspect_items($id) {
 		
-		$items = $this->con->getData("SELECT id, aspect_id, item_name, item_type FROM aspects_items WHERE aspect_id = $id");
+		$items = $this->con->getData("SELECT id, aspect_id, item_name, item_infographic, item_type, use_images FROM aspects_items WHERE aspect_id = $id");
 		
 		foreach ($items as $i => $item) {
 			
 			$items[$i]['values'] = $this->aspect_item_values($item['id']);
 			$items[$i]['values_dels'] = [];
+			$items[$i]['use_images'] = ($item['use_images'])?true:false;
 			
 		}
 		
@@ -93,7 +95,7 @@ class survey {
 	
 	private function section_item_values($id) {
 		
-		$item_values = $this->con->getData("SELECT id, section_item_id, display, siv_value, siv_value_other, siv_min, min_below, siv_max, max_above, data_type, row_type FROM section_item_values WHERE section_item_id = $id");
+		$item_values = $this->con->getData("SELECT id, section_item_id, display, siv_value, siv_value_other, siv_min, min_below, siv_max, max_above, data_type, row_type, siv_infographic FROM section_item_values WHERE section_item_id = $id");
 		
 		foreach ($item_values as $i => $item_value) {
 			
@@ -113,7 +115,7 @@ class survey {
 	
 	private function aspect_item_values($id) {
 		
-		$item_values = $this->con->getData("SELECT id, aspect_item_id, display, siv_value, siv_value_other, siv_min, min_below, siv_max, max_above, data_type, row_type FROM aspect_item_values WHERE aspect_item_id = $id");
+		$item_values = $this->con->getData("SELECT id, aspect_item_id, display, siv_value, siv_value_other, siv_min, min_below, siv_max, max_above, data_type, row_type, siv_infographic FROM aspect_item_values WHERE aspect_item_id = $id");
 		
 		foreach ($item_values as $i => $item_value) {
 			

@@ -65,6 +65,75 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 		}
 	};	
 	
+}).directive('addSaiIg',function($timeout) {
+
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+		
+			element.bind('click', function() {
+
+
+			});
+
+			element.bind('change', function() {
+
+				let indexes = attrs.addSaiIg;
+				
+				let s_indexes = indexes.split(",");
+				let section_index = s_indexes[0];
+				let aspect_index = s_indexes[1];
+				let aspect_item_index = s_indexes[2];
+
+				var file = ($('#upload-sai-infographic_'+aspect_item_index)[0].files)[0];
+
+				var type = file.type.split("/");
+				
+				let valid_files = ["jpeg","png"];				
+				if (!valid_files.includes(type[1])) return;
+				
+				var eid = "#sai_"+aspect_item_index;
+				// var preview = document.querySelector(eid);
+				var reader  = new FileReader();
+
+				reader.addEventListener("load", function () {
+					// preview.src = reader.result;
+					scope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].item_infographic = reader.result;
+					scope.$apply();
+				}, false);
+
+				if (file) {
+					reader.readAsDataURL(file);
+				};		
+
+			});
+			
+		}
+	};
+		
+}).directive('removeSaiIg',function($timeout) {
+	
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+		
+			element.bind('click', function() {
+
+				let indexes = attrs.removeSaiIg;
+				
+				let s_indexes = indexes.split(",");
+				let section_index = s_indexes[0];
+				let aspect_index = s_indexes[1];
+				let aspect_item_index = s_indexes[2];
+
+				scope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].item_infographic = null;
+				scope.$apply();
+				
+			});
+			
+		}
+	};	
+	
 }).factory('form', function($http,$filter,$compile,$timeout,growl,bootstrapModal,validate,validateDialog,bui){
 
 	function form() {
@@ -118,7 +187,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				{
 					id: 7,
 					description: 'Multi Rows'
-				}			
+				}				
 			];
 			
 			scope.item_type_selected = function(item_type) {
@@ -582,6 +651,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 				scope.survey.sections[ss_index].aspects[sa_index].items.push({
 					id: 0,
+					item_infographic: null,					
 					values: [],
 					values_dels: []
 				});
@@ -700,9 +770,167 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			$('#upload-ssi-infographic_'+i)[0].click();
 			
 		};
+		
+		self.addSivIg = function(scope,i) {
+			
+			$('#upload-siv-infographic_'+i)[0].click();
+			
+		};		
+		
+		self.addSaiIg = function(scope,i) {
+			
+			$('#upload-sai-infographic_'+i)[0].click();
+			
+		};
+
+		self.addSaivIg = function(scope,i) {
+			
+			$('#upload-saiv-infographic_'+i)[0].click();
+			
+		};			
 
 	};
 
 	return new form();
 
-}); 
+}).directive('addSivIg',function($timeout) {
+
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+		
+			element.bind('click', function() {
+
+
+			});
+
+			element.bind('change', function() {
+
+				let indexes = attrs.addSivIg;
+				
+				let s_indexes = indexes.split(",");
+				let section_index = s_indexes[0];
+				let section_item_index = s_indexes[1];
+				let siv_index = s_indexes[2];
+
+				var file = ($('#upload-siv-infographic_'+siv_index)[0].files)[0];
+
+				var type = file.type.split("/");
+				
+				let valid_files = ["jpeg","png"];				
+				if (!valid_files.includes(type[1])) return;
+				
+				var eid = "#siv_"+siv_index;
+				// var preview = document.querySelector(eid);
+				var reader  = new FileReader();
+
+				reader.addEventListener("load", function () {
+					// preview.src = reader.result;
+					scope.survey.sections[section_index].items[section_item_index].values[siv_index].siv_infographic = reader.result;
+					scope.$apply();
+				}, false);
+
+				if (file) {
+					reader.readAsDataURL(file);
+				};		
+
+			});
+			
+		}
+	};
+		
+}).directive('removeSivIg',function($timeout) {
+	
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+		
+			element.bind('click', function() {
+
+				let indexes = attrs.removeSivIg;
+				
+				let s_indexes = indexes.split(",");
+				let section_index = s_indexes[0];
+				let section_item_index = s_indexes[1];
+				let siv_index = s_indexes[2];
+
+				scope.survey.sections[section_index].items[section_item_index].values[siv_index].siv_infographic = null;
+				scope.$apply();
+				
+			});
+			
+		}
+	};	
+	
+}).directive('addSaivIg',function($timeout) {
+
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+		
+			element.bind('click', function() {
+
+
+			});
+
+			element.bind('change', function() {
+
+				let indexes = attrs.addSaivIg;
+				
+				let s_indexes = indexes.split(",");
+				let section_index = s_indexes[0];
+				let aspect_index = s_indexes[1];
+				let aspect_item_index = s_indexes[2];
+				let saiv_index = s_indexes[3];
+
+				var file = ($('#upload-saiv-infographic_'+saiv_index)[0].files)[0];
+
+				var type = file.type.split("/");
+				
+				let valid_files = ["jpeg","png"];				
+				if (!valid_files.includes(type[1])) return;
+				
+				var eid = "#saiv_"+saiv_index;
+				// var preview = document.querySelector(eid);
+				var reader  = new FileReader();
+
+				reader.addEventListener("load", function () {
+					// preview.src = reader.result;
+					scope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].values[saiv_index].siv_infographic = reader.result;
+					scope.$apply();
+				}, false);
+
+				if (file) {
+					reader.readAsDataURL(file);
+				};		
+
+			});
+			
+		}
+	};
+		
+}).directive('removeSaivIg',function($timeout) {
+	
+	return {
+		restrict: 'A',
+		link: function(scope, element, attrs) {
+		
+			element.bind('click', function() {
+
+				let indexes = attrs.removeSaivIg;
+				
+				let s_indexes = indexes.split(",");
+				let section_index = s_indexes[0];
+				let aspect_index = s_indexes[1];
+				let aspect_item_index = s_indexes[2];
+				let saiv_index = s_indexes[3];
+
+				scope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].values[saiv_index].siv_infographic = null;
+				scope.$apply();
+				
+			});
+			
+		}
+	};	
+	
+});
