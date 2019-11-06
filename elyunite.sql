@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 06, 2019 at 04:21 PM
+-- Generation Time: Nov 06, 2019 at 04:34 PM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -99,6 +99,7 @@ CREATE TABLE `aspect_item_values` (
   `max_above` tinyint(4) DEFAULT NULL,
   `data_type` int(11) DEFAULT NULL,
   `row_type` int(11) DEFAULT NULL,
+  `siv_infographic` longtext,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -171,6 +172,7 @@ CREATE TABLE `section_item_values` (
   `max_above` tinyint(4) DEFAULT NULL,
   `data_type` int(11) DEFAULT NULL,
   `row_type` int(11) DEFAULT NULL,
+  `siv_infographic` longtext,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
