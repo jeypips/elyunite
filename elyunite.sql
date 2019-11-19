@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 06, 2019 at 11:14 PM
+-- Generation Time: Nov 19, 2019 at 10:51 AM
 -- Server version: 5.7.11
 -- PHP Version: 7.0.3
 
@@ -66,6 +66,17 @@ CREATE TABLE `aiv_sub_items` (
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `aiv_sub_items`
+--
+
+INSERT INTO `aiv_sub_items` (`id`, `vsi_id`, `display`, `vsi_value`, `vsi_value_other`, `vsi_min`, `min_below`, `vsi_max`, `max_above`, `data_type`, `system_log`) VALUES
+(1, 2, 'Buy and Sell', 'Buy and Sell', 0, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(2, 2, 'Tourism Related', 'Tourism Related', 0, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(3, 2, 'Agriculture, Fishery, Livestock', 'Agriculture, Fishery, Livestock', 0, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(4, 2, 'Services (Manicure, masseur)', 'Services (Manicure, masseur)', 0, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(5, 2, 'Others', 'Others', 0, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29');
+
 -- --------------------------------------------------------
 
 --
@@ -77,10 +88,18 @@ CREATE TABLE `aspects_items` (
   `aspect_id` int(11) DEFAULT NULL,
   `item_name` varchar(100) DEFAULT NULL,
   `item_type` int(11) DEFAULT NULL,
+  `item_presentation` int(11) DEFAULT NULL,
   `item_infographic` longtext,
   `use_images` tinyint(4) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `aspects_items`
+--
+
+INSERT INTO `aspects_items` (`id`, `aspect_id`, `item_name`, `item_type`, `item_presentation`, `item_infographic`, `use_images`, `system_log`) VALUES
+(1, 1, 'Employment Status', 4, NULL, NULL, 0, '2019-10-28 20:40:29');
 
 -- --------------------------------------------------------
 
@@ -103,6 +122,17 @@ CREATE TABLE `aspect_item_values` (
   `siv_infographic` longtext,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `aspect_item_values`
+--
+
+INSERT INTO `aspect_item_values` (`id`, `aspect_item_id`, `display`, `siv_value`, `siv_value_other`, `siv_min`, `min_below`, `siv_max`, `max_above`, `data_type`, `row_type`, `siv_infographic`, `system_log`) VALUES
+(1, 1, 'Employed', 'Employed', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(2, 1, 'Self-employed', 'Self-employed', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(3, 1, 'Unemployed', 'Unemployed', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(4, 1, 'Schooling', 'Schooling', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(5, 1, 'Retired', 'Retired', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29');
 
 -- --------------------------------------------------------
 
@@ -140,6 +170,13 @@ CREATE TABLE `sections_aspects` (
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `sections_aspects`
+--
+
+INSERT INTO `sections_aspects` (`id`, `section_id`, `aspect_name`, `system_log`) VALUES
+(1, 2, 'JOB AND INCOME', '2019-10-28 20:40:29');
+
 -- --------------------------------------------------------
 
 --
@@ -151,10 +188,20 @@ CREATE TABLE `sections_items` (
   `section_id` int(11) DEFAULT NULL,
   `item_name` varchar(100) DEFAULT NULL,
   `item_type` int(11) DEFAULT NULL,
+  `item_presentation` int(11) DEFAULT NULL,
   `item_infographic` longtext,
   `use_images` tinyint(4) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `sections_items`
+--
+
+INSERT INTO `sections_items` (`id`, `section_id`, `item_name`, `item_type`, `item_presentation`, `item_infographic`, `use_images`, `system_log`) VALUES
+(1, 1, 'Sex', 4, NULL, NULL, 0, '2019-10-28 20:40:29'),
+(2, 1, 'Marital Status', 4, NULL, NULL, 0, '2019-10-28 20:40:29'),
+(3, 1, 'Age', 1, NULL, NULL, 0, '2019-10-28 20:40:29');
 
 -- --------------------------------------------------------
 
@@ -177,6 +224,24 @@ CREATE TABLE `section_item_values` (
   `siv_infographic` longtext,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `section_item_values`
+--
+
+INSERT INTO `section_item_values` (`id`, `section_item_id`, `display`, `siv_value`, `siv_value_other`, `siv_min`, `min_below`, `siv_max`, `max_above`, `data_type`, `row_type`, `siv_infographic`, `system_log`) VALUES
+(1, 1, 'Male', 'Male', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(2, 1, 'Female', 'Female', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(3, 2, 'Single', 'Single', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(4, 2, 'Married', 'Married', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(5, 2, 'Live-in', 'Live-in', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(6, 2, 'Widowed', 'Widowed', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(7, 2, 'Separated', 'Separated', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(8, 3, '18 - 29 years old', NULL, NULL, '18', 0, '29', 0, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(9, 3, '30 - 39 years old', NULL, NULL, '30', 0, '39', 0, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(10, 3, '40 - 49 years old', NULL, NULL, '40', 0, '49', 0, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(11, 3, '50 - 59 years old', NULL, NULL, '50', 0, '59', 0, NULL, NULL, NULL, '2019-10-28 20:40:29'),
+(12, 3, '60 years old and above', NULL, NULL, '60', 0, '60', 0, NULL, NULL, NULL, '2019-10-28 20:40:29');
 
 -- --------------------------------------------------------
 
@@ -211,6 +276,13 @@ CREATE TABLE `surveys` (
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `surveys`
+--
+
+INSERT INTO `surveys` (`id`, `name`, `description`, `system_log`) VALUES
+(1, 'Elyunite Survey', 'A description of elyunite sruvey', '2019-10-28 20:40:29');
+
 -- --------------------------------------------------------
 
 --
@@ -223,6 +295,14 @@ CREATE TABLE `surveys_sections` (
   `section_name` varchar(100) DEFAULT NULL,
   `system_log` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `surveys_sections`
+--
+
+INSERT INTO `surveys_sections` (`id`, `survey_id`, `section_name`, `system_log`) VALUES
+(1, 1, 'Basic Information', '2019-10-28 20:40:29'),
+(2, 1, 'Life Satisfaction', '2019-10-28 20:40:29');
 
 --
 -- Indexes for dumped tables
@@ -325,7 +405,7 @@ ALTER TABLE `aspects_items`
 -- AUTO_INCREMENT for table `aspect_item_values`
 --
 ALTER TABLE `aspect_item_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `groups`
 --
@@ -340,12 +420,12 @@ ALTER TABLE `sections_aspects`
 -- AUTO_INCREMENT for table `sections_items`
 --
 ALTER TABLE `sections_items`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `section_item_values`
 --
 ALTER TABLE `section_item_values`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `siv_sub_items`
 --
@@ -360,7 +440,7 @@ ALTER TABLE `surveys`
 -- AUTO_INCREMENT for table `surveys_sections`
 --
 ALTER TABLE `surveys_sections`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- Constraints for dumped tables
 --

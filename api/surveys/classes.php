@@ -5,6 +5,7 @@ class survey {
 	var $con;
 	var $id;
 	var $survey;
+	var $surveys;
 
 	function __construct($con,$id) {
 		
@@ -12,21 +13,42 @@ class survey {
 		$this->id = $id;
 		
 		$survey = $this->info();
+		$surveys = $this->infos();
 		
 		$this->survey = $survey;		
+		$this->surveys = $surveys;		
 		
 	}
 	
 	private function info() {
 		
 		$survey = $this->con->getData("SELECT id, name, description FROM surveys WHERE id = ".$this->id);
-		
-		$survey = (count($survey))?$survey[0]:$survey;
-		$survey['sections'] = $this->sections($this->id);
-		$survey['sections_dels'] = [];
+
+		if (count($survey)) {
+			
+			$survey = $survey[0];
+			$survey['sections'] = $this->sections($this->id);
+			$survey['sections_dels'] = [];			
+			
+		};		
 		
 		return $survey;
 		
+	}
+	
+	private function infos() {
+
+		$surveys = $this->con->getData("SELECT id, name, description FROM surveys");
+
+		foreach ($surveys as $i => $survey) {
+			
+			$surveys[$i]['sections'] = $this->sections($survey['id']);
+			$surveys[$i]['sections_dels'] = [];
+
+		};
+
+		return $surveys;
+
 	}
 	
 	private function sections($id) {
@@ -48,7 +70,7 @@ class survey {
 	
 	private function section_items($id) {
 		
-		$items = $this->con->getData("SELECT id, section_id, item_name, item_infographic, item_type, use_images FROM sections_items WHERE section_id = $id");
+		$items = $this->con->getData("SELECT id, section_id, item_name, item_infographic, item_type, item_presentation, use_images FROM sections_items WHERE section_id = $id");
 		
 		foreach ($items as $i => $item) {
 						
@@ -79,7 +101,7 @@ class survey {
 	
 	private function aspect_items($id) {
 		
-		$items = $this->con->getData("SELECT id, aspect_id, item_name, item_infographic, item_type, use_images FROM aspects_items WHERE aspect_id = $id");
+		$items = $this->con->getData("SELECT id, aspect_id, item_name, item_infographic, item_type, item_presentation, use_images FROM aspects_items WHERE aspect_id = $id");
 		
 		foreach ($items as $i => $item) {
 			
@@ -165,6 +187,12 @@ class survey {
 		
 		return $this->survey;
 		
+	}
+	
+	function getAll() {
+
+		return $this->surveys;
+	
 	}
 	
 }

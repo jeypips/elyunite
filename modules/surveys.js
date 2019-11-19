@@ -227,6 +227,22 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				return (value && selected.length) ? selected[0].description : 'Not set';			
 			};
 			
+			scope.presentations = [
+				{
+					id: 1,
+					description: 'Table',
+				},
+				{
+					id: 2,
+					description: 'Icons',
+				}			
+			];
+
+			scope.item_presentation_selected = function(value) {
+				let selected = $filter('filter')(scope.presentations, {id: value});
+				return (value && selected.length) ? selected[0].description : 'Not set';			
+			};				
+			
 			scope.survey = {};
 			scope.survey.id = 0;
 			scope.survey.sections = [];

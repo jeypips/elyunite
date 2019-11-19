@@ -125,6 +125,10 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 			$values_dels = $section_item['values_dels'];
 			unset($section_item['values_dels']);		
 			
+			if ($section_item['item_type'] != 6) {
+				$section_item['item_presentation'] = null;
+			};
+			
 			# delete item values
 			if (count($values_dels)) {
 				
@@ -462,6 +466,10 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 				$values_dels = $aspect_item['values_dels'];
 				unset($aspect_item['values_dels']);		
 				
+				if ($aspect_item['item_type'] != 6) {
+					$aspect_item['item_presentation'] = null;
+				};
+				
 				# delete item values
 				if (count($values_dels)) {
 					
@@ -781,6 +789,19 @@ $app->get('/get/{id}', function (Request $request, Response $response, array $ar
 	$r = "<pre>".json_encode($survey->get(),JSON_PRETTY_PRINT)."</pre>";
 	return $response->write($r);
 	
+});
+
+$app->get('/all', function (Request $request, Response $response, array $args) {
+
+	require_once 'classes.php';
+	
+	$con = $this->con;
+	$con->table = "surveys";
+
+	$survey = new survey($con,0);
+
+	return $response->withHeader('Access-Control-Allow-Origin','*')->withJson($survey->getAll());
+
 });
 
 # delete account

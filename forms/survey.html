@@ -120,7 +120,23 @@
 											</div>
 										</div>
 									</div>
-								</div>								
+								</div>
+								<div ng-show="ssi.item_type == 6" class="form-example-int form-horizental mg-t-15">
+									<div class="form-group">
+										<div class="row">
+											<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+												<label class="hrzn-fm">Presentation</label>
+											</div>
+											<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+												<div class="nk-int-st">
+													<div class="popover-wrapper">
+														<a href="javascript:;" editable-select="ssi.item_presentation" e-ng-options="ip.id as ip.description for ip in presentations" e-single>{{item_presentation_selected(ssi.item_presentation)}}</a>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 								<div class="form-example-int form-horizental mg-t-15">
 									<div class="form-group">
 										<div class="row">
@@ -306,37 +322,54 @@
 											</div>
 										</div>
 										
-								<div class="form-example-int form-horizental mg-t-15">
-									<div class="form-group">
-										<div class="row">
-											<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
-												<label class="hrzn-fm">Infographic</label>
-											</div>
-											<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
-												<div class="nk-int-st">
-													<div class="images-container">													
-														<div ng-show="sai.item_infographic != null" class="image-container">
-															<div class="controls">
-																<a href="javascript:;" class="control-btn remove" remove-sai-ig="{{section_index}},{{aspect_index}},{{aspect_item_index}}">
-																	<i class="notika-icon notika-trash"></i>
-																</a>
-															</div>														
-															<img id="sai_{{section_item_index}}" class="image ssi-infographic" src="{{sai.item_infographic}}">
-														</div>
-														<input type="file" style="display: none;" id="upload-sai-infographic_{{aspect_item_index}}" add-sai-ig="{{section_index}},{{aspect_index}},{{aspect_item_index}}">
-														<a ng-show="sai.item_infographic == null" href="javascript:;" ng-click="form.addSaiIg(this,aspect_item_index)">
-															<div class="image-container new">
-																<div class="ssi-infographic">
-																	<i class="notika-icon notika-plus-symbol"></i>
-																</div>
+										<div ng-show="sai.item_type == 6" class="form-example-int form-horizental mg-t-15">
+											<div class="form-group">
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+														<label class="hrzn-fm">Presentation</label>
+													</div>
+													<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+														<div class="nk-int-st">
+															<div class="popover-wrapper">
+																<a href="javascript:;" editable-select="sai.item_presentation" e-ng-options="ip.id as ip.description for ip in presentations" e-single>{{item_presentation_selected(sai.item_presentation)}}</a>
 															</div>
-														</a>	
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>										
+										
+										<div class="form-example-int form-horizental mg-t-15">
+											<div class="form-group">
+												<div class="row">
+													<div class="col-lg-2 col-md-3 col-sm-3 col-xs-12">
+														<label class="hrzn-fm">Infographic</label>
+													</div>
+													<div class="col-lg-10 col-md-9 col-sm-9 col-xs-12">
+														<div class="nk-int-st">
+															<div class="images-container">													
+																<div ng-show="sai.item_infographic != null" class="image-container">
+																	<div class="controls">
+																		<a href="javascript:;" class="control-btn remove" remove-sai-ig="{{section_index}},{{aspect_index}},{{aspect_item_index}}">
+																			<i class="notika-icon notika-trash"></i>
+																		</a>
+																	</div>														
+																	<img id="sai_{{section_item_index}}" class="image ssi-infographic" src="{{sai.item_infographic}}">
+																</div>
+																<input type="file" style="display: none;" id="upload-sai-infographic_{{aspect_item_index}}" add-sai-ig="{{section_index}},{{aspect_index}},{{aspect_item_index}}">
+																<a ng-show="sai.item_infographic == null" href="javascript:;" ng-click="form.addSaiIg(this,aspect_item_index)">
+																	<div class="image-container new">
+																		<div class="ssi-infographic">
+																			<i class="notika-icon notika-plus-symbol"></i>
+																		</div>
+																	</div>
+																</a>	
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
 										</div>
-									</div>
-								</div>
 								
 										<div class="form-example-int form-horizental mg-t-15">
 											<div class="form-group">
