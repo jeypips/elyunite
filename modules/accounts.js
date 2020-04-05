@@ -1,19 +1,18 @@
-angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($http,$compile,$timeout,growl,bootstrapModal,validate,bui){
+angular.module('app-module',['bootstrap-growl','bootstrap-modal','form-validator','block-ui']).factory('form', function($rootScope,$http,$compile,$timeout,growl,bootstrapModal,validate,bui){
 
 function form(){
 
 	var self = this;
 	
-	self.data = function(scope){
+	self.data = function() {
 
-		scope.mode = null;
+		$rootScope.mode = null;
 		
-		scope.views = {};
-		scope.views.currentPage = 1;
+		$rootScope.views = {};
 
-		scope.views.list = true;
+		$rootScope.views.list = true;
 			
-		scope.controls = {
+		$rootScope.controls = {
 			ok: {
 				btn: false,
 				label: 'Save'
@@ -28,21 +27,21 @@ function form(){
 			},
 		};
 			
-		scope.account = {};
-		scope.account.id = 0;
+		$rootScope.store.account = {};
+		$rootScope.store.account.id = 0;
 
-		scope.accounts = []; // list
+		$rootScope.store.accounts = [];
 		
 	};
 	
-	function groups(scope){
-		
+	function groups() {
+
 		$http({
 			method: 'POST',
 			url: 'api/suggestions/groups.php'
 		}).then(function mySucces(response) {
 			
-			scope.groups = response.data;
+			$rootScope.groups = response.data;
 			
 		},function myError(response) {
 			
@@ -50,13 +49,28 @@ function form(){
 		
 	};
 	
-	function passwordMeter(scope){
+	function offices() {
+
+		$http({
+			method: 'POST',
+			url: 'api/suggestions/offices.php'
+		}).then(function mySucces(response) {
+			
+			$rootScope.offices = response.data;
+			
+		},function myError(response) {
+			
+		});
+		
+	};	
+	
+	function passwordMeter() {
 		
 		var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
 		var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
-		scope.label = "";
+		$rootScope.store.label = "";
 		
-		scope.progress_bar_item_1 = {
+		$rootScope.store.progress_bar_item_1 = {
 			
 			"display": "inline-block",
 			"height": "100%",
@@ -68,7 +82,7 @@ function form(){
 			  
 		};
 		
-		scope.progress_bar_item_2 = {
+		$rootScope.store.progress_bar_item_2 = {
 			
 			"display": "inline-block",
 			"height": "100%",
@@ -80,7 +94,7 @@ function form(){
 			  
 		};
 		
-		scope.progress_bar_item_3 = {
+		$rootScope.store.progress_bar_item_3 = {
 			
 			"display": "inline-block",
 			"height": "100%",
@@ -92,21 +106,21 @@ function form(){
 			  
 		};
 		
-		scope.analyze = function(value) {
+		$rootScope.store.analyze = function(value) {
 		
 			if(strongRegex.test(value)) {
 				
-				scope.progress_bar_item_3["background-color"] = "#2DAF7D"; // green
+				$rootScope.store.progress_bar_item_3["background-color"] = "#2DAF7D"; // green
 				
-				scope.label = "Strong";
-				scope.color = "#2DAF7D";
+				$rootScope.store.label = "Strong";
+				$rootScope.store.color = "#2DAF7D";
 				
 			} else {
 				
-				scope.label = "Medium";
-				scope.color = "#F9AE35";
+				$rootScope.store.label = "Medium";
+				$rootScope.store.color = "#F9AE35";
 				
-				scope.progress_bar_item_3 = {
+				$rootScope.store.progress_bar_item_3 = {
 			
 					"display": "inline-block",
 					"height": "100%",
@@ -122,15 +136,15 @@ function form(){
 			
 			if(mediumRegex.test(value)) {
 				
-				scope.progress_bar_item_2["background-color"] = "#F9AE35"; // yellow
+				$rootScope.store.progress_bar_item_2["background-color"] = "#F9AE35"; // yellow
 				
 			} else {
 				
-				scope.label = "Weak"
+				$rootScope.store.label = "Weak"
 				
-				scope.color = "#FF4B47";
+				$rootScope.store.color = "#FF4B47";
 				
-				scope.progress_bar_item_2 = {
+				$rootScope.store.progress_bar_item_2 = {
 			
 					"display": "inline-block",
 					"height": "100%",
@@ -144,15 +158,15 @@ function form(){
 				
 			}
 		
-			if(value!=undefined) {
+			if (value!=undefined) {
 
-				scope.progress_bar_item_1["background-color"] = "#FF4B47"; // red
+				$rootScope.store.progress_bar_item_1["background-color"] = "#FF4B47"; // red
 				
 			} else if (value==undefined) {
 					
-				scope.label = "";
+				$rootScope.store.label = "";
 				
-				scope.progress_bar_item_1 = {
+				$rootScope.store.progress_bar_item_1 = {
 					
 					"display": "inline-block",
 					"height": "100%",
@@ -164,7 +178,7 @@ function form(){
 					  
 				};
 				
-				scope.progress_bar_item_2 = {
+				$rootScope.store.progress_bar_item_2 = {
 					
 					"display": "inline-block",
 					"height": "100%",
@@ -176,7 +190,7 @@ function form(){
 					  
 				};
 				
-				scope.progress_bar_item_3 = {
+				$rootScope.store.progress_bar_item_3 = {
 					
 					"display": "inline-block",
 					"height": "100%",
@@ -191,31 +205,23 @@ function form(){
 		};
 	};
 	
-	self.list = function(scope) {
+	self.list = function() {
 			
 		bui.show();
 		
-		if (scope.$id > 2) scope = scope.$parent;	
+		$rootScope.views.list = true;
+		$rootScope.controls.btn.add = false;
+		$rootScope.controls.btn.edit = false;
 		
-		scope.views.list = true;
-		scope.controls.btn.add = false;
-		scope.controls.btn.edit = false;
-		
-		scope.account = {};
-		scope.account.id = 0;
-		
-		scope.currentPage = scope.views.currentPage;
-		scope.pageSize = 10;
-		scope.maxSize = 5;
+		$rootScope.store.account = {};
+		$rootScope.store.account.id = 0;
 		
 		$http({
 		  method: 'POST',
 		  url: 'handlers/accounts/list.php',
 		}).then(function mySucces(response) {
 			
-			scope.accounts = angular.copy(response.data);
-			scope.filterData = scope.accounts;
-			scope.currentPage = scope.views.currentPage;
+			$rootScope.store.accounts = angular.copy(response.data);
 			
 			bui.hide();
 			
@@ -226,7 +232,7 @@ function form(){
 		});
 		
 		$('#x_content').load('lists/accounts.html', function() {
-			$timeout(function() { $compile($('#x_content')[0])(scope); },100);								
+			$timeout(function() { $compile($('#x_content')[0])($rootScope); },100);								
 			// instantiate datable
 			$timeout(function() {
 				$('#account').DataTable({
@@ -238,9 +244,9 @@ function form(){
 		
 	};
 	
-	function validate(scope) {
+	function validate() {
 									// change
-		var controls = scope.formHolder.account.$$controls;
+		var controls = $rootScope.formHolder.account.$$controls;
 		
 		angular.forEach(controls,function(elem,i) {
 			
@@ -248,54 +254,53 @@ function form(){
 								
 		});
 							 // change
-		return scope.formHolder.account.$invalid;
+		return $rootScope.formHolder.account.$invalid;
 		
 	};
 	
-	function mode(scope,row) {
+	function mode(row) {
 			
 		if (row == null) {
-			scope.controls.ok.label = 'Save';
-			scope.controls.ok.btn = false;
-			scope.controls.cancel.label = 'Cancel';
-			scope.controls.cancel.btn = false;
-			scope.controls.btn.add = true;
-			scope.controls.btn.edit = true;
+			$rootScope.controls.ok.label = 'Save';
+			$rootScope.controls.ok.btn = false;
+			$rootScope.controls.cancel.label = 'Cancel';
+			$rootScope.controls.cancel.btn = false;
+			$rootScope.controls.btn.add = true;
+			$rootScope.controls.btn.edit = true;
 		} else {
-			scope.controls.ok.label = 'Update';
-			scope.controls.ok.btn = true;
-			scope.controls.cancel.label = 'Close';
-			scope.controls.cancel.btn = false;	
-			scope.controls.btn.edit = false;			
+			$rootScope.controls.ok.label = 'Update';
+			$rootScope.controls.ok.btn = true;
+			$rootScope.controls.cancel.label = 'Close';
+			$rootScope.controls.cancel.btn = false;	
+			$rootScope.controls.btn.edit = false;			
 		}
 		
 	};
 	
-	self.addEdit = function(scope,row) {
+	self.addEdit = function(row) {
 
 		bui.show();
 		
-		passwordMeter(scope);
+		passwordMeter();
 		
-		scope.account = {};
-		scope.account.id = 0;
+		$rootScope.store.account = {};
+		$rootScope.store.account.id = 0;
 		
-		mode(scope,row);
+		mode(row);
 		
 		$('#x_content').load('forms/account.html',function() {
-			$timeout(function() { $compile($('#x_content')[0])(scope); },200);
+			$timeout(function() { $compile($('#x_content')[0])($rootScope); },200);
 		});
 		
 		if (row != null) {
-			
-			if (scope.$id > 2) scope = scope.$parent;				
+
 			$http({
 			  method: 'POST',
 			  url: 'handlers/accounts/view.php',
 			  data: {id: row.id}
 			}).then(function mySucces(response) {
 				
-				angular.copy(response.data, scope.account);
+				$rootScope.store.account = angular.copy(response.data);
 				bui.hide();
 				
 			}, function myError(response) {
@@ -305,61 +310,58 @@ function form(){
 			});					
 		};
 		
-		groups(scope);
+		groups();
+		offices();
 		
 		bui.hide();
 	
 	};
 	
-	self.cancel = function(scope) {
+	self.cancel = function() {
 
-		self.list(scope);
+		self.list();
 
 	};
 	
-	self.edit = function(scope) {
+	self.edit = function() {
 			
-		scope.controls.ok.btn = !scope.controls.ok.btn;
-		scope.controls.btn.edit = true;
+		$rootScope.controls.ok.btn = !$rootScope.controls.ok.btn;
+		$rootScope.controls.btn.edit = true;
 		
 	};
 		
-	self.save = function(scope) {
+	self.save = function() {
 		
-		if (validate(scope)){ 
+		if (validate()){ 
 			growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please complete required fields.');
 			return;
 		}
 		
 		$http({
-		  method: 'POST',
-		  url: 'handlers/accounts/save.php',
-		data: {account: scope.account}
+			method: 'POST',
+			url: 'handlers/accounts/save.php',
+			data: {account: $rootScope.store.account}
 		}).then(function mySucces(response) {
 			
-			if (scope.account.id == 0) {
-					scope.account.id = response.data;
-					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Account Information successfully added.');
-				}	else{
-					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Account Information successfully updated.');
-				}
-			mode(scope,scope.account);
+			if ($rootScope.store.account.id == 0) {
+				$rootScope.store.account.id = response.data;
+				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Account Information successfully added.');
+			} else {
+				growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Account Information successfully updated.');
+			}
+			mode($rootScope.store.account);
 			
 		}, function myError(response) {
 			 
 		  // error
 			
 		});	
-
-		console.log(scope.account.password.length);		
 		
 	};	
 	
-	self.delete = function(scope,row) {
+	self.delete = function(row) {
 			
-		var onOk = function() {
-			
-			if (scope.$id > 2) scope = scope.$parent;			
+		var onOk = function() {						
 			
 			$http({
 			  method: 'POST',
@@ -367,7 +369,7 @@ function form(){
 			  data: {id: [row.id]}
 			}).then(function mySucces(response) {
 
-				self.list(scope);
+				self.list();
 				
 				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},'Account Information successfully deleted.');
 				
@@ -379,13 +381,13 @@ function form(){
 
 		};
 
-		bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this record?',onOk,function() {});
+		bootstrapModal.confirm($rootScope,'Confirmation','Are you sure you want to delete this record?',onOk,function() {});
 			
 	};
 	
 	self.inputType = 'password';
 		  
-	self.hideShowPassword = function(scope){
+	self.hideShowPassword = function() {
 			
 		if (self.inputType == 'password'){
 			self.inputType = 'text';

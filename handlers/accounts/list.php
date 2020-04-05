@@ -13,7 +13,10 @@ $accounts = $con->getData("SELECT *, CONCAT(firstname,' ',lastname) fullname FRO
 foreach($accounts as $key => $account){
 	
 	$groups = $con->getData("SELECT id, name FROM groups WHERE id = ".$account['groups']);
-	$accounts[$key]['groups'] = $groups[0];
+	$accounts[$key]['groups'] =(count($groups))?$groups[0]:array("id"=>0,"name"=>"");
+	
+	$office = $con->getData("SELECT id, office_name FROM offices WHERE id = ".$account['office']);	
+	$accounts[$key]['office'] = (count($office))?$office[0]:array("id"=>0,"office_name"=>"");	
 	
 };
 

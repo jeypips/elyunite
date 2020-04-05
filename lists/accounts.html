@@ -7,17 +7,19 @@
 						<th>No</th>
 						<th>Name</th>
 						<th>Groups</th>
+						<th>Office</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="data in accounts">
+					<tr ng-repeat="data in store.accounts">
 						<td>{{$index+1}}</td>
 						<td>{{data.fullname}}</td>
 						<td>{{data.groups.name}}</td>
+						<td>{{data.office.office_name}}</td>
 						<td>
-							<button class="btn btn-info info-icon-notika waves-effect" ng-click="form.addEdit(this,data)"><i class="notika-icon notika-search"></i></button>
-							<button class="btn btn-deeporange deeporange-icon-notika waves-effect" ng-click="form.delete(this,data)"><i class="notika-icon notika-trash"></i></button>
+							<button class="btn btn-info info-icon-notika waves-effect" ng-click="form.addEdit(data)"><i class="notika-icon notika-search"></i></button>
+							<button class="btn btn-deeporange deeporange-icon-notika waves-effect" ng-click="form.delete(data)"><i class="notika-icon notika-trash"></i></button>
 						</td>
 					</tr>
 				</tbody>

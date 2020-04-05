@@ -8,13 +8,16 @@ include_once '../../db.php';
 
 $con = new pdo_db("accounts");
 
+$_POST['account']['groups'] = $_POST['account']['groups']['id'];
+$_POST['account']['office'] = $_POST['account']['office']['id'];
+
 if ($_POST['account']['id']) {
 	
-	$account = $con->updateObj($_POST['account'],'id');
+	$account = $con->updateData($_POST['account'],'id');
 	
 } else {
 	
-	$account = $con->insertObj($_POST['account']);
+	$account = $con->insertData($_POST['account']);
 	echo $con->insertId;
 
 }

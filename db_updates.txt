@@ -24,3 +24,6 @@ ALTER TABLE `offices`
 --
 ALTER TABLE `offices`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+ALTER TABLE `accounts`  ADD `office` INT NULL  AFTER `groups`;
+ALTER TABLE `surveys`  ADD `office` INT NULL  AFTER `description`;

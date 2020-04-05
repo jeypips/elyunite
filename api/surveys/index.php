@@ -51,6 +51,8 @@ $app->get('/list', function (Request $request, Response $response, array $args) 
 # add
 $app->post('/save', function (Request $request, Response $response, array $args) {
 
+	session_start();
+
 	$con = $this->con;
 	$con->table = "surveys";
 
@@ -65,9 +67,11 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 	$sections_dels = $data['sections_dels'];
 	unset($data['sections_dels']);
 
+	$data['office'] = $_SESSION['elyunite_user_office'];
+
 	# surveys	
 	if ($data['id']) {
-		
+
 		$save_survey = $con->updateData($data,'id');
 		$id = $data['id'];
 		
