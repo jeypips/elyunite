@@ -4,7 +4,7 @@
 			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<?php
 					$home = ($page=='dashboard')||($page=='surveys');
-					$maintenance = ($page=='groups')||($page=='accounts');					
+					$maintenance = ($page=='groups')||($page=='accounts')||($page=='offices');					
 				?>				
 				<ul class="nav nav-tabs notika-menu-wrap menu-it-icon-pro">
 					<li class="<?=($home)?'active':''?>"><a data-toggle="tab" href="#Home"><i class="fa fa-home"></i> Home</a></li>
@@ -21,6 +21,7 @@
 						<ul class="notika-main-menu-dropdown">
 							<li><a href="groups.html">Groups</a></li>
 							<li><a href="accounts.html">Accounts</a></li>
+							<li><a href="offices.html">Offices</a></li>
 						</ul>
 					</div>
 				</div>

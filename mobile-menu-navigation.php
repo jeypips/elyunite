@@ -10,6 +10,7 @@
 				<ul id="Pagemob" class="collapse dropdown-header-top">
 					<li><a href="groups.html">Groups</a></li>
 					<li><a href="accounts.html">Accounts</a></li>
+					<li><a href="offices.html">Offices</a></li>					
 				</ul>
 			</li>
 		</ul>
