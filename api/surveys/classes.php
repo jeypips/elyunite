@@ -22,7 +22,7 @@ class survey {
 	
 	private function info() {
 		
-		$survey = $this->con->getData("SELECT id, name, description FROM surveys WHERE id = ".$this->id);
+		$survey = $this->con->getData("SELECT id, name, description, office, (SELECT office_name FROM offices WHERE id = office) office_name FROM surveys WHERE id = ".$this->id);
 
 		if (count($survey)) {
 			
@@ -38,7 +38,7 @@ class survey {
 	
 	private function infos() {
 
-		$surveys = $this->con->getData("SELECT id, name, description FROM surveys");
+		$surveys = $this->con->getData("SELECT id, name, description, office, (SELECT office_name FROM offices WHERE id = office) office_name FROM surveys");
 
 		foreach ($surveys as $i => $survey) {
 			
