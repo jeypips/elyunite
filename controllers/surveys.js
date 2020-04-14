@@ -1,18 +1,18 @@
 var app = angular.module('surveys',['xeditable','account-module','app-module']);
 
-app.run(function(editableOptions) {
+app.run(function($rootScope,editableOptions) {
   editableOptions.theme = 'bs4';
 });
 
-app.controller('surveysCtrl',function($scope,form) {
+app.controller('surveysCtrl',function($rootScope,$scope,form) {
 	
-	$scope.views = {};
-	$scope.formHolder = {};
+	$rootScope.views = {};
+	$rootScope.formHolder = {};
 	
-	form.data($scope);
-	form.list($scope);
+	form.data();
+	form.list();
 	
-	$scope.form = form;
+	$rootScope.form = form;
 
 });
 

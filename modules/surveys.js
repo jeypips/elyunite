@@ -1,4 +1,4 @@
-angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','form-validator-dialog','block-ui']).directive('addSsiIg',function($timeout) {
+angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-model','bootstrap-growl','bootstrap-modal','form-validator','form-validator-dialog','block-ui']).directive('addSsiIg',function($rootScope,$timeout) {
 
 	return {
 		restrict: 'A',
@@ -30,8 +30,8 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 
 				reader.addEventListener("load", function () {
 					// preview.src = reader.result;
-					scope.survey.sections[section_index].items[section_item_index].item_infographic = reader.result;
-					scope.$apply();
+					$rootScope.survey.sections[section_index].items[section_item_index].item_infographic = reader.result;
+					$rootScope.$apply();
 				}, false);
 
 				if (file) {
@@ -43,7 +43,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 		}
 	};
 		
-}).directive('removeSsiIg',function($timeout) {
+}).directive('removeSsiIg',function($rootScope,$timeout) {
 	
 	return {
 		restrict: 'A',
@@ -57,15 +57,15 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				let section_index = s_indexes[0];
 				let section_item_index = s_indexes[1];
 
-				scope.survey.sections[section_index].items[section_item_index].item_infographic = null;
-				scope.$apply();
+				$rootScope.survey.sections[section_index].items[section_item_index].item_infographic = null;
+				$rootScope.$apply();
 				
 			});
 			
 		}
 	};	
 	
-}).directive('addSaiIg',function($timeout) {
+}).directive('addSaiIg',function($rootScope,$timeout) {
 
 	return {
 		restrict: 'A',
@@ -98,8 +98,8 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 
 				reader.addEventListener("load", function () {
 					// preview.src = reader.result;
-					scope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].item_infographic = reader.result;
-					scope.$apply();
+					$rootScope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].item_infographic = reader.result;
+					$rootScope.$apply();
 				}, false);
 
 				if (file) {
@@ -111,7 +111,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 		}
 	};
 		
-}).directive('removeSaiIg',function($timeout) {
+}).directive('removeSaiIg',function($rootScope,$timeout) {
 	
 	return {
 		restrict: 'A',
@@ -126,29 +126,29 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				let aspect_index = s_indexes[1];
 				let aspect_item_index = s_indexes[2];
 
-				scope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].item_infographic = null;
-				scope.$apply();
+				$rootScope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].item_infographic = null;
+				$rootScope.$apply();
 				
 			});
 			
 		}
 	};	
 	
-}).factory('form', function($http,$filter,$compile,$timeout,growl,bootstrapModal,validate,validateDialog,bui){
+}).factory('form', function($rootScope,$http,$filter,$compile,$timeout,growl,bootstrapModal,validate,validateDialog,bui){
 
 	function form() {
 
 		var self = this;
 		
-		self.data = function(scope) {
+		self.data = function() {
 
-			scope.mode = null;
+			$rootScope.mode = null;
 			
-			scope.views = {};
+			$rootScope.views = {};
 			
-			scope.views.list = true;
+			$rootScope.views.list = true;
 			
-			scope.controls = {
+			$rootScope.controls = {
 				ok: {
 					btn: false,
 					label: 'Save'
@@ -159,7 +159,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				}
 			};
 			
-			scope.item_types = [
+			$rootScope.item_types = [
 				{
 					id: 1,
 					description: 'Bracket',
@@ -190,12 +190,12 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				}				
 			];
 			
-			scope.item_type_selected = function(item_type) {
-				let selected = $filter('filter')(scope.item_types, {id: item_type});
+			$rootScope.item_type_selected = function(item_type) {
+				let selected = $filter('filter')($rootScope.item_types, {id: item_type});
 				return (item_type && selected.length) ? selected[0].description : 'Not set';			
 			};
 			
-			scope.text_input_types = [
+			$rootScope.text_input_types = [
 				{
 					id: 1,
 					description: 'String',
@@ -206,12 +206,12 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				}			
 			];		
 			
-			scope.text_input_type_selected = function(value) {
-				let selected = $filter('filter')(scope.text_input_types, {id: value});
+			$rootScope.text_input_type_selected = function(value) {
+				let selected = $filter('filter')($rootScope.text_input_types, {id: value});
 				return (value && selected.length) ? selected[0].description : 'Not set';			
 			};
 			
-			scope.multi_rows_row_types = [
+			$rootScope.multi_rows_row_types = [
 				{
 					id: 1,
 					description: 'Headers',
@@ -222,12 +222,12 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				}			
 			];		
 
-			scope.multi_rows_row_type_selected = function(value) {
-				let selected = $filter('filter')(scope.multi_rows_row_types, {id: value});
+			$rootScope.multi_rows_row_type_selected = function(value) {
+				let selected = $filter('filter')($rootScope.multi_rows_row_types, {id: value});
 				return (value && selected.length) ? selected[0].description : 'Not set';			
 			};
 			
-			scope.presentations = [
+			$rootScope.presentations = [
 				{
 					id: 1,
 					description: 'Table',
@@ -238,49 +238,49 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				}			
 			];
 
-			scope.item_presentation_selected = function(value) {
-				let selected = $filter('filter')(scope.presentations, {id: value});
+			$rootScope.item_presentation_selected = function(value) {
+				let selected = $filter('filter')($rootScope.presentations, {id: value});
 				return (value && selected.length) ? selected[0].description : 'Not set';			
 			};				
 			
-			scope.survey = {};
-			scope.survey.id = 0;
-			scope.survey.sections = [];
-			scope.survey.sections_dels = [];
+			$rootScope.survey = {};
+			$rootScope.survey.id = 0;
+			$rootScope.survey.sections = [];
+			$rootScope.survey.sections_dels = [];
 
-			scope.surveys = []; // list
+			$rootScope.surveys = []; // list
 			
-			scope.pagination = {};
-			scope.pagination.surveys = {};
-			scope.pagination.currentPages = {};
-			scope.pagination.currentPages.surveys = 1;
+			$rootScope.pagination = {};
+			$rootScope.pagination.surveys = {};
+			$rootScope.pagination.currentPages = {};
+			$rootScope.pagination.currentPages.surveys = 1;
 			
-			scope.search = {};
+			$rootScope.search = {};
 			
-			scope.checks = {};
-			scope.checks.items = [];
+			$rootScope.checks = {};
+			$rootScope.checks.items = [];
 
 		};
 		
-		function mode(scope,opt) {
+		function mode(opt) {
 			
 			switch (opt) {
 				
 				case 1: // add
 				
-					scope.controls.ok.btn = false;
-					scope.controls.ok.label = 'Save';
-					scope.controls.cancel.btn = false;
-					scope.controls.cancel.label = 'Cancel';
+				$rootScope.controls.ok.btn = false;
+				$rootScope.controls.ok.label = 'Save';
+				$rootScope.controls.cancel.btn = false;
+				$rootScope.controls.cancel.label = 'Cancel';
 				
 				break;
 				
 				case 2: // edit
 
-					scope.controls.ok.btn = false;
-					scope.controls.ok.label = 'Update';
-					scope.controls.cancel.btn = false;
-					scope.controls.cancel.label = 'Close';
+				$rootScope.controls.ok.btn = false;
+				$rootScope.controls.ok.label = 'Update';
+				$rootScope.controls.cancel.btn = false;
+				$rootScope.controls.cancel.label = 'Close';
 				
 				break;	
 			
@@ -288,35 +288,32 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			
 		};
 		
-		self.chkSelected = function(scope) {
-			
-			if (scope.$id>2) scope = scope.$parent;
-			console.log(scope.checks);
-			
+		self.chkSelected = function() {
+
+			console.log($rootScope.checks);
+
 		};
 		
-		self.list = function(scope,view=true) {
+		self.list = function(view=true) {
 				
 			bui.show();
 			
-			if (scope.$id > 2) scope = scope.$parent;	
+			$rootScope.pagination.surveys.currentPage = $rootScope.pagination.currentPages.surveys;
+			$rootScope.pagination.surveys.pageSize = 10;
+			$rootScope.pagination.surveys.maxSize = 3;
 			
-			scope.pagination.surveys.currentPage = scope.pagination.currentPages.surveys;
-			scope.pagination.surveys.pageSize = 10;
-			scope.pagination.surveys.maxSize = 3;
-			
-			scope.survey = {};
-			scope.survey.id = 0;
+			$rootScope.survey = {};
+			$rootScope.survey.id = 0;
 			
 			$http({
 			  method: 'GET',
 			  url: 'api/surveys/list',
 			}).then(function mySucces(response) {
 
-				scope.surveys = angular.copy(response.data);	
+				$rootScope.surveys = angular.copy(response.data);	
 
-				scope.pagination.surveys.filterData = scope.surveys;
-				scope.pagination.surveys.currentPage = scope.pagination.currentPages.surveys;
+				$rootScope.pagination.surveys.filterData = $rootScope.surveys;
+				$rootScope.pagination.surveys.currentPage = $rootScope.pagination.currentPages.surveys;
 
 				bui.hide();
 				
@@ -329,61 +326,61 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			if (view) {
 			
 				$('#x_content').load('lists/surveys.html', function() {
-					$timeout(function() { $compile($('#x_content')[0])(scope); },500);
+					$timeout(function() { $compile($('#x_content')[0])($rootScope); },500);
 				});
 				
 			};
 			
 		};
 		
-		self.add = function(scope) {
+		self.add = function(sope) {
 			
 			bui.show();
 			
-			mode(scope,1);
+			mode(1);
 			
-			scope.survey = {};
-			scope.survey.id = 0;
-			scope.survey.sections = [];
-			scope.survey.sections_dels = [];		
+			$rootScope.survey = {};
+			$rootScope.survey.id = 0;
+			$rootScope.survey.sections = [];
+			$rootScope.survey.sections_dels = [];		
 			
 			$('#survey-main').load('forms/survey.html', function() {
-				$compile($('#survey-main')[0])(scope);
+				$compile($('#survey-main')[0])($rootScope);
 			});		
 			
 			bui.hide();
 			
 		};
 		
-		self.edit = function(scope) {
+		self.edit = function() {
 			
-			if (scope.checks.items.length==0) {
+			if ($rootScope.checks.items.length==0) {
 				
 				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please select a survey');
 				return;
 				
 			};
 			
-			if (scope.checks.items.length>1) {
+			if ($rootScope.checks.items.length>1) {
 				
 				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please select only one survey');
 				return;
 				
 			};		
 			
-			mode(scope,2);
+			mode(2);
 			
 			$http({
 				method: 'GET',
-				url: 'api/surveys/view/'+scope.checks.items[0]
+				url: 'api/surveys/view/'+$rootScope.checks.items[0]
 			}).then(function mySucces(response) {
 				
 				$('#survey-main').load('forms/survey.html', function() {
-					$compile($('#survey-main')[0])(scope);
-					scope.survey = response.data;
+					$compile($('#survey-main')[0])($rootScope);
+					$rootScope.survey = response.data;
 				});
 				
-				scope.checks.items = [];
+				$rootScope.checks.items = [];
 				
 				bui.hide();
 				
@@ -396,15 +393,15 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			
 		};	
 		
-		self.cancel = function(scope) {
+		self.cancel = function() {
 
-			self.list(scope);
+			self.list();
 
 		};
 			
-		self.save = function(scope) {
+		self.save = function() {
 
-			if (validate.form(scope,'survey')){ 
+			if (validate.form($rootScope,'survey')){ 
 				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please complete required fields.');
 				return;
 			}
@@ -414,15 +411,15 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			$http({
 				method: 'POST',
 				url: 'api/surveys/save',
-				data: scope.survey
+				data: $rootScope.survey
 			}).then(function mySucces(response) {
 				
 				bui.hide();
 				
-				if (scope.survey.id == 0) {
-					// scope.survey.id = response.data;
+				if ($rootScope.survey.id == 0) {
+					// $rootScope.survey.id = response.data;
 					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'New survey successfully added.');
-					self.list(scope);
+					self.list();
 				} else {
 					growl.show('btn btn-success notika-btn-success waves-effect',{from: 'top', amount: 55},'Survey info successfully updated.');
 				}
@@ -436,28 +433,26 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			
 		};	
 		
-		self.delete = function(scope,row) {
+		self.delete = function(row) {
 			
-			if (scope.checks.items.length==0) {
+			if ($rootScope.checks.items.length==0) {
 				
 				growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},' Please select a survey');
 				return;
 				
 			};	
 			
-			var onOk = function() {
+			var onOk = function() {	
 				
-				if (scope.$id > 2) scope = scope.$parent;			
-				
-				scope.pagination.currentPages.surveys = scope.pagination.surveys.currentPage;
+				$rootScope.pagination.currentPages.surveys = $rootScope.pagination.surveys.currentPage;
 				
 				$http({
 				  method: 'POST',
 				  url: 'api/surveys/delete',
-				  data: {id: scope.checks.items}
+				  data: {id: sc$rootScopeope.checks.items}
 				}).then(function mySucces(response) {
 
-					self.list(scope);
+					self.list();
 					
 					growl.show('btn btn-danger notika-btn-danger waves-effect',{from: 'top', amount: 55},'Survey(s) successfully deleted.');
 					
@@ -469,7 +464,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 
 			};
 
-			bootstrapModal.confirm(scope,'Confirmation','Are you sure you want to delete this survey?',onOk,function() {});
+			bootstrapModal.confirm($rootScope,'Confirmation','Are you sure you want to delete this survey?',onOk,function() {});
 				
 		};
 		
@@ -479,9 +474,9 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			add: function(scope) {
+			add: function() {
 				
-				scope.survey.sections.push({
+				$rootScope.survey.sections.push({
 					id: 0,
 					items: [],
 					items_dels: [],
@@ -491,22 +486,22 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			remove: function(scope,ss) {
+			remove: function(ss) {
 			
 				if (ss.id > 0) {
-					scope.survey.sections_dels.push(ss.id);
+					$rootScope.survey.sections_dels.push(ss.id);
 				};
 				
-				let sections = scope.survey.sections;
-				let ss_index = scope.survey.sections.indexOf(ss);
-				scope.survey.sections = [];	
+				let sections = $rootScope.survey.sections;
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				$rootScope.survey.sections = [];	
 				
 				angular.forEach(sections, function(d,i) {
 					
 					if (ss_index != i) {
 						
 						delete d['$$hashKey'];
-						scope.survey.sections.push(d);
+						$rootScope.survey.sections.push(d);
 						
 					};
 					
@@ -522,11 +517,11 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			add: function(scope,ss) {
+			add: function(ss) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
 
-				scope.survey.sections[ss_index].items.push({
+				$rootScope.survey.sections[ss_index].items.push({
 					id: 0,
 					item_infographic: null,
 					values: [],
@@ -535,24 +530,24 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			remove: function(scope,ss,ssi) {			
+			remove: function(ss,ssi) {			
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
-				let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				let ssi_index = $rootScope.survey.sections[ss_index].items.indexOf(ssi);
 				
 				if (ssi.id > 0) {
-					scope.survey.sections[ss_index].items_dels.push(ssi.id);
+					$rootScope.survey.sections[ss_index].items_dels.push(ssi.id);
 				};			
 				
-				let section_items = scope.survey.sections[ss_index].items;
-				scope.survey.sections[ss_index].items = [];	
+				let section_items = $rootScope.survey.sections[ss_index].items;
+				$rootScope.survey.sections[ss_index].items = [];	
 				
 				angular.forEach(section_items, function(d,i) {
 					
 					if (ssi_index != i) {
 						
 						delete d['$$hashKey'];
-						scope.survey.sections[ss_index].items.push(d);
+						$rootScope.survey.sections[ss_index].items.push(d);
 						
 					};
 					
@@ -568,11 +563,11 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			add: function(scope,ss) {
+			add: function(ss) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
 
-				scope.survey.sections[ss_index].aspects.push({
+				$rootScope.survey.sections[ss_index].aspects.push({
 					id: 0,
 					items: [],
 					items_dels: []			
@@ -580,24 +575,24 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			remove: function(scope,ss,sa) {
+			remove: function(ss,sa) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
-				let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				let sa_index = $rootScope.survey.sections[ss_index].aspects.indexOf(sa);
 				
 				if (sa.id > 0) {
-					scope.survey.sections[ss_index].aspects_dels.push(sa.id);
+					$rootScope.survey.sections[ss_index].aspects_dels.push(sa.id);
 				};			
 				
-				let section_aspects = scope.survey.sections[ss_index].aspects;
-				scope.survey.sections[ss_index].aspects = [];
+				let section_aspects = $rootScope.survey.sections[ss_index].aspects;
+				$rootScope.survey.sections[ss_index].aspects = [];
 				
 				angular.forEach(section_aspects, function(d,i) {
 					
 					if (sa_index != i) {
 						
 						delete d['$$hashKey'];
-						scope.survey.sections[ss_index].aspects.push(d);
+						$rootScope.survey.sections[ss_index].aspects.push(d);
 						
 					};
 					
@@ -613,12 +608,12 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 
-			add: function(scope,ss,ssi) {
+			add: function(ss,ssi) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
-				let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				let ssi_index = $rootScope.survey.sections[ss_index].items.indexOf(ssi);
 				
-				scope.survey.sections[ss_index].items[ssi_index].values.push({
+				$rootScope.survey.sections[ss_index].items[ssi_index].values.push({
 					id: 0,
 					sub_items: [],
 					sub_items_dels: []
@@ -626,25 +621,25 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			remove: function(scope,ss,ssi,v) {
+			remove: function(ss,ssi,v) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
-				let ssi_index = scope.survey.sections[ss_index].items.indexOf(ssi);
-				let v_index = scope.survey.sections[ss_index].items[ssi_index].values.indexOf(v);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				let ssi_index = $rootScope.survey.sections[ss_index].items.indexOf(ssi);
+				let v_index = $rootScope.survey.sections[ss_index].items[ssi_index].values.indexOf(v);
 				
 				if (v.id > 0) {
-					scope.survey.sections[ss_index].items[ssi_index].values_dels.push(v.id);
+					$rootScope.survey.sections[ss_index].items[ssi_index].values_dels.push(v.id);
 				};			
 				
-				let section_item_values = scope.survey.sections[ss_index].items[ssi_index].values;
-				scope.survey.sections[ss_index].items[ssi_index].values = [];
+				let section_item_values = $rootScope.survey.sections[ss_index].items[ssi_index].values;
+				$rootScope.survey.sections[ss_index].items[ssi_index].values = [];
 				
 				angular.forEach(section_item_values, function(d,i) {
 					
 					if (v_index != i) {
 						
 						delete d['$$hashKey'];
-						scope.survey.sections[ss_index].items[ssi_index].values.push(d);
+						$rootScope.survey.sections[ss_index].items[ssi_index].values.push(d);
 						
 					};
 					
@@ -660,12 +655,12 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			add: function(scope,ss,sa) {
+			add: function(ss,sa) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
-				let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				let sa_index = $rootScope.survey.sections[ss_index].aspects.indexOf(sa);
 				
-				scope.survey.sections[ss_index].aspects[sa_index].items.push({
+				$rootScope.survey.sections[ss_index].aspects[sa_index].items.push({
 					id: 0,
 					item_infographic: null,					
 					values: [],
@@ -674,25 +669,25 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			remove: function(scope,ss,sa,sai) {
+			remove: function(ss,sa,sai) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
-				let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
-				let sai_index = scope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				let sa_index = $rootScope.survey.sections[ss_index].aspects.indexOf(sa);
+				let sai_index = $rootScope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
 				
 				if (sai.id > 0) {
-					scope.survey.sections[ss_index].aspects[sa_index].items_dels.push(sai.id);
+					$rootScope.survey.sections[ss_index].aspects[sa_index].items_dels.push(sai.id);
 				};
 				
-				let aspect_items = scope.survey.sections[ss_index].aspects[sa_index].items;
-				scope.survey.sections[ss_index].aspects[sa_index].items = [];
+				let aspect_items = $rootScope.survey.sections[ss_index].aspects[sa_index].items;
+				$rootScope.survey.sections[ss_index].aspects[sa_index].items = [];
 				
 				angular.forEach(aspect_items, function(d,i) {
 					
 					if (sai_index != i) {
 						
 						delete d['$$hashKey'];
-						scope.survey.sections[ss_index].aspects[sa_index].items.push(d);
+						$rootScope.survey.sections[ss_index].aspects[sa_index].items.push(d);
 						
 					};
 					
@@ -708,13 +703,13 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 
-			add: function(scope,ss,sa,sai) {
+			add: function(ss,sa,sai) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
-				let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
-				let sai_index = scope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				let sa_index = $rootScope.survey.sections[ss_index].aspects.indexOf(sa);
+				let sai_index = $rootScope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
 				
-				scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.push({
+				$rootScope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.push({
 					id: 0,
 					sub_items: [],
 					sub_items_dels: []				
@@ -722,26 +717,26 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			remove: function(scope,ss,sa,sai,v) {
+			remove: function(ss,sa,sai,v) {
 				
-				let ss_index = scope.survey.sections.indexOf(ss);
-				let sa_index = scope.survey.sections[ss_index].aspects.indexOf(sa);
-				let sai_index = scope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
-				let v_index = scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.indexOf(v);
+				let ss_index = $rootScope.survey.sections.indexOf(ss);
+				let sa_index = $rootScope.survey.sections[ss_index].aspects.indexOf(sa);
+				let sai_index = $rootScope.survey.sections[ss_index].aspects[sa_index].items.indexOf(sai);
+				let v_index = $rootScope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.indexOf(v);
 				
 				if (v.id > 0) {
-					scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values_dels.push(v.id);
+					$rootScope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values_dels.push(v.id);
 				};			
 				
-				let aspect_item_values = scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values;
-				scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values = [];
+				let aspect_item_values = $rootScope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values;
+				$rootScope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values = [];
 				
 				angular.forEach(aspect_item_values, function(d,i) {
 					
 					if (v_index != i) {
 						
 						delete d['$$hashKey'];
-						scope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.push(d);
+						$rootScope.survey.sections[ss_index].aspects[sa_index].items[sai_index].values.push(d);
 						
 					};
 					
@@ -757,7 +752,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 
-			add: function(scope,rows) {
+			add: function(rows) {
 				
 				rows.push({
 					id: 0
@@ -765,7 +760,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				
 			},
 			
-			remove: function(scope,v,rows,row) {
+			remove: function(v,rows,row) {
 
 				if (row.id > 0) {
 					
@@ -781,25 +776,25 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			
 		};
 		
-		self.addSsiIg = function(scope,i) {
+		self.addSsiIg = function(i) {
 			
 			$('#upload-ssi-infographic_'+i)[0].click();
 			
 		};
 		
-		self.addSivIg = function(scope,i) {
+		self.addSivIg = function(i) {
 			
 			$('#upload-siv-infographic_'+i)[0].click();
 			
 		};		
 		
-		self.addSaiIg = function(scope,i) {
+		self.addSaiIg = function(i) {
 			
 			$('#upload-sai-infographic_'+i)[0].click();
 			
 		};
 
-		self.addSaivIg = function(scope,i) {
+		self.addSaivIg = function(i) {
 			
 			$('#upload-saiv-infographic_'+i)[0].click();
 			
@@ -809,7 +804,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 
 	return new form();
 
-}).directive('addSivIg',function($timeout) {
+}).directive('addSivIg',function($rootScope,$timeout) {
 
 	return {
 		restrict: 'A',
@@ -842,8 +837,8 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 
 				reader.addEventListener("load", function () {
 					// preview.src = reader.result;
-					scope.survey.sections[section_index].items[section_item_index].values[siv_index].siv_infographic = reader.result;
-					scope.$apply();
+					$rootScope.survey.sections[section_index].items[section_item_index].values[siv_index].siv_infographic = reader.result;
+					$rootScope.$apply();
 				}, false);
 
 				if (file) {
@@ -855,7 +850,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 		}
 	};
 		
-}).directive('removeSivIg',function($timeout) {
+}).directive('removeSivIg',function($rootScope,$timeout) {
 	
 	return {
 		restrict: 'A',
@@ -870,15 +865,15 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				let section_item_index = s_indexes[1];
 				let siv_index = s_indexes[2];
 
-				scope.survey.sections[section_index].items[section_item_index].values[siv_index].siv_infographic = null;
-				scope.$apply();
+				$rootScope.survey.sections[section_index].items[section_item_index].values[siv_index].siv_infographic = null;
+				$rootScope.$apply();
 				
 			});
 			
 		}
 	};	
 	
-}).directive('addSaivIg',function($timeout) {
+}).directive('addSaivIg',function($rootScope,$timeout) {
 
 	return {
 		restrict: 'A',
@@ -912,8 +907,8 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 
 				reader.addEventListener("load", function () {
 					// preview.src = reader.result;
-					scope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].values[saiv_index].siv_infographic = reader.result;
-					scope.$apply();
+					$rootScope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].values[saiv_index].siv_infographic = reader.result;
+					$rootScope.$apply();
 				}, false);
 
 				if (file) {
@@ -925,7 +920,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 		}
 	};
 		
-}).directive('removeSaivIg',function($timeout) {
+}).directive('removeSaivIg',function($rootScope,$timeout) {
 	
 	return {
 		restrict: 'A',
@@ -941,8 +936,8 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				let aspect_item_index = s_indexes[2];
 				let saiv_index = s_indexes[3];
 
-				scope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].values[saiv_index].siv_infographic = null;
-				scope.$apply();
+				$rootScope.survey.sections[section_index].aspects[aspect_index].items[aspect_item_index].values[saiv_index].siv_infographic = null;
+				$rootScope.$apply();
 				
 			});
 			
