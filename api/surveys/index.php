@@ -69,6 +69,10 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 
 	$data['office'] = $_SESSION['elyunite_user_office'];
 
+	if (isset($data['office_name'])) {
+		unset($data['office_name']);
+	}
+
 	# surveys	
 	if ($data['id']) {
 
