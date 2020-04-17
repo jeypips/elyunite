@@ -105,10 +105,10 @@
 																	<i class="notika-icon notika-trash"></i>
 																</a>
 															</div>														
-															<img id="ssi_{{section_item_index}}" class="image ssi-infographic" src="{{ssi.item_infographic}}">
+															<img id="ssi_{{section_index}}{{section_item_index}}" class="image ssi-infographic" src="{{ssi.item_infographic}}">
 														</div>
-														<input type="file" style="display: none;" id="upload-ssi-infographic_{{section_item_index}}" add-ssi-ig="{{section_index}},{{section_item_index}}">
-														<a ng-show="ssi.item_infographic == null" href="javascript:;" ng-click="form.addSsiIg(section_item_index)">
+														<input type="file" style="display: none;" id="upload-ssi-infographic_{{section_index}}{{section_item_index}}" add-ssi-ig="{{section_index}},{{section_item_index}}">
+														<a ng-show="ssi.item_infographic == null" href="javascript:;" ng-click="form.addSsiIg(section_index,section_item_index)">
 															<div class="image-container new">
 																<div class="ssi-infographic">
 																	<i class="notika-icon notika-plus-symbol"></i>
@@ -174,10 +174,10 @@
 																							<i class="notika-icon notika-trash"></i>
 																						</a>
 																					</div>														
-																					<img id="siv_{{siv_index}}" class="image siv-infographic" src="{{v.siv_infographic}}">
+																					<img id="siv_{{section_index}}{{section_item_index}}{{siv_index}}" class="image siv-infographic" src="{{v.siv_infographic}}">
 																				</div>
-																				<input type="file" style="display: none;" id="upload-siv-infographic_{{siv_index}}" add-siv-ig="{{section_index}},{{section_item_index}},{{siv_index}}">
-																				<a ng-show="v.siv_infographic == null" href="javascript:;" ng-click="form.addSivIg(siv_index)">
+																				<input type="file" style="display: none;" id="upload-siv-infographic_{{section_index}}{{section_item_index}}{{siv_index}}" add-siv-ig="{{section_index}},{{section_item_index}},{{siv_index}}">
+																				<a ng-show="v.siv_infographic == null" href="javascript:;" ng-click="form.addSivIg(section_index,section_item_index,siv_index)">
 																					<div class="image-container new">
 																						<div class="siv-infographic">
 																							<i class="notika-icon notika-plus-symbol"></i>
@@ -354,10 +354,10 @@
 																			<i class="notika-icon notika-trash"></i>
 																		</a>
 																	</div>														
-																	<img id="sai_{{section_item_index}}" class="image ssi-infographic" src="{{sai.item_infographic}}">
+																	<img id="sai_{{section_index}}{{aspect_index}}{{aspect_item_index}}" class="image ssi-infographic" src="{{sai.item_infographic}}">
 																</div>
-																<input type="file" style="display: none;" id="upload-sai-infographic_{{aspect_item_index}}" add-sai-ig="{{section_index}},{{aspect_index}},{{aspect_item_index}}">
-																<a ng-show="sai.item_infographic == null" href="javascript:;" ng-click="form.addSaiIg(aspect_item_index)">
+																<input type="file" style="display: none;" id="upload-sai-infographic_{{section_index}}{{aspect_index}}{{aspect_item_index}}" add-sai-ig="{{section_index}},{{aspect_index}},{{aspect_item_index}}">
+																<a ng-show="sai.item_infographic == null" href="javascript:;" ng-click="form.addSaiIg(section_index,aspect_index,aspect_item_index)">
 																	<div class="image-container new">
 																		<div class="ssi-infographic">
 																			<i class="notika-icon notika-plus-symbol"></i>
@@ -407,10 +407,10 @@
 																									<i class="notika-icon notika-trash"></i>
 																								</a>
 																							</div>														
-																							<img id="saiv_{{saiv_index}}" class="image siv-infographic" src="{{v.siv_infographic}}">
+																							<img id="saiv_{{section_index}}{{aspect_index}}{{aspect_item_index}}{{saiv_index}}" class="image siv-infographic" src="{{v.siv_infographic}}">
 																						</div>
-																						<input type="file" style="display: none;" id="upload-saiv-infographic_{{saiv_index}}" add-saiv-ig="{{section_index}},{{aspect_index}},{{aspect_item_index}},{{saiv_index}}">
-																						<a ng-show="v.siv_infographic == null" href="javascript:;" ng-click="form.addSaivIg(saiv_index)">
+																						<input type="file" style="display: none;" id="upload-saiv-infographic_{{section_index}}{{aspect_index}}{{aspect_item_index}}{{saiv_index}}" add-saiv-ig="{{section_index}},{{aspect_index}},{{aspect_item_index}},{{saiv_index}}">
+																						<a ng-show="v.siv_infographic == null" href="javascript:;" ng-click="form.addSaivIg(section_index,aspect_index,aspect_item_index,saiv_index)">
 																							<div class="image-container new">
 																								<div class="siv-infographic">
 																									<i class="notika-icon notika-plus-symbol"></i>

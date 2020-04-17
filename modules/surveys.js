@@ -17,14 +17,14 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				let section_index = s_indexes[0];
 				let section_item_index = s_indexes[1];
 
-				var file = ($('#upload-ssi-infographic_'+section_item_index)[0].files)[0];
+				var file = ($('#upload-ssi-infographic_'+section_index+section_item_index)[0].files)[0];
 
 				var type = file.type.split("/");
 				
 				let valid_files = ["jpeg","png"];				
 				if (!valid_files.includes(type[1])) return;
 				
-				var eid = "#ssi_"+section_item_index;
+				var eid = "#ssi_"+section_index+section_item_index;
 				// var preview = document.querySelector(eid);
 				var reader  = new FileReader();
 
@@ -85,14 +85,14 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				let aspect_index = s_indexes[1];
 				let aspect_item_index = s_indexes[2];
 
-				var file = ($('#upload-sai-infographic_'+aspect_item_index)[0].files)[0];
+				var file = ($('#upload-sai-infographic_'+section_index+aspect_index+aspect_item_index)[0].files)[0];
 
 				var type = file.type.split("/");
 				
 				let valid_files = ["jpeg","png"];				
 				if (!valid_files.includes(type[1])) return;
 				
-				var eid = "#sai_"+aspect_item_index;
+				var eid = "#sai_"+section_index+aspect_index+aspect_item_index;
 				// var preview = document.querySelector(eid);
 				var reader  = new FileReader();
 
@@ -776,27 +776,27 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			
 		};
 		
-		self.addSsiIg = function(i) {
+		self.addSsiIg = function(s,si) {
 			
-			$('#upload-ssi-infographic_'+i)[0].click();
+			$('#upload-ssi-infographic_'+s.toString()+si.toString())[0].click();
 			
 		};
 		
-		self.addSivIg = function(i) {
-			
-			$('#upload-siv-infographic_'+i)[0].click();
+		self.addSivIg = function(s,si,siv) {
+
+			$('#upload-siv-infographic_'+s.toString()+si.toString()+siv.toString())[0].click();
 			
 		};		
 		
-		self.addSaiIg = function(i) {
+		self.addSaiIg = function(s,sa,si) {
 			
-			$('#upload-sai-infographic_'+i)[0].click();
+			$('#upload-sai-infographic_'+s.toString()+sa.toString()+si.toString())[0].click();
 			
 		};
 
-		self.addSaivIg = function(i) {
+		self.addSaivIg = function(s,sa,si,siv) {
 			
-			$('#upload-saiv-infographic_'+i)[0].click();
+			$('#upload-saiv-infographic_'+s.toString()+sa.toString()+si.toString()+siv.toString())[0].click();
 			
 		};			
 
@@ -810,39 +810,40 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 		restrict: 'A',
 		link: function(scope, element, attrs) {
 		
-			element.bind('click', function() {
+			// element.bind('click', function() {
 
-
-			});
+			// });
 
 			element.bind('change', function() {
 
 				let indexes = attrs.addSivIg;
-				
+
 				let s_indexes = indexes.split(",");
 				let section_index = s_indexes[0];
 				let section_item_index = s_indexes[1];
 				let siv_index = s_indexes[2];
 
-				var file = ($('#upload-siv-infographic_'+siv_index)[0].files)[0];
-
+				var file = ($('#upload-siv-infographic_'+section_index+section_item_index+siv_index)[0].files)[0];
+				
 				var type = file.type.split("/");
 				
 				let valid_files = ["jpeg","png"];				
 				if (!valid_files.includes(type[1])) return;
-				
-				var eid = "#siv_"+siv_index;
+
+				var eid = "#siv_"+section_index+section_item_index+siv_index;
 				// var preview = document.querySelector(eid);
 				var reader  = new FileReader();
 
 				reader.addEventListener("load", function () {
 					// preview.src = reader.result;
 					$rootScope.survey.sections[section_index].items[section_item_index].values[siv_index].siv_infographic = reader.result;
-					$rootScope.$apply();
+					$rootScope.$apply();		
+
 				}, false);
 
 				if (file) {
 					reader.readAsDataURL(file);
+					console.log(reader.result);
 				};		
 
 			});
@@ -859,6 +860,8 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 			element.bind('click', function() {
 
 				let indexes = attrs.removeSivIg;
+
+				console.log(indexes);
 				
 				let s_indexes = indexes.split(",");
 				let section_index = s_indexes[0];
@@ -894,14 +897,14 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				let aspect_item_index = s_indexes[2];
 				let saiv_index = s_indexes[3];
 
-				var file = ($('#upload-saiv-infographic_'+saiv_index)[0].files)[0];
+				var file = ($('#upload-saiv-infographic_'+section_index+aspect_index+aspect_item_index+saiv_index)[0].files)[0];
 
 				var type = file.type.split("/");
 				
 				let valid_files = ["jpeg","png"];				
 				if (!valid_files.includes(type[1])) return;
 				
-				var eid = "#saiv_"+saiv_index;
+				var eid = "#saiv_"+section_index+aspect_index+aspect_item_index+saiv_index;
 				// var preview = document.querySelector(eid);
 				var reader  = new FileReader();
 
