@@ -271,7 +271,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 						unset($si_value['siv_max']);
 						unset($si_value['max_above']);
 						// $si_value['data_type'];
-						unset($si_value['row_type']);						
+						// unset($si_value['row_type']);						
 					
 					break;
 					

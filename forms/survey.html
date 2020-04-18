@@ -210,7 +210,7 @@
 																			</div>																			
 																		</td>																		
 																		<td ng-show="(ssi.item_type == 1) || (ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 7)">
-																			Show Sub Items: <input ng-model="v.show_subitems" ng-checked="v.show_subitems" type="checkbox" style="display: inline-block; margin-left: 3px; position: relative; top: 3px;">
+																			<span ng-show="(ssi.item_type == 7) && (v.row_type == 1)">Show Sub Items: <input ng-model="v.show_subitems" ng-checked="v.show_subitems" type="checkbox" style="display: inline-block; margin-left: 3px; position: relative; top: 3px;"></span>
 																			<table class="table item-values" ng-show="v.show_subitems">
 																				<thead>
 																					<tr><th>Display</th><th ng-show="(ssi.item_type == 2) || (ssi.item_type == 4) || (ssi.item_type == 5) || (ssi.item_type == 6) || (ssi.item_type == 7)">Value</th><th ng-show="ssi.item_type == 1">Min</th><th ng-show="ssi.item_type == 1">Max</th><th ng-show="ssi.item_type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.value_sub_items.add(v.sub_items)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></i></span></button></th></tr>
@@ -443,7 +443,7 @@
 																					</div>																			
 																				</td>
 																				<td ng-show="(sai.item_type == 1) || (sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 7)">
-																					Show Sub Items: <input ng-model="v.show_subitems" ng-checked="v.show_subitems" class="checkbox" type="checkbox" style="display: inline-block; margin-left: 3px; position: relative; top: 3px;">
+																					<span ng-show="(sai.item_type == 7) && (v.row_type == 1)">Show Sub Items: <input ng-model="v.show_subitems" ng-checked="v.show_subitems" class="checkbox" type="checkbox" style="display: inline-block; margin-left: 3px; position: relative; top: 3px;"></span>
 																					<table class="table item-values" ng-show="v.show_subitems">
 																						<thead>
 																							<tr><th>Display</th><th ng-show="(sai.item_type == 2) || (sai.item_type == 4) || (sai.item_type == 5) || (sai.item_type == 6) || (sai.item_type == 7)">Value</th><th ng-show="sai.item_type == 1">Min</th><th ng-show="sai.item_type == 1">Max</th><th ng-show="sai.item_type == 3">Data Type</th><th><button class="btn btn-xs notika-btn-amber waves-effect" ng-click="form.value_sub_items.add(v.sub_items)"><span style="color:#fff;"><i class="notika-icon notika-plus-symbol"></i></span></button></th></tr>
