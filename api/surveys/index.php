@@ -399,7 +399,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 						
 						case 7: # Multi Rows
 						
-							unset($vsi['vsi_value']);
+							// unset($vsi['vsi_value']);
 							unset($vsi['vsi_value_other']);
 							unset($vsi['vsi_min']);
 							unset($vsi['min_below']);

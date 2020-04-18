@@ -449,7 +449,7 @@ angular.module('app-module',['ui.bootstrap','ngAnimate','ngSanitize','checklist-
 				$http({
 				  method: 'POST',
 				  url: 'api/surveys/delete',
-				  data: {id: sc$rootScopeope.checks.items}
+				  data: {id: $rootScope.checks.items}
 				}).then(function mySucces(response) {
 
 					self.list();
