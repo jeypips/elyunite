@@ -161,6 +161,8 @@ class survey {
 
 		foreach ($sub_items as $i => $si) {
 			
+			$sub_items[$i]['min_below'] = ($si['min_below']==1)?true:false;
+			$sub_items[$i]['max_above'] = ($si['max_above']==1)?true:false;
 			$sub_items[$i]['vsi_value_other'] = ($si['vsi_value_other']==1)?true:false;
 			
 		};

@@ -204,7 +204,7 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 						unset($si_value['siv_max']);
 						unset($si_value['max_above']);
 						unset($si_value['data_type']);
-						unset($si_value['row_type']);					
+						unset($si_value['row_type']);		
 					
 					break;
 					
@@ -325,8 +325,8 @@ $app->post('/save', function (Request $request, Response $response, array $args)
 							unset($vsi['data_type']);
 							unset($vsi['row_type']);
 							
-							$vsi['vsi_min'] = ((isset($vsi['vsi_min']))&&($vsi['vsi_min']))?1:0;
-							$vsi['vsi_max'] = ((isset($vsi['vsi_max']))&&($vsi['vsi_max']))?1:0;								
+							$vsi['min_below'] = ((isset($vsi['min_below']))&&($vsi['min_below']))?1:0;
+							$vsi['max_above'] = ((isset($vsi['max_above']))&&($vsi['max_above']))?1:0;								
 						
 						break;
 						
